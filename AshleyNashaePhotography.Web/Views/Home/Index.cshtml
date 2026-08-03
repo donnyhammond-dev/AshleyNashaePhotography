@@ -1,8 +1,43 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using AshleyNashaePhotography.Web.Models
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@model HomePageSettings
+
+<div class="hero-container mt-3">
+	<section class="hero-section d-flex flex-column"
+			 id="hero"
+			 style="background-image: url('@Model.HeroWildImagePath')">
+
+		<nav class="hero-navigation d-flex w-100 justify-content-around mt-6">
+			<a asp-controller="Portfolio"
+			   asp-action="Love"
+			   data-image="@Model.HeroLoveImagePath"
+			   title="View Love Portfolio">Love
+		   </a>
+
+			<a asp-controller="Portfolio"
+			   asp-action="Celebration"
+			   data-image="@Model.HeroCelebrationImagePath"
+			   title="View Celebrate Portfolio">Celebrate
+		   </a>
+
+			<a asp-controller="Portfolio"
+			   asp-action="Wild"
+			   data-image="@Model.HeroWildImagePath"
+			   title="View Wild Portfolio">Wild
+		   </a>
+		</nav>
+
+		<div class="hero-quote mt-auto text-center">
+			<p>@Model.HeroQuote</p>
+		</div>
+
+
+	</section>
+
 </div>
+
+@section Scripts {
+
+	<script src="~/js/hero.js"></script>
+
+}
