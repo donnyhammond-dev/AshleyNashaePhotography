@@ -68,20 +68,28 @@ body {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     outline: 1px solid #222;
     outline-offset: 8px;
-    transition: opacity .5s ease;
+    transition: opacity .75s ease;
 }
 
 .hero-navigation a {
     font-family: "Cormorant Garamond", cursive;
-    font-size: 7rem;
+    font-size: clamp(2.5rem, 8vw, 7rem);
     font-weight: 300;
     text-decoration: none;
     color: white;
+    transition: transform .2s ease, letter-spacing .2s ease;
 }
+    .hero-navigation a:hover {
+        transform: scale(1.03);
+        color: lemonchiffon;
+        letter-spacing: .05em;
+    }
+
+
 
 .hero-quote p {
     font-family: "Italianno", cursive;
-    font-size: 3rem;
+    font-size: clamp(1rem, 4vw, 3rem);
     font-weight: 300;
     text-decoration: none;
     color: white;

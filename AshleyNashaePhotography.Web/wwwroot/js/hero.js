@@ -1,5 +1,6 @@
 ﻿const hero = document.getElementById("hero")
 const heroLinks = document.querySelectorAll(".hero-navigation a")
+let currentImagePath = heroLinks[0].dataset.image;
 
 heroLinks.forEach(link => {
 
@@ -7,12 +8,22 @@ heroLinks.forEach(link => {
 
 		const imagePath = link.dataset.image;
 
-		hero.style.opacity = "0";
+		if (imagePath != currentImagePath) {
+			console.log("1. Mouse entered/Condition met", link.textContent);
 
-		setTimeout(() => {
-			hero.style.backgroundImage = `url('${imagePath}')`;
-			hero.style.opacity = "1";
-		},500);
+			hero.style.opacity = "0";
+			console.log("2. Fade out", hero.style.backgroundImage);
+
+			setTimeout(() => {
+
+				hero.style.backgroundImage = `url('${imagePath}')`;
+				currentImagePath = imagePath;
+				hero.style.opacity = "1";
+				console.log("3. Fade in", imagePath);
+			}, 750);
+		}
+		
+
 
 	});
 });
