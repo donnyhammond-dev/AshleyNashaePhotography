@@ -21,7 +21,7 @@ namespace AshleyNashaePhotography.Web.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.HomePageSettings", b =>
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,21 +29,64 @@ namespace AshleyNashaePhotography.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("HeroHeading")
+                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("HeroImagePath")
-                        .IsRequired()
+                    b.Property<int?>("PortfolioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PortfolioId");
+
+                    b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Portfolio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("HeroImageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Quote")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("HeroSubheading")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("HomePageSettings");
+                    b.HasIndex("HeroImageId");
+
+                    b.ToTable("Portfolios");
+                });
+
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Photo", b =>
+                {
+                    b.HasOne("AshleyNashaePhotography.Web.Models.Portfolio", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("PortfolioId");
+                });
+
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Portfolio", b =>
+                {
+                    b.HasOne("AshleyNashaePhotography.Web.Models.Photo", "HeroImage")
+                        .WithMany()
+                        .HasForeignKey("HeroImageId");
+
+                    b.Navigation("HeroImage");
+                });
+
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Portfolio", b =>
+                {
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }

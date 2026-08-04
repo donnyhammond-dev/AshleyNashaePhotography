@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using AshleyNashaePhotography.Web.ViewModels;
 using AshleyNashaePhotography.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,15 +16,15 @@ namespace AshleyNashaePhotography.Web.Controllers
 
         public IActionResult Index()
         {
-            var model = new HomePageSettings
+            var vm = new HomePageViewModel
             {
-                HeroWildImagePath = "/images/Hero_PH3.jpg",
-                HeroLoveImagePath = "/images/Hero_PH1.jpg",
-                HeroCelebrationImagePath = "/images/Hero_PH2.jpg",
+                HeroWild = new Photo { ImagePath = "/images/Hero_PH3.jpg" },
+                HeroLove = new Photo { ImagePath = "/images/Hero_PH1.jpg" },
+                HeroCelebration = new Photo { ImagePath = "/images/Hero_PH2.jpg" },
                 HeroQuote = "Where light, love, and wild places become timeless stories"
             };
 
-            return View(model);
+            return View(vm);
         }
 
         public IActionResult Privacy()

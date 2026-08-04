@@ -1,28 +1,29 @@
 ﻿@using AshleyNashaePhotography.Web.Models
+@using AshleyNashaePhotography.Web.ViewModels
 
-@model HomePageSettings
+@model HomePageViewModel
 
 <div class="hero-container mt-3">
 	<section class="hero-section d-flex flex-column"
 			 id="hero"
-			 style="background-image: url('@Model.HeroWildImagePath')">
+			 style="background-image: url('@Model.HeroWild.ImagePath')">
 
 		<nav class="hero-navigation d-flex w-100 justify-content-around mt-6">
 			<a asp-controller="Portfolio"
 			   asp-action="Love"
-			   data-image="@Model.HeroLoveImagePath"
+			   data-image="@Model.HeroLove.ImagePath"
 			   title="View Love Portfolio">Love
 		   </a>
 
 			<a asp-controller="Portfolio"
 			   asp-action="Celebration"
-			   data-image="@Model.HeroCelebrationImagePath"
+			   data-image="@Model.HeroCelebration.ImagePath"
 			   title="View Celebrate Portfolio">Celebrate
 		   </a>
 
 			<a asp-controller="Portfolio"
 			   asp-action="Wild"
-			   data-image="@Model.HeroWildImagePath"
+			   data-image="@Model.HeroWild.ImagePath"
 			   title="View Wild Portfolio">Wild
 		   </a>
 		</nav>
