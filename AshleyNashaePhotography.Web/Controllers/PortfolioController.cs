@@ -1,5 +1,6 @@
 ﻿using AshleyNashaePhotography.Web.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AshleyNashaePhotography.Web.Controllers
 {
@@ -14,17 +15,38 @@ namespace AshleyNashaePhotography.Web.Controllers
 
         public async Task<IActionResult> Wild()
         {
-            return View();
+            var portfolio = await _context.Portfolios
+                .Include(p => p.HeroImage)
+                .Include(p => p.Photos)
+                .FirstOrDefaultAsync(p => p.Title == "Wild");
+
+            if (portfolio == null) return NotFound();
+
+            return View(portfolio);
         }
 
         public async Task<IActionResult> Love()
         {
-            return View();
+            var portfolio = await _context.Portfolios
+                .Include(p => p.HeroImage)
+                .Include(p => p.Photos)
+                .FirstOrDefaultAsync(p => p.Title == "Love");
+
+            if (portfolio == null) return NotFound();
+
+            return View(portfolio);
         }
 
         public async Task<IActionResult> Celebrate()
         {
-            return View();
+            var portfolio = await _context.Portfolios
+                .Include(p => p.HeroImage)
+                .Include(p => p.Photos)
+                .FirstOrDefaultAsync(p => p.Title == "Celebrate");
+
+            if (portfolio == null) return NotFound();
+
+            return View(portfolio);
         }
     }
 }
