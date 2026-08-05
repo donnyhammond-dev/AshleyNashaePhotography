@@ -21,6 +21,37 @@ namespace AshleyNashaePhotography.Web.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.HomePage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("HeroCelebrationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HeroLoveId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HeroQuote")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("HeroWildId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HeroCelebrationId");
+
+                    b.HasIndex("HeroLoveId");
+
+                    b.HasIndex("HeroWildId");
+
+                    b.ToTable("HomePages");
+                });
+
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -66,6 +97,27 @@ namespace AshleyNashaePhotography.Web.Migrations
                     b.HasIndex("HeroImageId");
 
                     b.ToTable("Portfolios");
+                });
+
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.HomePage", b =>
+                {
+                    b.HasOne("AshleyNashaePhotography.Web.Models.Photo", "HeroCelebration")
+                        .WithMany()
+                        .HasForeignKey("HeroCelebrationId");
+
+                    b.HasOne("AshleyNashaePhotography.Web.Models.Photo", "HeroLove")
+                        .WithMany()
+                        .HasForeignKey("HeroLoveId");
+
+                    b.HasOne("AshleyNashaePhotography.Web.Models.Photo", "HeroWild")
+                        .WithMany()
+                        .HasForeignKey("HeroWildId");
+
+                    b.Navigation("HeroCelebration");
+
+                    b.Navigation("HeroLove");
+
+                    b.Navigation("HeroWild");
                 });
 
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Photo", b =>

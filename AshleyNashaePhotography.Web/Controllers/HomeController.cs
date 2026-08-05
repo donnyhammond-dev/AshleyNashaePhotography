@@ -1,30 +1,37 @@
 using System.Diagnostics;
-using AshleyNashaePhotography.Web.ViewModels;
+using AshleyNashaePhotography.Web.Data;
 using AshleyNashaePhotography.Web.Models;
+using AshleyNashaePhotography.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AshleyNashaePhotography.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var vm = new HomePageViewModel
-            {
-                HeroWild = new Photo { ImagePath = "/images/Hero_PH3.jpg" },
-                HeroLove = new Photo { ImagePath = "/images/Hero_PH1.jpg" },
-                HeroCelebration = new Photo { ImagePath = "/images/Hero_PH2.jpg" },
-                HeroQuote = "Where light, love, and wild places become timeless stories"
-            };
+            var homePage = await _context.HomePages
+                .Include(h => h.HeroWild)
+                .Include(h => h.HeroLove)
+                .Include(h => h.HeroCelebration)
+                .FirstOrDefaultAsync();
 
-            return View(vm);
+            if (homePage == null)
+            {
+                return NotFound();
+            }
+
+            return View(homePage);
         }
 
         public IActionResult Privacy()

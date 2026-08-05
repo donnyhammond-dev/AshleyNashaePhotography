@@ -9,6 +9,8 @@ namespace AshleyNashaePhotography.Web.Data
         {
         }
 
+        public DbSet<HomePage> HomePages { get; set; }
+
         public DbSet<Photo> Photos { get; set; }
 
         public DbSet<Portfolio> Portfolios { get; set; }

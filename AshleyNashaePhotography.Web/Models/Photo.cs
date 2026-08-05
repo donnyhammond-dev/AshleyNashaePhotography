@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AshleyNashaePhotography.Web.Models
 {
@@ -7,5 +8,12 @@ namespace AshleyNashaePhotography.Web.Models
         public int Id { get; set; }
         public required string ImagePath { get; set; }
 
+        public Photo() { }
+
+        [SetsRequiredMembers]
+        public Photo(string imagePath)
+        {
+            ImagePath = imagePath;
+        }
     }
 }

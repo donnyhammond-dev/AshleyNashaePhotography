@@ -1,12 +1,14 @@
-﻿<div class="hero-container mt-3">
-	<section class="hero-section d-flex flex-column"
-			 id="hero"
-			 style="background-image: url('@Model.HeroWildImagePath')">
+﻿@using AshleyNashaePhotography.Web.Models
 
-		<div class="hero-quote mt-auto text-center">
-			<p>@Model.HeroQuote</p>
+@model Portfolio
+
+<div class="hero-container mt-3">
+	<section class="hero-section"
+			 style="background-image: url('@Model.HeroImage?.ImagePath')">
+
+		<div class="hero-quote text-center">
+			<p>@Model.Quote</p>
 		</div>
-
 
 	</section>
 
