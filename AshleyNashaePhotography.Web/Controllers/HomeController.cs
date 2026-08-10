@@ -23,7 +23,7 @@ namespace AshleyNashaePhotography.Web.Controllers
             var homePage = await _context.HomePages
                 .Include(h => h.HeroWild)
                 .Include(h => h.HeroLove)
-                .Include(h => h.HeroCelebration)
+                .Include(h => h.HeroRadiant)
                 .FirstOrDefaultAsync();
 
             if (homePage == null)

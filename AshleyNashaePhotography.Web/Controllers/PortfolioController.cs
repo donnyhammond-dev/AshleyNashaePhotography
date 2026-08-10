@@ -37,12 +37,12 @@ namespace AshleyNashaePhotography.Web.Controllers
             return View(portfolio);
         }
 
-        public async Task<IActionResult> Celebrate()
+        public async Task<IActionResult> Radiant()
         {
             var portfolio = await _context.Portfolios
                 .Include(p => p.HeroImage)
                 .Include(p => p.Photos)
-                .FirstOrDefaultAsync(p => p.Title == "Celebrate");
+                .FirstOrDefaultAsync(p => p.Title == "Radiant");
 
             if (portfolio == null) return NotFound();
 

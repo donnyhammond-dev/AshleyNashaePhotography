@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
+using AshleyNashaePhotography.Web.Enums;
 
 namespace AshleyNashaePhotography.Web.Models
 {
@@ -7,13 +7,15 @@ namespace AshleyNashaePhotography.Web.Models
     {
         public int Id { get; set; }
         public required string ImagePath { get; set; }
+        public required PhotoLayout Layout { get; set; }
 
         public Photo() { }
 
         [SetsRequiredMembers]
-        public Photo(string imagePath)
+        public Photo(string imagePath, PhotoLayout layout)
         {
             ImagePath = imagePath;
+            Layout = layout;
         }
     }
 }

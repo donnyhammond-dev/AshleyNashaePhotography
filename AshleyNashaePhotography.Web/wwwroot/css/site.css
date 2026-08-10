@@ -51,7 +51,7 @@ body {
 
 
 /* ==========================================
-   Hero Section
+   Home Page Hero Section
    ========================================== */
 
 .hero-container {
@@ -64,7 +64,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
+   
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     outline: 1px solid #222;
     outline-offset: 8px;
@@ -72,7 +72,7 @@ body {
 }
 
 .hero-navigation a {
-    font-family: "Cormorant Garamond", cursive;
+    font-family: "Cormorant Garamond", serif;
     font-size: clamp(2.5rem, 8vw, 7rem);
     font-weight: 300;
     text-decoration: none;
@@ -96,10 +96,44 @@ body {
 }
 
 /* ==========================================
-   Portfolio
+   Portfolio Hero Section
    ========================================== */
-.portfolio-container{
-    margin: 1rem 3rem
+.portfolio-section {
+    min-height: 60vh;
+    background-size: cover;
+    background-position: center 35%;
+    background-repeat: no-repeat;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    outline: 1px solid #222;
+    outline-offset: 8px;
 }
+
+.portfolio-quote p {
+    font-family: "Italianno", cursive;
+    font-size: clamp(1rem, 5vw, 3rem);
+    font-weight: 300;
+    text-decoration: none;
+    color: white;
+}
+
+/* ==========================================
+   Portfolio Photo Gallery
+   ========================================== */
+.photo-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 4rem 2rem;
+}
+
+    .photo-gallery img {
+        height: 280px;
+        width: auto;
+        max-width: 50%;
+        object-fit: cover;
+        flex-grow: 1;
+    }
+
 
 

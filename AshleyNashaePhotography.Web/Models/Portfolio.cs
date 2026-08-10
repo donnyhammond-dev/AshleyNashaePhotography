@@ -9,6 +9,6 @@ namespace AshleyNashaePhotography.Web.Models
         public int? HeroImageId { get; set; }
         public Photo? HeroImage { get; set; }
         public string? Quote { get; set; }
-        public List<Photo> Photos { get; set; } = new();
+        public List<Photo> Photos { get; set; } = [];
     }
 }

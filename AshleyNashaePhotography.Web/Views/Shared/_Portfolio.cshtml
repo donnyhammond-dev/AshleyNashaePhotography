@@ -1,0 +1,26 @@
+﻿@using AshleyNashaePhotography.Web.Models
+@using AshleyNashaePhotography.Web.Enums
+
+@model Portfolio
+
+<!--Hero-->
+<div class="hero-container">
+	<section class="portfolio-section d-flex justify-content-center align-items-center"
+			 style="background-image: url('@Model.HeroImage?.ImagePath');">
+
+		<div class="portfolio-quote text-center">
+			<p>@Model.Quote</p>
+		</div>
+	</section>
+</div>
+
+<!--Gallery-->
+<div class="photo-gallery">
+	@{
+		foreach (Photo photo in Model.Photos)
+		{
+			<img src="@photo.ImagePath"
+				 alt="Portfolio Photo" />
+		}
+	}
+</div>

@@ -1,15 +1,3 @@
-﻿@using AshleyNashaePhotography.Web.Models
+﻿@model Portfolio
 
-@model Portfolio
-
-<div class="hero-container mt-3">
-	<section class="hero-section"
-			 style="background-image: url('@Model.HeroImage?.ImagePath')">
-
-		<div class="hero-quote text-center">
-			<p>@Model.Quote</p>
-		</div>
-
-	</section>
-
-</div>
+<partial name="_Portfolio" model="Model" />
