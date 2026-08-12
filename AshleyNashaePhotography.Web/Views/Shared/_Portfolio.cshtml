@@ -14,13 +14,23 @@
 	</section>
 </div>
 
-<!--Gallery-->
+<!--Photo Gallery-->
 <div class="photo-gallery">
 	@{
 		foreach (Photo photo in Model.Photos)
 		{
-			<img src="@photo.ImagePath"
+			<img class="gallery-photo"
+				 src="@photo.ImagePath"
+				 title="View Photo"
 				 alt="Portfolio Photo" />
 		}
 	}
 </div>
+
+<!--Click To Enlarge Photo-->
+<div id="lightbox" class="lightbox">
+	<img id="lightbox-image"
+		 alt="Enlarged portfolio photo" />
+</div>
+
+<script src="~/js/lightbox.js"></script>

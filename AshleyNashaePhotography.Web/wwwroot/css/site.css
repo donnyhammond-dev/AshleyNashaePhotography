@@ -135,5 +135,29 @@ body {
         flex-grow: 1;
     }
 
+        .photo-gallery img:hover {
+            transform: scale(1.02);
+        }
 
+/*Click to enlarge photo*/
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+    .lightbox.show {
+        display: flex;
+    }
+
+#lightbox-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+}
 
