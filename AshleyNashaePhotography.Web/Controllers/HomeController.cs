@@ -24,6 +24,7 @@ namespace AshleyNashaePhotography.Web.Controllers
                 .Include(h => h.HeroWild)
                 .Include(h => h.HeroLove)
                 .Include(h => h.HeroRadiant)
+                .Include(h => h.AboutMePhoto)
                 .FirstOrDefaultAsync();
 
             if (homePage == null)

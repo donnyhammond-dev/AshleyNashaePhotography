@@ -15,5 +15,7 @@ namespace AshleyNashaePhotography.Web.Data
 
         public DbSet<Portfolio> Portfolios { get; set; }
 
+        public DbSet<PhotoSession> PhotoSessions { get; set; }
+
     }
 }

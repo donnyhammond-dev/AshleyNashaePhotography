@@ -31,13 +31,21 @@
 			<p>@Model.HeroQuote</p>
 		</div>
 
-
 	</section>
+</div>
+
+<div class="about-container">
+
+	<div class="about-content">
+		<p>@Model.AboutMeDescription</p>
+	</div>
+
+	<img class="about-photo"
+		 src="@Model.AboutMePhoto?.ImagePath"
+		 alt="Ashley" />
 
 </div>
 
 @section Scripts {
-
 	<script src="~/js/hero.js"></script>
-
 }

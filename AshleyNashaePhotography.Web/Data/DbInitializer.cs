@@ -15,7 +15,28 @@ namespace AshleyNashaePhotography.Web.Data
                 HeroLove = new Photo("/images/home_love.jpg", PhotoLayout.Landscape),
                 HeroWild = new Photo("/images/home_wild.jpg", PhotoLayout.Landscape),
                 HeroRadiant = new Photo("/images/home_radiant.jpg", PhotoLayout.Portrait),
-                HeroQuote = "Where light, love, and wild places become timeless stories"
+                HeroQuote = "Where light, love, and wild places become timeless stories",
+                AboutMePhoto = new Photo("/images/about.jpg", PhotoLayout.Landscape),
+                AboutMeDescription = """
+                Hi! I’m Ashley.
+
+                Raised in the mountains of West Virginia and now rooted in the beautiful 
+                Blue Ridge Mountains of Asheville, North Carolina, I’ve always felt most 
+                at home in nature. It reminds me to slow down, be present, and appreciate 
+                what truly matters. As a mother of three, my journey through motherhood 
+                has shaped the way I see the world. It has taught me to cherish the simple 
+                moments that matter most—a warm embrace, my daughters running barefoot 
+                through the grass, shared laughter, golden light, and the peace found in 
+                wild places. My work is rooted in what I hold sacred: family, the earth, 
+                love, and authentic human connection. Every session takes place outdoors, 
+                where the landscape becomes part of your story. My hope is to create 
+                timeless photographs that preserve not only how life looked, but how it 
+                felt.  When I’m not behind the camera, you’ll find me spending time with 
+                my family, traveling, teaching dance and yoga, supporting wildlife 
+                conservation, exploring the mountains, and making memories with the love 
+                of my life, Donny, our three daughters, our dog Buddy, and our two cats, 
+                Ziggy and Stardust.
+                """
             };
 
             context.HomePages.Add(homePage);
