@@ -1,0 +1,103 @@
+﻿@using AshleyNashaePhotography.Web.ViewModels
+@using AshleyNashaePhotography.Web.Models
+
+@model BookingViewModel
+
+<!--Get booked dates for calendar-->
+@{
+	var bookedDatesJson =
+		System.Text.Json.JsonSerializer.Serialize(Model.BookedDates);
+}
+
+<!-- Flatpickr calendar CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!--Book a Session Form-->
+<section class="booking-container">
+	<div class="booking-content">
+
+		<h1 class="print-header">BOOK A SESSION</h1>
+
+		<form asp-action="Create" method="post" class="d-flex flex-column align-items-center gap-4">
+			
+			<div asp-validation-summary="All" class="text-danger"></div>
+
+			<!-- First/Last Name -->
+			<div class="d-flex flex-column flex-md-row gap-3 w-100">
+				<div class="flex-fill">
+					<label asp-for="Session.FirstName" class="form-label">FIRST NAME:</label>
+					<input asp-for="Session.FirstName" class="form-control" />
+					<span asp-validation-for="Session.FirstName" class="text-danger"></span>
+				</div>
+				<div class="flex-fill">
+					<label asp-for="Session.LastName" class="form-label">LAST NAME:</label>
+					<input asp-for="Session.LastName" class="form-control" />
+					<span asp-validation-for="Session.LastName" class="text-danger"></span>
+				</div>
+			</div>
+
+			<!-- Contact Info -->
+			<div class="d-flex flex-column flex-md-row gap-3 w-100">
+				<div class="flex-fill">
+					<label asp-for="Session.Email" class="form-label">EMAIL:</label>
+					<input asp-for="Session.Email" class="form-control" />
+					<span asp-validation-for="Session.Email" class="text-danger"></span>
+				</div>
+				<div class="flex-fill">
+					<label asp-for="Session.PhoneNumber" class="form-label">PHONE:</label>
+					<input asp-for="Session.PhoneNumber" class="form-control" />
+					<span asp-validation-for="Session.PhoneNumber" class="text-danger"></span>
+				</div>
+			</div>
+
+			<!--Session Type-->
+			<div class="w-100">
+				<label asp-for="Session.Length" class="form-label">SESSION:</label>
+				<select asp-for="Session.Length" class="form-select">
+					<option value="">Choose a session</option>
+					<option value="Mini">Mini — 30 minutes, perfect for...</option>
+					<option value="Standard">Standard — 1 hour, ideal for...</option>
+					<option value="Extended">Extended — 2 hours, best for...</option>
+				</select>
+				<span asp-validation-for="Session.Length" class="text-danger"></span>
+			</div>
+
+			<!-- Calendar / Notes -->
+			<div class="row g-3 w-100">
+
+				<div class="col-md-6">
+					<label asp-for="Session.Date" class="form-label">DATE:</label>
+					<input asp-for="Session.Date" id="session-date" />
+					<span asp-validation-for="Session.Date" class="text-danger"></span>
+				</div>
+
+				<div class="col-md-6">
+					<label asp-for="Session.ClientNotes" class="form-label">NOTES:</label>
+					<textarea asp-for="Session.ClientNotes"
+							  class="form-control"
+							  rows="12"></textarea>
+					<span asp-validation-for="Session.ClientNotes"
+						  class="text-danger"></span>
+				</div>
+
+			</div>
+
+			<!--Submit-->
+			<button type="submit" class="btn">BOOK SESSION</button>
+
+		</form>
+
+	</div>
+</section>
+
+
+<!--Calendar JS scripts-->
+@section Scripts {
+	<script>
+		const bookedDates = @Html.Raw(bookedDatesJson);
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="~/js/booking-calendar.js"></script>
+}
+

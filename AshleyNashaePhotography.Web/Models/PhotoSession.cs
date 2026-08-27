@@ -8,10 +8,13 @@ namespace AshleyNashaePhotography.Web.Models
         public int Id { get; set; }
 
         [Required]
-        public string ClientName { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
 
         [Required]
-        public DateTime StartTime { get; set; }
+        public string LastName { get; set; } = null!;
+
+        [Required]
+        public DateOnly Date { get; set; }
 
         [Required]
         public SessionLength Length { get; set; }  

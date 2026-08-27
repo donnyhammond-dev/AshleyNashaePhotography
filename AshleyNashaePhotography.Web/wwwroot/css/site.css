@@ -24,7 +24,7 @@ html {
 
 body {
     margin-bottom: 60px;
-    font-family: "Klee One", cursive;
+    font-family: "Cormorant Garamond", serif;
     background-color: #f5f0e8;
 }
 
@@ -63,12 +63,11 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    transition: opacity .75s ease;
     border: 1px solid rgba(0, 0, 0, 0.15);
-   
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     outline: 1px solid #222;
     outline-offset: 8px;
-    transition: opacity .75s ease;
 }
 
 .hero-navigation a {
@@ -125,9 +124,6 @@ body {
     font-weight: 300;
     white-space: pre-line;
 }
-
-
-
 
 /* ==========================================
    Portfolio Hero Section
@@ -193,5 +189,61 @@ body {
     max-height: 90vh;
     width: auto;
     height: auto;
+}
+
+/* ==========================================
+   Book Appointment
+   ========================================== */
+.booking-container {
+    margin: 5rem 2rem;
+}
+
+.booking-content {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 3rem;
+
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    outline: 1px solid #222;
+    outline-offset: 8px;
+}
+
+
+/*Flatpicker Calendar Responsiveness*/
+.flatpickr-calendar.inline {
+    width: 100%;
+    max-width: 100%;
+}
+
+.flatpickr-days,
+.dayContainer {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.flatpickr-day {
+    width: 14.2857%;
+    max-width: none;
+    flex-basis: 14.2857%;
+}
+
+#session-date {
+    display: none;
+}
+
+/* ==========================================
+   Preset Fonts
+   ========================================== */
+.print-header {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    text-align: center;
+}
+
+.cursive-header {
+    font-family: "Italianno", cursive;
+    font-weight: 300;
 }
 
