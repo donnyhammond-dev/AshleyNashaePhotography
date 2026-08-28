@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AshleyNashaePhotography.Web.Data;
-using AshleyNashaePhotography.Web.ViewModels;
+﻿using AshleyNashaePhotography.Web.Data;
+using AshleyNashaePhotography.Web.Enums;
 using AshleyNashaePhotography.Web.Models;
+using AshleyNashaePhotography.Web.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AshleyNashaePhotography.Web.Controllers
 {
@@ -23,7 +24,11 @@ namespace AshleyNashaePhotography.Web.Controllers
             {
                 BookedDates = await GetBookedDatesAsync(),
                 Month = today.Month,
-                Year = today.Year
+                Year = today.Year,
+                Session = new PhotoSession
+                {
+                    Length = SessionLength.Standard
+                }
             };
 
             return View(vm);

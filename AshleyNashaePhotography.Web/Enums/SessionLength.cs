@@ -4,6 +4,6 @@
     {
         Mini,
         Standard,
-        Long
+        Extended
     }
 }

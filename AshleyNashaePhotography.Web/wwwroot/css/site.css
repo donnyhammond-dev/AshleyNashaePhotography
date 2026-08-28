@@ -247,3 +247,26 @@ body {
     font-weight: 300;
 }
 
+/* ==========================================
+   Buttons
+   ========================================== */
+.site-button {
+    padding: 0.75rem 2.5rem;
+    border: 1px solid #222;
+    background-color: transparent;
+    font-size: 1.1rem;
+    letter-spacing: 0.15rem;
+
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+    .site-button:hover {
+        transform: scale(1.05);
+        background-color: #222;
+        color: #f5f0e8;
+    }
+
+    .site-button:active {
+        transform: scale(0.98);
+    }
+
+
