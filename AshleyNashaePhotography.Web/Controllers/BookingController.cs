@@ -74,6 +74,8 @@ namespace AshleyNashaePhotography.Web.Controllers
             _context.PhotoSessions.Add(session);
             await _context.SaveChangesAsync();
 
+            TempData["Success"] = "Your session has been booked successfully! Ashley will be in touch soon to confirm the details.";
+
             return RedirectToAction("Index", "Home");
         }
 

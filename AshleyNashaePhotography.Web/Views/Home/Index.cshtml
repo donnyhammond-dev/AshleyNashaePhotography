@@ -2,6 +2,15 @@
 
 @model HomePage
 
+<!--Booked Session Success Message-->
+@if (TempData["Success"] != null)
+{
+	<div>
+		@TempData["Success"]
+	</div>
+}
+
+<!--Hero/Portfolio Navigation-->
 <div class="hero-container">
 	<section class="hero-section d-flex flex-column"
 			 id="hero"
@@ -34,6 +43,7 @@
 	</section>
 </div>
 
+<!--About Me Section-->
 <div class="about-container">
 
 	<div class="about-content">
