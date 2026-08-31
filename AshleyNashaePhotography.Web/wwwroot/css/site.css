@@ -192,6 +192,22 @@ body {
 }
 
 /* ==========================================
+   Admin Dashboard
+   ========================================== */
+.admin-container {
+    margin: 2rem;
+}
+
+.admin-content {
+    padding: 2rem;
+
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    outline: 1px solid #222;
+    outline-offset: 8px;
+}
+
+/* ==========================================
    Book Appointment
    ========================================== */
 .booking-container {

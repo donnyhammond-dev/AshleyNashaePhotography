@@ -1,0 +1,51 @@
+﻿@using AshleyNashaePhotography.Web.Enums;
+
+@model List<PhotoSession>
+
+<section class="admin-container">
+    <div class="admin-content">
+
+        <h1 class="print-header">BOOKINGS</h1>
+
+        <!--Table -->
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>DATE</th>
+                        <th>CLIENT</th>
+                        <th>DURATION</th>
+                        <th>EMAIL</th>
+                        <th>PHONE</th>
+                        <th>NOTES</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var session in Model)
+                    {
+                        <tr>
+                            <td>@session.Date</td>
+                            <td>@(session.LastName + ", " + session.FirstName)</td>
+                            <td>@(session.Length switch
+                                    {
+                                        SessionLength.Mini => "30 minutes",
+                                        SessionLength.Standard => "1 hour",
+                                        SessionLength.Extended => "2 hours",
+                                        _ => "N/A"
+                                    })
+                            </td>
+                            <td>@session.Email</td>
+                            <td>@session.PhoneNumber</td>
+                            <td>@session.ClientNotes</td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</section>
