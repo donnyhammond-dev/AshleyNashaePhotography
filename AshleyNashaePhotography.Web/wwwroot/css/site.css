@@ -256,6 +256,9 @@ body {
     background-color: transparent;
     font-size: 1.1rem;
     letter-spacing: 0.15rem;
+    text-decoration: none;
+    color: #222;
+    text-align: center;
 
     transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
