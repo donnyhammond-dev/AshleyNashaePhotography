@@ -1,6 +1,8 @@
 ﻿using AshleyNashaePhotography.Web.Models;
 using AshleyNashaePhotography.Web.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace AshleyNashaePhotography.Web.Data
 {
@@ -129,6 +131,88 @@ namespace AshleyNashaePhotography.Web.Data
                 await context.SaveChangesAsync();
             }
 
+        }
+
+        public static async Task SeedIdentityUserAsync(
+            UserManager<IdentityUser> userManager, 
+            RoleManager<IdentityRole> roleManager,
+            IConfiguration config,
+            ILogger logger)
+        {
+            var identityUser = await userManager.FindByNameAsync("Admin");
+
+            if (identityUser == null)
+            {
+                var adminPW = config["Admin:Password"];
+                var adminEmail = config["Admin:Email"];
+
+                if (string.IsNullOrWhiteSpace(adminPW))
+                {
+                    throw new InvalidOperationException("Admin password is not configured.");
+                }
+                if (string.IsNullOrWhiteSpace(adminEmail))
+                {
+                    throw new InvalidOperationException("Admin email is not configured.");
+                }
+
+                identityUser = new IdentityUser
+                {
+                    UserName = "Admin",
+                    Email = adminEmail
+                };
+
+                var result = await userManager.CreateAsync(identityUser, adminPW);
+
+                if (!result.Succeeded)
+                {
+                    logger.LogError("Failed to create admin user");
+
+                    foreach (var error in result.Errors)
+                    {
+                        logger.LogError("Identity user error: {ErrorDescription}", error.Description);
+                    }
+
+                    throw new InvalidOperationException("Failed to create admin user.");
+                }
+            }
+
+            var role = await roleManager.FindByNameAsync("Admin");
+
+            if (role == null)
+            {
+                role = new IdentityRole("Admin");
+
+                var result = await roleManager.CreateAsync(role);
+
+                if (!result.Succeeded)
+                {
+                    logger.LogError("Failed to create admin role");
+
+                    foreach (var error in result.Errors)
+                    {
+                        logger.LogError("Identity role error: {ErrorDescription}", error.Description);
+                    }
+
+                    throw new InvalidOperationException("Failed to create admin role.");
+                }
+            }
+
+            if (!await userManager.IsInRoleAsync(identityUser, "Admin"))
+            {
+                var result = await userManager.AddToRoleAsync(identityUser, "Admin");
+
+                if (!result.Succeeded)
+                {
+                    logger.LogError("Failed to assign role");
+
+                    foreach (var error in result.Errors)
+                    {
+                        logger.LogError("Identity role addition error: {ErrorDescription}", error.Description);
+                    }
+
+                    throw new InvalidOperationException("Failed to assign admin user to Admin role.");
+                }
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 using AshleyNashaePhotography.Web.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,19 +8,39 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services
+    .AddDefaultIdentity<IdentityUser>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+    })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Seed initial placeholder data
+// Seed Initial Data
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider
         .GetRequiredService<ApplicationDbContext>();
 
+    var userManager = scope.ServiceProvider
+    .GetRequiredService<UserManager<IdentityUser>>();
+
+    var roleManager = scope.ServiceProvider
+        .GetRequiredService<RoleManager<IdentityRole>>();
+
+    var loggerFactory = scope.ServiceProvider
+        .GetRequiredService<ILoggerFactory>();
+
+    var logger = loggerFactory.CreateLogger("DbInitializer");
+
     await DbInitializer.SeedHomePageAsync(context);
     await DbInitializer.SeedPortfoliosAsync(context);
+    await DbInitializer.SeedIdentityUserAsync(userManager, roleManager, builder.Configuration, logger);
 }
 
 // Configure the HTTP request pipeline.
@@ -32,6 +53,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
