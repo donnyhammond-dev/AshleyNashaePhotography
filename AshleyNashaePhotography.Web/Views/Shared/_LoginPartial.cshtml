@@ -1,0 +1,4 @@
+﻿@if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+{
+    <a asp-controller="Admin" asp-action="Index">Admin</a>
+}
