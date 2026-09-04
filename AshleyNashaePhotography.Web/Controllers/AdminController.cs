@@ -21,15 +21,21 @@ namespace AshleyNashaePhotography.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var sessions = await _context.PhotoSessions
+            var vm = new AdminViewModel
+            {
+                Sessions = await _context.PhotoSessions
                 .OrderBy(x => x.Date)
-                .ToListAsync();
+                .ToListAsync(),
 
-            return View(sessions);
+                Portfolios = await _context.Portfolios
+                .Include(x => x.Photos)
+                .Include(x => x.HeroImage)
+                .ToListAsync()
+            };
+        
+
+            return View(vm);
         }
-
-
-
     }
 
 }

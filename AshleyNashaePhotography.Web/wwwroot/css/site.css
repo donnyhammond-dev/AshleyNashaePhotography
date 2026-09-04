@@ -36,7 +36,19 @@ body {
 .navbar-nav .nav-link {
     font-family: "Cormorant Garamond", serif;
     font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: 0.1rem;
+    color: #222;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 1px;
+    transition: background-size 0.2s ease;
 }
+
+    .navbar-nav .nav-link:hover {
+        background-size: 100% 1px;
+    }
 
 .form-floating > .form-control-plaintext::placeholder,
 .form-floating > .form-control::placeholder {
@@ -49,15 +61,42 @@ body {
     text-align: start;
 }
 
+/* ==========================================
+   Default Templates & Fonts
+   ========================================== */
+.basic-container {
+    margin: 1rem 2rem;
+}
+
+.basic-card {
+    border: 1px solid #222;
+    padding: 2rem;
+    min-width: 15rem;
+}
+    .basic-card h1 {
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+
+    .basic-card p {
+        font-size: 1.2rem;
+    }
+
+.print-header {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    letter-spacing: .1rem;
+    text-align: center;
+}
+
+.cursive-header {
+    font-family: "Italianno", cursive;
+    font-weight: 300;
+}
 
 /* ==========================================
    Home Page Hero Section
    ========================================== */
-
-.hero-container {
-    margin: 1rem 2rem;
-}
-
 .hero-section {
     min-height: 85vh;
     background-size: cover;
@@ -83,8 +122,6 @@ body {
         color: lemonchiffon;
         letter-spacing: .05em;
     }
-
-
 
 .hero-quote p {
     font-family: "Italianno", cursive;
@@ -169,6 +206,12 @@ body {
             transform: scale(1.02);
         }
 
+.portfolio-card {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 /*Click to enlarge photo*/
 .lightbox {
     display: none;
@@ -194,13 +237,8 @@ body {
 /* ==========================================
    Admin Dashboard
    ========================================== */
-.admin-container {
-    margin: 2rem;
-}
-
 .admin-content {
     padding: 2rem;
-
     border: 1px solid rgba(0, 0, 0, 0.15);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     outline: 1px solid #222;
@@ -247,20 +285,6 @@ body {
 
 #session-date {
     display: none;
-}
-
-/* ==========================================
-   Preset Fonts
-   ========================================== */
-.print-header {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 300;
-    text-align: center;
-}
-
-.cursive-header {
-    font-family: "Italianno", cursive;
-    font-weight: 300;
 }
 
 /* ==========================================

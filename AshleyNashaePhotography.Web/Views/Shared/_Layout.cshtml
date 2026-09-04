@@ -26,20 +26,27 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between gap-2">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
+                            <a class="nav-link nav-link-font" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Portfolio" asp-action="Index">PORTFOLIO</a>
+                            <a class="nav-link nav-link-font" asp-area="" asp-controller="Portfolio" asp-action="Index">PORTFOLIO</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Create">BOOK</a>
+                            <a class="nav-link nav-link-font" asp-area="" asp-controller="Booking" asp-action="Create">BOOK</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="Index">CONTACT</a>
+                            <a class="nav-link nav-link-font" asp-area="" asp-controller="Contact" asp-action="Index">CONTACT</a>
                         </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area"" asp-controller="Admin" asp-action="Index">ADMIN</a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>

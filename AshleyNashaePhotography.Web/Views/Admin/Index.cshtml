@@ -1,14 +1,15 @@
 ﻿@using AshleyNashaePhotography.Web.Enums;
+@using AshleyNashaePhotography.Web.ViewModels;
 
-@model List<PhotoSession>
+@model AdminViewModel
 
-<section class="admin-container">
+<section class="basic-container">
     <div class="admin-content">
 
         <h1 class="print-header">BOOKINGS</h1>
 
         <!--Table -->
-        <div class="table-responsive">
+        <div class="table-responsive mb-5">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -22,7 +23,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach (var session in Model)
+                    @foreach (var session in Model.Sessions)
                     {
                         <tr>
                             <td>@session.Date</td>
@@ -47,5 +48,33 @@
 
         </div>
 
+        <hr class="my-5" />
+
+        <h1 class="print-header">PORTFOLIOS</h1>
+
+        <div class="d-flex flex-row justify-content-center gap-4">
+            @foreach (var portfolio in Model.Portfolios)
+            {
+                <div class="basic-card portfolio-card"
+                     style="background-image:
+                                linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+                                url('@portfolio.HeroImage?.ImagePath')">
+                    <div class="d-flex flex-column align-items-center gap-2">
+                        <h1 class="text-white">@portfolio.Title</h1>
+                        <p class="text-white">@(portfolio.Photos.Count + " Photos")</p>
+                        <a asp-controller="Admin"
+                           asp-action="EditPortfolio"
+                           asp-route-id="@portfolio.Id"
+                           class="site-button text-white">
+                            Edit Portfolio
+                        </a>
+                    </div>
+
+                </div>
+            }
+        </div>
+
     </div>
+
+
 </section>
