@@ -1,0 +1,33 @@
+﻿@model Portfolio
+
+<div class="basic-container text-center">
+
+    <section class="basic-content">
+
+        <h1 class="print-header">Edit @Model.Title Portfolio</h1>
+
+        <h2 class="print-header">Current Hero</h2>
+
+        @if (Model.HeroImage != null)
+        {
+            <img src="@Model.HeroImage.ImagePath"
+                 alt="@Model.Title hero image"
+                 class="admin-hero-preview" />
+        }
+
+        <hr class="my-5" />
+
+        <h2 class="print-header">Photos</h2>
+
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+
+            @foreach (var photo in Model.Photos)
+            {
+                <img src="@photo.ImagePath"
+                     alt="@Model.Title portfolio photo"
+                     class="admin-photo-thumbnail" />
+            }
+
+        </div>
+    </section>
+</div>

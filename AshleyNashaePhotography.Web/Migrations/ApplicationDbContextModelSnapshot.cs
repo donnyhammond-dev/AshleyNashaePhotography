@@ -17,7 +17,7 @@ namespace AshleyNashaePhotography.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -36,27 +36,12 @@ namespace AshleyNashaePhotography.Web.Migrations
                     b.Property<int?>("AboutMePhotoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("HeroLoveId")
-                        .HasColumnType("int");
-
                     b.Property<string>("HeroQuote")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("HeroRadiantId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HeroWildId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AboutMePhotoId");
-
-                    b.HasIndex("HeroLoveId");
-
-                    b.HasIndex("HeroRadiantId");
-
-                    b.HasIndex("HeroWildId");
 
                     b.ToTable("HomePages");
                 });
@@ -133,6 +118,9 @@ namespace AshleyNashaePhotography.Web.Migrations
                     b.Property<int?>("HeroImageId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("HomePageHeroImageId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Quote")
                         .HasColumnType("nvarchar(max)");
 
@@ -143,6 +131,8 @@ namespace AshleyNashaePhotography.Web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("HeroImageId");
+
+                    b.HasIndex("HomePageHeroImageId");
 
                     b.ToTable("Portfolios");
                 });
@@ -355,25 +345,7 @@ namespace AshleyNashaePhotography.Web.Migrations
                         .WithMany()
                         .HasForeignKey("AboutMePhotoId");
 
-                    b.HasOne("AshleyNashaePhotography.Web.Models.Photo", "HeroLove")
-                        .WithMany()
-                        .HasForeignKey("HeroLoveId");
-
-                    b.HasOne("AshleyNashaePhotography.Web.Models.Photo", "HeroRadiant")
-                        .WithMany()
-                        .HasForeignKey("HeroRadiantId");
-
-                    b.HasOne("AshleyNashaePhotography.Web.Models.Photo", "HeroWild")
-                        .WithMany()
-                        .HasForeignKey("HeroWildId");
-
                     b.Navigation("AboutMePhoto");
-
-                    b.Navigation("HeroLove");
-
-                    b.Navigation("HeroRadiant");
-
-                    b.Navigation("HeroWild");
                 });
 
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Photo", b =>
@@ -389,7 +361,13 @@ namespace AshleyNashaePhotography.Web.Migrations
                         .WithMany()
                         .HasForeignKey("HeroImageId");
 
+                    b.HasOne("AshleyNashaePhotography.Web.Models.Photo", "HomePageHeroImage")
+                        .WithMany()
+                        .HasForeignKey("HomePageHeroImageId");
+
                     b.Navigation("HeroImage");
+
+                    b.Navigation("HomePageHeroImage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

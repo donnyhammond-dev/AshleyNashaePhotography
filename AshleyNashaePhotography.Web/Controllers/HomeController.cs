@@ -21,18 +21,39 @@ namespace AshleyNashaePhotography.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var homePage = await _context.HomePages
-                .Include(h => h.HeroWild)
-                .Include(h => h.HeroLove)
-                .Include(h => h.HeroRadiant)
                 .Include(h => h.AboutMePhoto)
                 .FirstOrDefaultAsync();
 
-            if (homePage == null)
-            {
-                return NotFound();
-            }
+            var portfolio1 = await _context.Portfolios
+                 .Include(p => p.HomePageHeroImage)
+                 .FirstOrDefaultAsync(p => p.Id == 1);
 
-            return View(homePage);
+            var portfolio2 = await _context.Portfolios
+                 .Include(p => p.HomePageHeroImage)
+                 .FirstOrDefaultAsync(p => p.Id == 2);
+
+            var portfolio3 = await _context.Portfolios
+                .Include(p => p.HomePageHeroImage)
+                .FirstOrDefaultAsync(p => p.Id == 3);
+
+            if (homePage == null) return NotFound();
+
+            if (portfolio1 == null) return NotFound();
+
+            if (portfolio2 == null) return NotFound();
+
+            if (portfolio3 == null) return NotFound();
+
+
+            var vm = new HomePageViewModel
+            {
+                HomePage = homePage,
+                Portfolio1 = portfolio1,
+                Portfolio2 = portfolio2,
+                Portfolio3 = portfolio3
+            };
+
+            return View(vm);
         }
 
         public IActionResult Privacy()

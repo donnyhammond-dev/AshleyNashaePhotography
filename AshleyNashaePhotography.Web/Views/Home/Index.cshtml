@@ -1,35 +1,39 @@
-﻿@using AshleyNashaePhotography.Web.Models
+﻿@using AshleyNashaePhotography.Web.ViewModels
 
-@model HomePage
+@model HomePageViewModel
 
 <!--Hero/Portfolio Navigation-->
 <div class="basic-container">
 	<section class="hero-section d-flex flex-column"
 			 id="hero"
-			 style="background-image: url('@Model.HeroWild?.ImagePath')">
+			 data-image="@Model.Portfolio3.HomePageHeroImage?.ImagePath"
+			 style="background-image: url('@Model.Portfolio3.HomePageHeroImage?.ImagePath')">
 
 		<nav class="hero-navigation d-flex w-100 justify-content-around mt-6">
 			<a asp-controller="Portfolio"
-			   asp-action="Love"
-			   data-image="@Model.HeroLove?.ImagePath"
-			   title="View Love Portfolio">Love
+			   asp-action="Portfolio1"
+			   data-image="@Model.Portfolio1.HomePageHeroImage?.ImagePath"
+			   title="View Portfolio">
+			   @Model.Portfolio1.Title
 		   </a>
 
 			<a asp-controller="Portfolio"
-			   asp-action="Radiant"
-			   data-image="@Model.HeroRadiant?.ImagePath"
-			   title="View Radiant Portfolio">Radiant
+			   asp-action="Portfolio3"
+			   data-image="@Model.Portfolio3.HomePageHeroImage?.ImagePath"
+			   title="View Portfolio">
+				@Model.Portfolio3.Title
 		   </a>
 
 			<a asp-controller="Portfolio"
-			   asp-action="Wild"
-			   data-image="@Model.HeroWild?.ImagePath"
-			   title="View Wild Portfolio">Wild
-		   </a>
+			   asp-action="Portfolio2"
+			   data-image="@Model.Portfolio2.HomePageHeroImage?.ImagePath"
+			   title="View Portfolio">
+				@Model.Portfolio2.Title
+			</a>
 		</nav>
 
 		<div class="hero-quote mt-auto text-center">
-			<p>@Model.HeroQuote</p>
+			<p>@Model.HomePage.HeroQuote</p>
 		</div>
 
 	</section>
@@ -39,11 +43,11 @@
 <div class="about-container">
 
 	<div class="about-content">
-		<p>@Model.AboutMeDescription</p>
+		<p>@Model.HomePage.AboutMeDescription</p>
 	</div>
 
 	<img class="about-photo"
-		 src="@Model.AboutMePhoto?.ImagePath"
+		 src="@Model.HomePage.AboutMePhoto?.ImagePath"
 		 alt="Ashley" />
 
 </div>

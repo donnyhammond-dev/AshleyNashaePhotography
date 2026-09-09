@@ -13,36 +13,36 @@ namespace AshleyNashaePhotography.Web.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Wild()
+        public async Task<IActionResult> Portfolio1()
         {
             var portfolio = await _context.Portfolios
                 .Include(p => p.HeroImage)
                 .Include(p => p.Photos)
-                .FirstOrDefaultAsync(p => p.Title == "Wild");
+                .FirstOrDefaultAsync(p => p.Id == 1);
 
             if (portfolio == null) return NotFound();
 
             return View(portfolio);
         }
 
-        public async Task<IActionResult> Love()
+        public async Task<IActionResult> Portfolio2()
         {
             var portfolio = await _context.Portfolios
                 .Include(p => p.HeroImage)
                 .Include(p => p.Photos)
-                .FirstOrDefaultAsync(p => p.Title == "Love");
+                .FirstOrDefaultAsync(p => p.Id == 2);
 
             if (portfolio == null) return NotFound();
 
             return View(portfolio);
         }
 
-        public async Task<IActionResult> Radiant()
+        public async Task<IActionResult> Portfolio3()
         {
             var portfolio = await _context.Portfolios
                 .Include(p => p.HeroImage)
                 .Include(p => p.Photos)
-                .FirstOrDefaultAsync(p => p.Title == "Radiant");
+                .FirstOrDefaultAsync(p => p.Id == 3);
 
             if (portfolio == null) return NotFound();
 

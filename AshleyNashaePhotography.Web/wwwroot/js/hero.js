@@ -1,6 +1,7 @@
-﻿const hero = document.getElementById("hero")
-const heroLinks = document.querySelectorAll(".hero-navigation a")
-let currentImagePath = heroLinks[0].dataset.image;
+﻿const hero = document.getElementById("hero");
+const heroLinks = document.querySelectorAll(".hero-navigation a");
+
+let currentImagePath = hero.dataset.image;
 
 heroLinks.forEach(link => {
 

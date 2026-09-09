@@ -36,6 +36,16 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             return View(vm);
         }
+
+        public async Task<IActionResult> EditPortfolio(int id)
+        {
+            var portfolio = await _context.Portfolios
+             .Include(x => x.Photos)
+             .Include(x => x.HeroImage)
+             .FirstOrDefaultAsync(x => x.Id == id);
+
+            return View(portfolio);
+        }
     }
 
 }

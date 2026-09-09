@@ -68,6 +68,14 @@ body {
     margin: 1rem 2rem;
 }
 
+.basic-content {
+    padding: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    outline: 1px solid #222;
+    outline-offset: 8px;
+}
+
 .basic-card {
     border: 1px solid #222;
     padding: 2rem;
@@ -243,6 +251,18 @@ body {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     outline: 1px solid #222;
     outline-offset: 8px;
+}
+
+.admin-hero-preview {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.admin-photo-thumbnail {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
 }
 
 /* ==========================================
