@@ -15,7 +15,7 @@ namespace AshleyNashaePhotography.Web.Data
             var homePage = new HomePage()
             {
                 HeroQuote = "Where light, love, and wild places become timeless stories",
-                AboutMePhoto = new Photo("/images/about.jpg", PhotoLayout.Landscape),
+                AboutMePhoto = new Photo("/images/about.jpg"),
                 AboutMeDescription = """
                 Hi! I’m Ashley.
 
@@ -45,33 +45,33 @@ namespace AshleyNashaePhotography.Web.Data
 
         public static async Task SeedPortfoliosAsync(ApplicationDbContext context)
         {
-            if (!await context.Portfolios.AnyAsync(p => p.Title == "Love"))
+            if (!await context.Portfolios.AnyAsync(p => p.Id == 1))
             {
                 var lovePortfolio = new Portfolio
                 {
                     Title = "Love",
-                    HomePageHeroImage = new Photo("/images/Portfolio1/Hero.jpg", PhotoLayout.Landscape),
-                    HeroImage = new Photo("/images/Portfolio1/Love1.jpg", PhotoLayout.Portrait),
+                    HomePageHeroImage = new Photo("/images/Portfolio1/Hero.jpg"),
+                    HeroImage = new Photo("/images/Portfolio1/Love1.jpg"),
                     Quote = "Love is composed of a single soul inhabiting two bodies. — Aristotle",
 
                     Photos = 
                     {
-                        new Photo("/images/Portfolio1/Love2.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio1/Love4.jpg", PhotoLayout.Landscape),
-                        new Photo("/images/Portfolio1/Love5.jpg", PhotoLayout.Landscape),
-                        new Photo("/images/Portfolio1/Love6.jpg", PhotoLayout.Landscape),
-                        new Photo("/images/Portfolio1/Love7.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio1/Love8.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio1/Love9.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio1/LoveA.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio1/LoveB.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio1/LoveC.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio1/LoveD.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio1/LoveE.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio1/LoveF.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio1/LoveG.jpg", PhotoLayout.Landscape),
-                        new Photo("/images/Portfolio1/LoveH.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio1/LoveI.jpg", PhotoLayout.Portrait),
+                        new Photo("/images/Portfolio1/Love2.jpg"),
+                        new Photo("/images/Portfolio1/Love4.jpg"),
+                        new Photo("/images/Portfolio1/Love5.jpg"),
+                        new Photo("/images/Portfolio1/Love6.jpg"),
+                        new Photo("/images/Portfolio1/Love7.jpg"),
+                        new Photo("/images/Portfolio1/Love8.jpg"),
+                        new Photo("/images/Portfolio1/Love9.jpg"),
+                        new Photo("/images/Portfolio1/LoveA.jpg"),
+                        new Photo("/images/Portfolio1/LoveB.jpg"),
+                        new Photo("/images/Portfolio1/LoveC.jpg"),
+                        new Photo("/images/Portfolio1/LoveD.jpg"),
+                        new Photo("/images/Portfolio1/LoveE.jpg"),
+                        new Photo("/images/Portfolio1/LoveF.jpg"),
+                        new Photo("/images/Portfolio1/LoveG.jpg"),
+                        new Photo("/images/Portfolio1/LoveH.jpg"),
+                        new Photo("/images/Portfolio1/LoveI.jpg")
 
 
                     }
@@ -81,20 +81,49 @@ namespace AshleyNashaePhotography.Web.Data
                 await context.SaveChangesAsync();
             }
 
-            if (!await context.Portfolios.AnyAsync(p => p.Title == "Wild"))
+            if (!await context.Portfolios.AnyAsync(p => p.Id == 2))
+            {
+                var radiantPortfolio = new Portfolio
+                {
+                    Title = "Radiant",
+                    HomePageHeroImage = new Photo("/images/Portfolio2/Hero.jpg"),
+                    HeroImage = new Photo("/images/Portfolio2/Radiant1.jpg"),
+                    Quote = "No beauty shines brighter than that of a good heart. — Shanina Shaik",
+
+                    Photos =
+                    {
+                        new Photo("/images/Portfolio2/Radiant2.jpg"),
+                        new Photo("/images/Portfolio2/Radiant3.jpg"),
+                        new Photo("/images/Portfolio2/Radiant4.jpg"),
+                        new Photo("/images/Portfolio2/Radiant5.jpg"),
+                        new Photo("/images/Portfolio2/Radiant6.jpg"),
+                        new Photo("/images/Portfolio2/Radiant7.jpg"),
+                        new Photo("/images/Portfolio2/Radiant8.jpg"),
+                        new Photo("/images/Portfolio2/Radiant9.jpg"),
+                        new Photo("/images/Portfolio2/RadiantA.jpg"),
+                        new Photo("/images/Portfolio2/RadiantB.jpg"),
+                        new Photo("/images/Portfolio2/RadiantC.jpg")
+                    }
+                };
+
+                context.Portfolios.Add(radiantPortfolio);
+                await context.SaveChangesAsync();
+            }
+
+            if (!await context.Portfolios.AnyAsync(p => p.Id == 3))
             {
                 var wildPortfolio = new Portfolio
                 {
                     Title = "Wild",
-                    HomePageHeroImage = new Photo("/images/Portfolio3/Hero.jpg", PhotoLayout.Landscape),
-                    HeroImage = new Photo("/images/Portfolio3/Wild1.jpg", PhotoLayout.Landscape),
+                    HomePageHeroImage = new Photo("/images/Portfolio3/Hero.jpg"),
+                    HeroImage = new Photo("/images/Portfolio3/Wild1.jpg"),
                     Quote = "The earth has music for those who listen. — William Shakespeare",
 
                     Photos =
                     {
-                        new Photo("/images/Portfolio3/Wild2.jpg", PhotoLayout.Landscape),
-                        new Photo("/images/Portfolio3/Wild3.jpg", PhotoLayout.Landscape),
-                        new Photo("/images/Portfolio3/Wild4.jpg", PhotoLayout.Portrait),
+                        new Photo("/images/Portfolio3/Wild2.jpg"),
+                        new Photo("/images/Portfolio3/Wild3.jpg"),
+                        new Photo("/images/Portfolio3/Wild4.jpg"),
                     }
                 };
 
@@ -102,34 +131,7 @@ namespace AshleyNashaePhotography.Web.Data
                 await context.SaveChangesAsync();
             }
 
-            if (!await context.Portfolios.AnyAsync(p => p.Title == "Radiant"))
-            {
-                var radiantPortfolio = new Portfolio
-                {
-                    Title = "Radiant",
-                    HomePageHeroImage = new Photo ("/images/Portfolio2/Hero.jpg", PhotoLayout.Portrait),
-                    HeroImage = new Photo("/images/Portfolio2/Radiant1.jpg", PhotoLayout.Landscape),
-                    Quote = "No beauty shines brighter than that of a good heart. — Shanina Shaik",
 
-                    Photos =
-                    {
-                        new Photo("/images/Portfolio2/Radiant2.jpg", PhotoLayout.Landscape),
-                        new Photo("/images/Portfolio2/Radiant3.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio2/Radiant4.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio2/Radiant5.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio2/Radiant6.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio2/Radiant7.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio2/Radiant8.jpg", PhotoLayout.Landscape),
-                        new Photo("/images/Portfolio2/Radiant9.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio2/RadiantA.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio2/RadiantB.jpg", PhotoLayout.Portrait),
-                        new Photo("/images/Portfolio2/RadiantC.jpg", PhotoLayout.Portrait),
-                    }
-                };
-
-                context.Portfolios.Add(radiantPortfolio);
-                await context.SaveChangesAsync();
-            }
 
         }
 

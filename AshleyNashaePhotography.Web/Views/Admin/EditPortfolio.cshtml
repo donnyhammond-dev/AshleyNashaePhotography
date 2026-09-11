@@ -4,30 +4,92 @@
 
     <section class="basic-content">
 
-        <h1 class="print-header">Edit @Model.Title Portfolio</h1>
+        <h1 class="print-header mb-4">Edit Portfolio</h1>
 
-        <h2 class="print-header">Current Hero</h2>
+        <!--Portfolio Details Form-->
+        <form asp-controller="Admin"
+              asp-action="EditPortfolio"
+              class="d-flex flex-column align-items-center gap-4"
+              method="post">
 
-        @if (Model.HeroImage != null)
-        {
-            <img src="@Model.HeroImage.ImagePath"
-                 alt="@Model.Title hero image"
-                 class="admin-hero-preview" />
-        }
+            <!-- Portfolio Id -->
+            <input asp-for="Id" type="hidden" />
+
+            <!-- Title -->
+            <div class="w-100" style="max-width: 450px;">
+                <label asp-for="Title"
+                       class="form-label h4 print-header"></label>
+
+                <input asp-for="Title"
+                       class="form-control" />
+
+                <span asp-validation-for="Title" class="text-danger"></span>
+
+               
+            </div>
+
+            <!-- Quote -->
+            <div class="w-100" style="max-width: 700px;">
+                <label asp-for="Quote"
+                       class="form-label h4 print-header"></label>
+
+                <textarea asp-for="Quote"
+                          class="form-control"
+                          rows="4"></textarea>
+
+                <span asp-validation-for="Quote" class="text-danger"></span>
+
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="site-button">
+                Save Changes
+            </button>
+
+        </form>
 
         <hr class="my-5" />
 
-        <h2 class="print-header">Photos</h2>
+        <!--Change Hero Form-->
+        <form asp-controller="Admin" asp-action="ChangeHero"
+              class="d-flex flex-column align-items-center gap-4"
+              method="post"
+              enctype="multipart/form-data">
 
-        <div class="d-flex flex-wrap justify-content-center gap-3">
+              <input asp-for="Id" type="hidden" />
 
-            @foreach (var photo in Model.Photos)
-            {
-                <img src="@photo.ImagePath"
-                     alt="@Model.Title portfolio photo"
-                     class="admin-photo-thumbnail" />
-            }
+            <!-- Current Hero -->
+            <div>
+                <h2 class="print-header">Current Featured Photo</h2>
 
-        </div>
+                @if (Model.HeroImage != null)
+                {
+                    <img src="@Model.HeroImage.ImagePath"
+                         alt="@Model.Title hero image"
+                         class="admin-hero-preview" />
+                }
+            </div>
+
+            <!--New Hero-->
+            <div>
+                <label for="heroFile" class="form-label h4 print-header">
+                    Select New Featured Photo
+                </label>
+
+                <input type="file"
+                       id="heroFile"
+                       name="heroFile"
+                       class="form-control"
+                       accept=".jpg,.jpeg,.png,.webp" />
+
+                @Html.ValidationMessage("heroFile", null, new { @class = "text-danger" })
+
+            </div>
+
+            <button type="submit" class="site-button">
+                Save Changes
+            </button>
+        </form>
+
     </section>
 </div>

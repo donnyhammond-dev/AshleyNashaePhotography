@@ -12,12 +12,13 @@ namespace AshleyNashaePhotography.Web.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _enviorment;
 
-        public AdminController(ApplicationDbContext context)
+        public AdminController(ApplicationDbContext context, IWebHostEnvironment enviorment)
         {
             _context = context;
+            _enviorment = enviorment;
         }
-
 
         public async Task<IActionResult> Index()
         {
@@ -32,7 +33,6 @@ namespace AshleyNashaePhotography.Web.Controllers
                 .Include(x => x.HeroImage)
                 .ToListAsync()
             };
-        
 
             return View(vm);
         }
@@ -46,6 +46,77 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             return View(portfolio);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPortfolio(Portfolio portfolio)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(portfolio);
+            }
+
+            var existingPortfolio = await _context.Portfolios
+                .FirstOrDefaultAsync(x => x.Id == portfolio.Id);
+
+            if (existingPortfolio == null) return NotFound();
+
+            existingPortfolio.Title = portfolio.Title;
+            existingPortfolio.Quote = portfolio.Quote;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(EditPortfolio), new { id = portfolio.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeHero(int id, IFormFile heroFile)
+        {
+            var current = await _context.Portfolios
+                .Include(x => x.HeroImage)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (current == null) return NotFound();
+
+            //Error Validation
+            if (heroFile == null || heroFile.Length == 0)
+            {
+                ModelState.AddModelError("heroFile", "Please select a photo.");
+
+                return View("EditPortfolio", current);
+            }
+
+            var extension = Path.GetExtension(heroFile.FileName).ToLower();
+
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+
+            if (!allowedExtensions.Contains(extension))
+            {
+                ModelState.AddModelError("heroFile", "Please select a JPG, PNG, or WEBP photo.");
+
+                return View("EditPortfolio", current);
+            }
+
+            var uploadFolder = Path.Combine(_enviorment.WebRootPath, "images", $"Portfolio{id}");
+
+            var fileName = $"PortfolioHero{extension}";
+
+            var filePath = Path.Combine(uploadFolder, fileName);
+
+            await using var stream = new FileStream(filePath, FileMode.Create);
+
+            await heroFile.CopyToAsync(stream);
+
+            var imagePath = $"/images/Portfolio{id}/{fileName}";
+
+            current.HeroImage!.ImagePath = imagePath;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(EditPortfolio), new { id = current.Id });
+
+        }
+
+
     }
 
 }

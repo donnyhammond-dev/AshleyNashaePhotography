@@ -58,9 +58,6 @@ namespace AshleyNashaePhotography.Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Layout")
-                        .HasColumnType("int");
-
                     b.Property<int?>("PortfolioId")
                         .HasColumnType("int");
 
@@ -122,11 +119,13 @@ namespace AshleyNashaePhotography.Web.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Quote")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.HasKey("Id");
 
