@@ -1,9 +1,11 @@
-﻿using AshleyNashaePhotography.Web.Data;
-using AshleyNashaePhotography.Web.Enums;
+﻿using System.Text;
+using AshleyNashaePhotography.Web.Data;
 using AshleyNashaePhotography.Web.Models;
 using AshleyNashaePhotography.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Elfie.Model.Strings;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace AshleyNashaePhotography.Web.Controllers
@@ -69,7 +71,7 @@ namespace AshleyNashaePhotography.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeHero(int id, IFormFile heroFile)
+        public async Task<IActionResult> ChangeHero(int id, IFormFile? heroFile)
         {
             var current = await _context.Portfolios
                 .Include(x => x.HeroImage)
@@ -77,7 +79,7 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             if (current == null) return NotFound();
 
-            //Error Validation
+            //Null Model Validation
             if (heroFile == null || heroFile.Length == 0)
             {
                 ModelState.AddModelError("heroFile", "Please select a photo.");
@@ -85,35 +87,87 @@ namespace AshleyNashaePhotography.Web.Controllers
                 return View("EditPortfolio", current);
             }
 
-            var extension = Path.GetExtension(heroFile.FileName).ToLower();
-
-            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
-
-            if (!allowedExtensions.Contains(extension))
+            //Extension Model Validation
+            var extension = GetExtension(heroFile);
+            if (extension == null)
             {
                 ModelState.AddModelError("heroFile", "Please select a JPG, PNG, or WEBP photo.");
 
                 return View("EditPortfolio", current);
             }
 
+            //Save File & Get Image Path
+            var imagePath = await SaveImageFileAsync(id, heroFile, extension, isHero: true);
+
+            //Update Hero
+            current.HeroImage!.ImagePath = imagePath;
+            
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(EditPortfolio), new { id = current.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPhoto(int id, IFormFile? photoFile)
+        {
+            var portfolio = await _context.Portfolios
+                .Include(x => x.Photos)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (portfolio == null) return NotFound();
+
+            //Null Model Validation
+            if (photoFile == null || photoFile.Length == 0)
+            {
+                ModelState.AddModelError("photoFile", "Please select a photo.");
+
+                return View("EditPortfolio", portfolio);
+            }
+
+            //Extension Model Validation
+            var extension = GetExtension(photoFile);
+
+            if (extension == null)
+            {
+                ModelState.AddModelError("photoFile", "Please select a JPG, PNG, or WEBP photo.");
+
+                return View("EditPortfolio", portfolio);
+            }
+
+            //Save File
+            var imagePath = await SaveImageFileAsync(id, photoFile, extension, isHero: false);
+
+            //Add Photo
+            portfolio.Photos.Add(new Photo(imagePath));
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(EditPortfolio), new { id = portfolio.Id });
+
+        }
+
+        private async Task<string> SaveImageFileAsync(int id, IFormFile file, string extension, bool isHero)
+        {
             var uploadFolder = Path.Combine(_enviorment.WebRootPath, "images", $"Portfolio{id}");
 
-            var fileName = $"PortfolioHero{extension}";
+            var fileName = isHero ? $"PortfolioHero{extension}" : $"{Guid.NewGuid()}{extension}";
 
             var filePath = Path.Combine(uploadFolder, fileName);
 
             await using var stream = new FileStream(filePath, FileMode.Create);
 
-            await heroFile.CopyToAsync(stream);
+            await file.CopyToAsync(stream);
 
-            var imagePath = $"/images/Portfolio{id}/{fileName}";
+            return $"/images/Portfolio{id}/{fileName}";
+        }
 
-            current.HeroImage!.ImagePath = imagePath;
+        private string? GetExtension(IFormFile file)
+        {
+            var extension = Path.GetExtension(file.FileName).ToLower();
 
-            await _context.SaveChangesAsync();
+            var allowedExtensions = new string[] { ".jpg", ".jpeg", ".png", ".webp" };
 
-            return RedirectToAction(nameof(EditPortfolio), new { id = current.Id });
-
+            return allowedExtensions.Contains(extension) ? extension : null;
         }
 
 

@@ -18,18 +18,19 @@
 		   </a>
 
 			<a asp-controller="Portfolio"
+			   asp-action="Portfolio2"
+			   data-image="@Model.Portfolio2.HomePageHeroImage?.ImagePath"
+			   title="View Portfolio">
+				@Model.Portfolio2.Title
+			</a>
+
+			<a asp-controller="Portfolio"
 			   asp-action="Portfolio3"
 			   data-image="@Model.Portfolio3.HomePageHeroImage?.ImagePath"
 			   title="View Portfolio">
 				@Model.Portfolio3.Title
 		   </a>
 
-			<a asp-controller="Portfolio"
-			   asp-action="Portfolio2"
-			   data-image="@Model.Portfolio2.HomePageHeroImage?.ImagePath"
-			   title="View Portfolio">
-				@Model.Portfolio2.Title
-			</a>
 		</nav>
 
 		<div class="hero-quote mt-auto text-center">

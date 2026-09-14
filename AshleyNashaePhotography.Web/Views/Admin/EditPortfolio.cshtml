@@ -48,7 +48,7 @@
 
         </form>
 
-        <hr class="my-5" />
+        <hr class="my-5" /> <!--Line Seperation-->
 
         <!--Change Hero Form-->
         <form asp-controller="Admin" asp-action="ChangeHero"
@@ -83,6 +83,52 @@
                        accept=".jpg,.jpeg,.png,.webp" />
 
                 @Html.ValidationMessage("heroFile", null, new { @class = "text-danger" })
+
+            </div>
+
+            <button type="submit" class="site-button">
+                Save Changes
+            </button>
+        </form>
+
+        <hr class="my-5" /> <!--Line Seperation-->
+
+        <!--Photos-->
+        <form asp-controller="Admin" asp-action="AddPhoto"
+              class="d-flex flex-column align-items-center gap-4"
+              method="post"
+              enctype="multipart/form-data">
+
+            <input asp-for="Id" type="hidden" />
+
+            <!--Current Photos-->
+
+            <h2 class="print-header">Photos</h2>
+
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+
+                @foreach (var photo in Model.Photos)
+                {
+                    <img src="@photo.ImagePath"
+                         alt="@Model.Title portfolio photo"
+                         class="admin-photo-thumbnail" />
+                }
+
+            </div>
+
+            <!--Add New Photo-->
+            <div>
+                <label for="photoFile" class="form-label h4 print-header">
+                    Add New Photo
+                </label>
+
+                <input type="file"
+                       id="photoFile"
+                       name="photoFile"
+                       class="form-control"
+                       accept=".jpg,.jpeg,.png,.webp" />
+
+                @Html.ValidationMessage("photoFile", null, new { @class = "text-danger" })
 
             </div>
 
