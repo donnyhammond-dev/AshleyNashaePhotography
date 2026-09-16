@@ -146,6 +146,22 @@ namespace AshleyNashaePhotography.Web.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RemovePhoto(int? photoId, int portfolioId)
+        {
+            if (photoId == null) return NotFound();
+
+            var photo = await _context.Photos.FirstOrDefaultAsync(x => x.Id == photoId);
+
+            if (photo == null) return NotFound();
+
+            _context.Photos.Remove(photo);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(EditPortfolio), new { id = portfolioId });
+        }
+
         private async Task<string> SaveImageFileAsync(int id, IFormFile file, string extension, bool isHero)
         {
             var uploadFolder = Path.Combine(_enviorment.WebRootPath, "images", $"Portfolio{id}");

@@ -94,48 +94,72 @@
         <hr class="my-5" /> <!--Line Seperation-->
 
         <!--Photos-->
-        <form asp-controller="Admin" asp-action="AddPhoto"
-              class="d-flex flex-column align-items-center gap-4"
-              method="post"
-              enctype="multipart/form-data">
-
-            <input asp-for="Id" type="hidden" />
-
-            <!--Current Photos-->
+        <div class="d-flex flex-column align-items-center gap-4">
 
             <h2 class="print-header">Photos</h2>
 
+          <!--Current Photos-->
             <div class="d-flex flex-wrap justify-content-center gap-3">
 
                 @foreach (var photo in Model.Photos)
                 {
-                    <img src="@photo.ImagePath"
-                         alt="@Model.Title portfolio photo"
-                         class="admin-photo-thumbnail" />
+                    <div class="admin-photo-wrapper">
+                        <img src="@photo.ImagePath"
+                             alt="@Model.Title portfolio photo"
+                             class="admin-photo-thumbnail" />
+
+                        <form asp-controller="Admin"
+                              asp-action="RemovePhoto"
+                              method="post">
+
+                            <input type="hidden"
+                                   name="photoId"
+                                   value="@photo.Id" />
+
+                            <input type="hidden"
+                                   name="portfolioId"
+                                   value="@Model.Id" />
+
+                            <!--Remove Photo-->
+                            <button type="submit"
+                                    title="Delete Photo"
+                                    class="photo-delete">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+
+                        </form>
+                    </div>
                 }
 
             </div>
 
             <!--Add New Photo-->
-            <div>
-                <label for="photoFile" class="form-label h4 print-header">
-                    Add New Photo
-                </label>
+            <form asp-controller="Admin" asp-action="AddPhoto"
+                  method="post"
+                  enctype="multipart/form-data"
+                  class="d-flex flex-column align-items-center gap-4">
 
-                <input type="file"
-                       id="photoFile"
-                       name="photoFile"
-                       class="form-control"
-                       accept=".jpg,.jpeg,.png,.webp" />
+                <input asp-for="Id" type="hidden" />
 
-                @Html.ValidationMessage("photoFile", null, new { @class = "text-danger" })
+                <div>
+                    <label for="photoFile" class="form-label h4 print-header">
+                        Add New Photo
+                    </label>
 
-            </div>
+                    <input type="file"
+                           id="photoFile"
+                           name="photoFile"
+                           class="form-control"
+                           accept=".jpg,.jpeg,.png,.webp" />
 
-            <button type="submit" class="site-button">
-                Save Changes
-            </button>
-        </form>
+                    @Html.ValidationMessage("photoFile", null, new { @class = "text-danger" })
 
+                </div>
+
+                <button type="submit" class="site-button">
+                    Save Changes
+                </button>
+            </form>
+        </div>
     </section>
 </div>

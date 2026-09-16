@@ -265,6 +265,20 @@ body {
     object-fit: cover;
 }
 
+.admin-photo-wrapper {
+    position: relative;
+}
+
+.photo-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+    .photo-delete:hover {
+        transform: scale(1.05);
+    }
+
 /* ==========================================
    Book Appointment
    ========================================== */
