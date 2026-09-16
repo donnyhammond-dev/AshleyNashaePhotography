@@ -47,11 +47,20 @@
 		<p>@Model.HomePage.AboutMeDescription</p>
 	</div>
 
-	<img class="about-photo"
+	<img class="about-photo mb-5"
 		 src="@Model.HomePage.AboutMePhoto?.ImagePath"
 		 alt="Ashley" />
 
+	<!--Book Now-->
+	<div class="text-center mt-5">
+		<a asp-controller="Booking" asp-action="Create"
+		   class="site-button"
+		   title="Book Now">BOOK NOW</a>
+	</div>
+
 </div>
+
+
 
 @section Scripts {
 	<script src="~/js/hero.js"></script>

@@ -32,24 +32,41 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between gap-2">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link nav-link-font" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
+                            <a class="nav-link nav-link-font"
+                               asp-area=""
+                               asp-controller="Home"
+                               asp-action="Index">
+                                HOME
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link nav-link-font"
+                               data-bs-toggle="dropdown">
+                                PORTFOLIO
+                            </a>
+
+                            @await Component.InvokeAsync("PortfolioNavigation")
+
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-font" asp-area="" asp-controller="Portfolio" asp-action="Index">PORTFOLIO</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-font" asp-area="" asp-controller="Booking" asp-action="Create">BOOK</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-font" asp-area="" asp-controller="Contact" asp-action="Index">CONTACT</a>
+                            <a class="nav-link nav-link-font"
+                               asp-area=""
+                               asp-controller="Booking"
+                               asp-action="Create">
+                                BOOK
+                            </a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-danger" asp-area"" asp-controller="Admin" asp-action="Index">ADMIN</a>
+                                <a class="nav-link text-danger"
+                                   asp-area=""
+                                   asp-controller="Admin"
+                                   asp-action="Index">
+                                    ADMIN
+                                </a>
                             </li>
                         }
-
                     </ul>
                 </div>
             </div>
