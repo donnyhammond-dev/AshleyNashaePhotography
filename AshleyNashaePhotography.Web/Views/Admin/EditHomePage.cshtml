@@ -1,0 +1,170 @@
+﻿@using AshleyNashaePhotography.Web.ViewModels
+
+@model HomePageViewModel
+
+<div class="basic-container text-center">
+
+    <section class="basic-content">
+
+        <h1 class="print-header mb-4">Edit Home Page</h1>
+
+        <!--HomePage Details Form-->
+        <form asp-controller="Admin"
+              asp-action="EditHomePage"
+              class="d-flex flex-column align-items-center gap-4"
+              method="post">
+
+            <!-- Quote -->
+            <div class="w-100" style="max-width: 700px;">
+                <label asp-for="HomePage.HeroQuote"
+                       class="form-label h4 print-header"></label>
+
+                <textarea asp-for="HomePage.HeroQuote"
+                          class="form-control"
+                          rows="4"></textarea>
+
+                <span asp-validation-for="HomePage.HeroQuote" class="text-danger"></span>
+            </div>
+
+            <!--AboutMe-->
+            <div class="w-100" style="max-width: 700px;">
+                <label asp-for="HomePage.AboutMeDescription"
+                       class="form-label h4 print-header"></label>
+
+                <textarea asp-for="HomePage.AboutMeDescription"
+                          class="form-control"
+                          rows="8"></textarea>
+
+                <span asp-validation-for="HomePage.AboutMeDescription" class="text-danger"></span>
+            </div>
+
+
+            <!-- Submit -->
+            <button type="submit" class="site-button">
+                Save Changes
+            </button>
+
+        </form>
+
+        <hr class="my-5" /> <!--Line Seperation-->
+        <!--Change Images-->
+        <form asp-controller="Admin" asp-action="ChangeHomePageImages"
+              class="d-flex flex-column align-items-center gap-4"
+              method="post"
+              enctype="multipart/form-data">
+
+            <div class="d-flex flex-column flex-md-row gap-4">
+
+                <!--About Me Photo-->
+                <div>
+                    <h2 class="print-header">About Me Photo</h2>
+
+                    @if (Model.HomePage.AboutMePhoto != null)
+                    {
+                        <img src="@Model.HomePage.AboutMePhoto.ImagePath"
+                             alt="About Me photo"
+                             class="admin-hero-preview" />
+                    }
+
+                    <div>
+                        <label for="aboutMeFile" class="form-label h4 print-header">
+                            Select New Photo
+                        </label>
+
+                        <input type="file"
+                               id="aboutMeFile"
+                               name="aboutMeFile"
+                               class="form-control"
+                               accept=".jpg,.jpeg,.png,.webp" />
+
+                        @Html.ValidationMessage("aboutMeFile", null, new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!--Portfolio1 Photo-->
+                <div>
+                    <h2 class="print-header">@Model.Portfolio1.Title Photo</h2>
+
+                    @if (Model.Portfolio1.HomePageHeroImage != null)
+                    {
+                        <img src="@Model.Portfolio1.HomePageHeroImage.ImagePath"
+                             alt="@Model.Portfolio1.Title photo"
+                             class="admin-hero-preview" />
+                    }
+
+                    <div>
+                        <label for="portfolio1File" class="form-label h4 print-header">
+                            Select New Photo
+                        </label>
+
+                        <input type="file"
+                               id="portfolio1File"
+                               name="portfolio1File"
+                               class="form-control"
+                               accept=".jpg,.jpeg,.png,.webp" />
+
+                        @Html.ValidationMessage("portfolio1File", null, new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!--Portfolio2 Photo-->
+                <div>
+                    <h2 class="print-header">@Model.Portfolio2.Title Photo</h2>
+
+                    @if (Model.Portfolio2.HomePageHeroImage != null)
+                    {
+                        <img src="@Model.Portfolio2.HomePageHeroImage.ImagePath"
+                             alt="@Model.Portfolio2.Title photo"
+                             class="admin-hero-preview" />
+                    }
+
+                    <div>
+                        <label for="portfolio2File" class="form-label h4 print-header">
+                            Select New Photo
+                        </label>
+
+                        <input type="file"
+                               id="portfolio2File"
+                               name="portfolio2File"
+                               class="form-control"
+                               accept=".jpg,.jpeg,.png,.webp" />
+
+                        @Html.ValidationMessage("portfolio2File", null, new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!--Portfolio3 Photo-->
+                <div>
+                    <h2 class="print-header">@Model.Portfolio3.Title Photo</h2>
+
+                    @if (Model.Portfolio3.HomePageHeroImage != null)
+                    {
+                        <img src="@Model.Portfolio3.HomePageHeroImage.ImagePath"
+                             alt="@Model.Portfolio3.Title photo"
+                             class="admin-hero-preview" />
+                    }
+
+                    <div>
+                        <label for="portfolio3File" class="form-label h4 print-header">
+                            Select New Photo
+                        </label>
+
+                        <input type="file"
+                               id="portfolio3File"
+                               name="portfolio3File"
+                               class="form-control"
+                               accept=".jpg,.jpeg,.png,.webp" />
+
+                        @Html.ValidationMessage("portfolio3File", null, new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit" class="site-button">
+                Save Changes
+            </button>
+
+        </form>
+    </section>
+</div>

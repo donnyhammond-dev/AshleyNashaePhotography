@@ -48,8 +48,9 @@
 
         </div>
 
-        <hr class="my-5" />
+        <hr class="my-5" />  <!--Line Seperation-->
 
+        <!--Edit Portfolios-->
         <h1 class="print-header">PORTFOLIOS</h1>
 
         <div class="d-flex flex-row justify-content-center gap-4">
@@ -66,12 +67,32 @@
                            asp-action="EditPortfolio"
                            asp-route-id="@portfolio.Id"
                            class="site-button text-white border-white">
-                            Edit Portfolio
+                            Edit<i class="bi bi-pencil fs-6 ms-2"></i>
                         </a>
                     </div>
 
                 </div>
             }
+        </div>
+
+        <hr class="my-5" />  <!--Line Seperation-->
+
+        <!--Edit About Me-->
+        <h1 class="print-header">Home Page</h1>
+
+        <div class="basic-card portfolio-card mx-auto"
+             style="background-image:
+                                linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+                                url('@Model.HomePage.AboutMePhoto!.ImagePath')">
+            <div class="d-flex flex-column align-items-center gap-2">
+                <h1 class="text-white">About Me</h1>
+                <a asp-controller="Admin"
+                   asp-action="EditHomePage"
+                   class="site-button text-white border-white">
+                    Edit<i class="bi bi-pencil fs-6 ms-2"></i>
+                </a>
+            </div>
+
         </div>
 
     </div>

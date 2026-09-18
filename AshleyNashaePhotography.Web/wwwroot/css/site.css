@@ -241,9 +241,12 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    max-width: 300px
 }
 
-/*Click to enlarge photo*/
+/* ==========================================
+   Lightbox (Click to Enlarge)
+   ========================================== */
 .lightbox {
     display: none;
     position: fixed;
@@ -320,8 +323,9 @@ body {
     outline-offset: 8px;
 }
 
-
-/*Flatpicker Calendar Responsiveness*/
+/* ==========================================
+   Flatpicker Calendar Responsiveness
+   ========================================== */
 .flatpickr-calendar.inline {
     width: 100%;
     max-width: 100%;

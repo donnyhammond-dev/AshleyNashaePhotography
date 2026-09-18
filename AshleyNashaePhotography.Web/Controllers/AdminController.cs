@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using AshleyNashaePhotography.Web.Data;
+using AshleyNashaePhotography.Web.Enums;
 using AshleyNashaePhotography.Web.Models;
 using AshleyNashaePhotography.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -24,8 +25,15 @@ namespace AshleyNashaePhotography.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var homePage = await _context.HomePages
+             .Include(x => x.AboutMePhoto)
+             .FirstOrDefaultAsync();
+            if (homePage == null) return NotFound();
+
             var vm = new AdminViewModel
             {
+                HomePage = homePage,
+
                 Sessions = await _context.PhotoSessions
                 .OrderBy(x => x.Date)
                 .ToListAsync(),
@@ -70,6 +78,173 @@ namespace AshleyNashaePhotography.Web.Controllers
             return RedirectToAction(nameof(EditPortfolio), new { id = portfolio.Id });
         }
 
+        public async Task<IActionResult> EditHomePage()
+        {
+            var homePage = await _context.HomePages.Include(x => x.AboutMePhoto).FirstOrDefaultAsync();
+            if (homePage == null) return NotFound();
+
+            var portfolio1 = await _context.Portfolios.Include(x => x.HomePageHeroImage).FirstOrDefaultAsync(x => x.Id == 1);
+            if (portfolio1 == null) return NotFound();
+
+            var portfolio2 = await _context.Portfolios.Include(x => x.HomePageHeroImage).FirstOrDefaultAsync(x => x.Id == 2);
+            if (portfolio2 == null) return NotFound();
+
+            var portfolio3 = await _context.Portfolios.Include(x => x.HomePageHeroImage).FirstOrDefaultAsync(x => x.Id == 3);
+            if (portfolio3 == null) return NotFound();
+
+            var vm = new HomePageViewModel
+            {
+                HomePage = homePage,
+                Portfolio1 = portfolio1!,
+                Portfolio2 = portfolio2!,
+                Portfolio3 = portfolio3!
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditHomePage(HomePageViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
+            var homePage = await _context.HomePages.FirstOrDefaultAsync();
+            if (homePage == null) return NotFound();
+
+            homePage.HeroQuote = vm.HomePage.HeroQuote;
+            homePage.AboutMeDescription = vm.HomePage.AboutMeDescription;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(EditHomePage));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeHomePageImages(IFormFile? aboutMeFile,
+            IFormFile? portfolio1File, IFormFile? portfolio2File, IFormFile? portfolio3File)
+        {
+            //Get Current Images
+            var homePage = await _context.HomePages
+                .Include(x => x.AboutMePhoto)
+                .FirstOrDefaultAsync();
+            if (homePage == null) return NotFound();
+
+            var portfolio1 = await _context.Portfolios
+                .Include(x => x.HomePageHeroImage)
+                .FirstOrDefaultAsync(x => x.Id == 1);
+            if (portfolio1 == null) return NotFound();
+
+            var portfolio2 = await _context.Portfolios
+                .Include(x => x.HomePageHeroImage)
+                .FirstOrDefaultAsync(x => x.Id == 2);
+            if (portfolio2 == null) return NotFound();
+
+            var portfolio3 = await _context.Portfolios
+                .Include(x => x.HomePageHeroImage)
+                .FirstOrDefaultAsync(x => x.Id == 3);
+            if (portfolio3 == null) return NotFound();
+
+            // Build ViewModel for validation fails
+            var vm = new HomePageViewModel
+            {
+                HomePage = homePage,
+                Portfolio1 = portfolio1,
+                Portfolio2 = portfolio2,
+                Portfolio3 = portfolio3
+            };
+
+
+            //About Me
+            if (aboutMeFile != null && aboutMeFile.Length > 0)
+            {
+                var aboutMeExtension = GetExtension(aboutMeFile);
+
+                if (aboutMeExtension == null)
+                {
+                    ModelState.AddModelError(
+                        "aboutMeFile",
+                        "Please select a JPG, PNG, or WEBP photo.");
+
+                    return View("EditHomePage", vm);
+                }
+
+                var imagePath = await SaveAboutMeFileAsync(aboutMeFile, aboutMeExtension);
+
+                homePage.AboutMePhoto!.ImagePath = imagePath;
+            }
+
+
+            //Portfolio 1
+            if (portfolio1File != null && portfolio1File.Length > 0)
+            {
+                var portfolio1Extension = GetExtension(portfolio1File);
+
+                if (portfolio1Extension == null)
+                {
+                    ModelState.AddModelError(
+                        "portfolio1File",
+                        "Please select a JPG, PNG, or WEBP photo.");
+
+                    return View("EditHomePage", vm);
+                }
+
+                var imagePath = await SaveImageFileAsync(
+                    1, portfolio1File, portfolio1Extension, PhotoRole.HomePageHero);
+
+                portfolio1.HomePageHeroImage!.ImagePath = imagePath;
+            }
+
+
+            //Portfolio 2
+            if (portfolio2File != null && portfolio2File.Length > 0)
+            {
+                var portfolio2Extension = GetExtension(portfolio2File);
+
+                if (portfolio2Extension == null)
+                {
+                    ModelState.AddModelError(
+                        "portfolio2File",
+                        "Please select a JPG, PNG, or WEBP photo.");
+
+                    return View("EditHomePage", vm);
+                }
+
+                var imagePath = await SaveImageFileAsync(
+                    2, portfolio2File, portfolio2Extension, PhotoRole.HomePageHero);
+
+                portfolio2.HomePageHeroImage!.ImagePath = imagePath;
+            }
+
+
+            //Portfolio 3
+            if (portfolio3File != null && portfolio3File.Length > 0)
+            {
+                var portfolio3Extension = GetExtension(portfolio3File);
+
+                if (portfolio3Extension == null)
+                {
+                    ModelState.AddModelError(
+                        "portfolio3File",
+                        "Please select a JPG, PNG, or WEBP photo.");
+
+                    return View("EditHomePage", vm);
+                }
+
+                var imagePath = await SaveImageFileAsync(
+                    3, portfolio3File, portfolio3Extension, PhotoRole.HomePageHero);
+
+                portfolio3.HomePageHeroImage!.ImagePath = imagePath;
+            }
+
+            //Save
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(EditHomePage));
+        }
+
         [HttpPost]
         public async Task<IActionResult> ChangeHero(int id, IFormFile? heroFile)
         {
@@ -97,7 +272,7 @@ namespace AshleyNashaePhotography.Web.Controllers
             }
 
             //Save File & Get Image Path
-            var imagePath = await SaveImageFileAsync(id, heroFile, extension, isHero: true);
+            var imagePath = await SaveImageFileAsync(id, heroFile, extension, PhotoRole.PortfolioHero);
 
             //Update Hero
             current.HeroImage!.ImagePath = imagePath;
@@ -135,7 +310,7 @@ namespace AshleyNashaePhotography.Web.Controllers
             }
 
             //Save File
-            var imagePath = await SaveImageFileAsync(id, photoFile, extension, isHero: false);
+            var imagePath = await SaveImageFileAsync(id, photoFile, extension, PhotoRole.PortfolioPhoto);
 
             //Add Photo
             portfolio.Photos.Add(new Photo(imagePath));
@@ -162,11 +337,17 @@ namespace AshleyNashaePhotography.Web.Controllers
             return RedirectToAction(nameof(EditPortfolio), new { id = portfolioId });
         }
 
-        private async Task<string> SaveImageFileAsync(int id, IFormFile file, string extension, bool isHero)
+        private async Task<string> SaveImageFileAsync(int id, IFormFile file, string extension, PhotoRole role)
         {
             var uploadFolder = Path.Combine(_enviorment.WebRootPath, "images", $"Portfolio{id}");
 
-            var fileName = isHero ? $"PortfolioHero{extension}" : $"{Guid.NewGuid()}{extension}";
+            var fileName = role switch
+            {
+                PhotoRole.HomePageHero => $"HomePageHero{extension}",
+                PhotoRole.PortfolioHero => $"PortfolioHero{extension}",
+                PhotoRole.PortfolioPhoto => $"{Guid.NewGuid()}{extension}",
+                _ => $"{Guid.NewGuid()}{extension}"
+            };
 
             var filePath = Path.Combine(uploadFolder, fileName);
 
@@ -175,6 +356,21 @@ namespace AshleyNashaePhotography.Web.Controllers
             await file.CopyToAsync(stream);
 
             return $"/images/Portfolio{id}/{fileName}";
+        }
+
+        private async Task<string> SaveAboutMeFileAsync(IFormFile file, string extension)
+        {
+            var uploadFolder = Path.Combine(_enviorment.WebRootPath, "images");
+
+            var fileName = $"AboutMeImage{extension}";
+
+            var filePath = Path.Combine(uploadFolder, fileName);
+
+            await using var stream = new FileStream(filePath, FileMode.Create);
+
+            await file.CopyToAsync(stream);
+
+            return $"/images/{fileName}";
         }
 
         private string? GetExtension(IFormFile file)
