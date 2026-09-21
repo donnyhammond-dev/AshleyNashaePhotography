@@ -2,6 +2,7 @@
 using AshleyNashaePhotography.Web.Data;
 using AshleyNashaePhotography.Web.Enums;
 using AshleyNashaePhotography.Web.Models;
+using AshleyNashaePhotography.Web.Services;
 using AshleyNashaePhotography.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +16,14 @@ namespace AshleyNashaePhotography.Web.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly AvailabilityService _availabilityService;
         private readonly IWebHostEnvironment _enviorment;
 
-        public AdminController(ApplicationDbContext context, IWebHostEnvironment enviorment)
+        public AdminController(ApplicationDbContext context, 
+            AvailabilityService availabilityService,IWebHostEnvironment enviorment)
         {
             _context = context;
+            _availabilityService = availabilityService;
             _enviorment = enviorment;
         }
 
@@ -41,7 +45,9 @@ namespace AshleyNashaePhotography.Web.Controllers
                 Portfolios = await _context.Portfolios
                 .Include(x => x.Photos)
                 .Include(x => x.HeroImage)
-                .ToListAsync()
+                .ToListAsync(),
+
+                UnavailableDates = await _availabilityService.GetUnavailableDatesAsync()
             };
 
             return View(vm);
@@ -121,6 +127,21 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             return RedirectToAction(nameof(EditHomePage));
         }
+
+        public async Task<IActionResult> BlockDates()
+        {
+            var unavailableDates = await _availabilityService.GetUnavailableDatesAsync();
+
+            return View(unavailableDates);
+        }
+
+        /*
+        [HttpPost]
+        public async Task<IActionResult> BlockDates()
+        {
+
+        }
+        */
 
         [HttpPost]
         public async Task<IActionResult> ChangeHomePageImages(IFormFile? aboutMeFile,
@@ -317,7 +338,7 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(EditPortfolio), new { id = portfolio.Id });
+            return Redirect($"{Url.Action(nameof(EditPortfolio), new { id = id })}#photos");
 
         }
 
@@ -334,7 +355,7 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(EditPortfolio), new { id = portfolioId });
+            return Redirect($"{Url.Action(nameof(EditPortfolio), new { id = portfolioId })}#photos");
         }
 
         private async Task<string> SaveImageFileAsync(int id, IFormFile file, string extension, PhotoRole role)

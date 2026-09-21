@@ -6,7 +6,7 @@ namespace AshleyNashaePhotography.Web.ViewModels
     {
         public PhotoSession Session { get; set; } = new();
 
-        public List<DateOnly> BookedDates { get; set; } = new();
+        public List<DateOnly> UnavailableDates { get; set; } = [];
 
         public int Month { get; set; }
 

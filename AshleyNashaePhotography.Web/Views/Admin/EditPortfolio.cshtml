@@ -4,7 +4,7 @@
 
     <section class="basic-content">
 
-        <h1 class="print-header mb-4">Edit Portfolio</h1>
+        <h1 class="print-header mb-4">EDIT PORTFOLIO</h1>
 
         <!--Portfolio Details Form-->
         <form asp-controller="Admin"
@@ -60,7 +60,7 @@
 
             <!-- Current Hero -->
             <div>
-                <h2 class="print-header">Current Featured Photo</h2>
+                <h2 class="print-header">FEATURED PHOTO</h2>
 
                 @if (Model.HeroImage != null)
                 {
@@ -96,7 +96,7 @@
         <!--Photos-->
         <div class="d-flex flex-column align-items-center gap-4">
 
-            <h2 class="print-header">Photos</h2>
+            <h2 id="photos" class="print-header">PHOTOS</h2>
 
           <!--Current Photos-->
             <div class="d-flex flex-wrap justify-content-center gap-3">

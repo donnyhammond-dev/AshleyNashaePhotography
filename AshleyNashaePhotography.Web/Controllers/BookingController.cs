@@ -1,6 +1,7 @@
 ﻿using AshleyNashaePhotography.Web.Data;
 using AshleyNashaePhotography.Web.Enums;
 using AshleyNashaePhotography.Web.Models;
+using AshleyNashaePhotography.Web.Services;
 using AshleyNashaePhotography.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,12 @@ namespace AshleyNashaePhotography.Web.Controllers
     public class BookingController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly AvailabilityService _availabilityService;
 
-        public BookingController(ApplicationDbContext context)
+        public BookingController(ApplicationDbContext context, AvailabilityService availabilityService)
         {
             _context = context;
+            _availabilityService = availabilityService;
         }
 
         public async Task<IActionResult> Create()
@@ -22,7 +25,7 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             var vm = new BookingViewModel
             {
-                BookedDates = await GetBookedDatesAsync(),
+                UnavailableDates = await _availabilityService.GetUnavailableDatesAsync(),
                 Month = today.Month,
                 Year = today.Year,
                 Session = new PhotoSession
@@ -41,20 +44,22 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                vm.BookedDates = await GetBookedDatesAsync();
+                vm.UnavailableDates = await _availabilityService.GetUnavailableDatesAsync();
                 return View(vm);
             }
 
-            //Check date for availaility
-            var dateIsBooked = await _context.PhotoSessions.AnyAsync(x => x.Date == vm.Session.Date);
+            //Check date for availability
+            var unavailableDates = await _availabilityService.GetUnavailableDatesAsync();
 
-            if (dateIsBooked)
+            var dateIsUnavailable = unavailableDates.Contains(vm.Session.Date);
+
+            if (dateIsUnavailable)
             {
                 ModelState.AddModelError(
                     "Session.Date",
-                    "That date is already booked.");
+                    "That date is unavailable.");
 
-                vm.BookedDates = await GetBookedDatesAsync();
+                vm.UnavailableDates = unavailableDates;
 
                 return View(vm);
             }
@@ -81,11 +86,5 @@ namespace AshleyNashaePhotography.Web.Controllers
         {
             return View();
         }
-        private async Task<List<DateOnly>> GetBookedDatesAsync() =>  
-             await _context.PhotoSessions
-                .Select(x => x.Date)
-                .OrderBy(x => x)
-                .ToListAsync();
-        
     }
 }

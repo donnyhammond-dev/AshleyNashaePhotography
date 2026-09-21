@@ -22,6 +22,22 @@ namespace AshleyNashaePhotography.Web.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.BlockedDate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BlockedDates");
+                });
+
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.HomePage", b =>
                 {
                     b.Property<int>("Id")

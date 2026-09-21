@@ -125,6 +125,10 @@ body {
     font-weight: 300;
 }
 
+.brand-logo {
+    font-family: "Italianno", cursive;
+}
+
 /* ==========================================
    Home Page Hero Section
    ========================================== */
@@ -372,5 +376,10 @@ body {
     .site-button:active {
         transform: scale(0.98);
     }
+
+.site-button-sm {
+    padding: 0.4rem 1.5rem;
+    font-size: 0.9rem;
+}
 
 
