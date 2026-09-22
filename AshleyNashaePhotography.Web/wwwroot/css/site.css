@@ -352,6 +352,35 @@ body {
     display: none;
 }
 
+.admin-calendar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 261.6px;
+    margin: 0 auto;
+}
+
+    .admin-calendar .booked-date {
+        background-color: lightblue;
+    }
+
+    .admin-calendar .blocked-date {
+        background-color: indianred;
+    }
+
+    .admin-calendar .flatpickr-day.selected {
+        background: transparent;
+        border-color: transparent;
+        color: inherit;
+    }
+
+    .admin-calendar .flatpickr-day.blocked-date,
+    .admin-calendar .flatpickr-day.blocked-date.selected {
+        background: indianred;
+        border-color: indianred;
+        color: white;
+    }
+
 /* ==========================================
    Buttons
    ========================================== */

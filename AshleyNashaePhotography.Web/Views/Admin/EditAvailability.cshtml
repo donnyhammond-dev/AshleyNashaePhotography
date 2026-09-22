@@ -1,0 +1,131 @@
+﻿@using AshleyNashaePhotography.Web.ViewModels
+
+@model EditAvailabilityViewModel
+
+<!--Calendar Json Data-->
+@{
+    var bookedDatesJson =
+        System.Text.Json.JsonSerializer.Serialize(Model.BookedDates);
+
+    var blockedDatesJson =
+        System.Text.Json.JsonSerializer.Serialize(Model.BlockedDates);
+}
+
+<!-- Flatpickr CSS -->
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+
+<div class="basic-container text-center">
+
+    <section class="basic-content">
+
+        <h1 class="print-header mb-4">Edit Availability</h1>
+
+        <form asp-controller="Admin"
+              asp-action="EditAvailability"
+              method="post"
+              class="d-flex flex-column align-items-center gap-4">
+
+            <div class="admin-calendar">
+                <input id="availability-calendar"
+                       class="d-none" />
+            </div>
+
+            <div id="selected-dates"></div>
+
+            <button type="submit" class="site-button">
+                Save Changes
+            </button>
+
+        </form>
+
+       
+    </section>
+
+</div>
+
+
+@section Scripts {
+
+    <!-- Make C# dates available to JavaScript -->
+    <script>
+        const bookedDates = @Html.Raw(bookedDatesJson);
+        const blockedDates = @Html.Raw(blockedDatesJson);
+    </script>
+
+    <!-- Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Create Calendar -->
+    <script>
+        let selectedDates = [...blockedDates];
+
+        const selectedDatesContainer =
+            document.getElementById("selected-dates");
+
+
+        function updateSelectedDates() {
+
+            selectedDatesContainer.innerHTML = "";
+
+            selectedDates.forEach(date => {
+
+                const input = document.createElement("input");
+
+                input.type = "hidden";
+                input.name = "SelectedDates";
+                input.value = date;
+
+                selectedDatesContainer.appendChild(input);
+            });
+        }
+
+
+        flatpickr("#availability-calendar", {
+            inline: true,
+            minDate: "today",
+
+            onDayCreate: function(dObj, dStr, fp, dayElem) {
+
+                const date = fp.formatDate(dayElem.dateObj, "Y-m-d");
+
+                // Booked Date
+                if (bookedDates.includes(date)) {
+
+                    dayElem.classList.add("booked-date");
+
+                    return;
+                }
+
+                // Blocked Date
+                if (selectedDates.includes(date)) {
+                    dayElem.classList.add("blocked-date");
+                }
+
+                // Toggle Blocked Date
+                dayElem.addEventListener("click", function() {
+
+                    if (selectedDates.includes(date)) {
+
+                        selectedDates =
+                            selectedDates.filter(x => x !== date);
+
+                        dayElem.classList.remove("blocked-date");
+                    }
+                    else {
+
+                        selectedDates.push(date);
+
+                        dayElem.classList.add("blocked-date");
+                    }
+
+                    updateSelectedDates();
+                });
+            }
+        });
+
+
+        updateSelectedDates();
+    </script>
+}

@@ -1,6 +1,7 @@
 using AshleyNashaePhotography.Web.Data;
-using Microsoft.EntityFrameworkCore;
+using AshleyNashaePhotography.Web.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ builder.Services
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<AvailabilityService>();
 
 var app = builder.Build();
 

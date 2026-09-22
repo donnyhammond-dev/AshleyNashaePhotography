@@ -7,6 +7,7 @@ namespace AshleyNashaePhotography.Web.ViewModels
         public List<Portfolio> Portfolios { get; set; } = [];
         public List<PhotoSession> Sessions { get; set; } = [];
         public HomePage HomePage { get; set; } = null!;
-        public List<DateOnly> UnavailableDates { get; set; } = [];
+        public List<DateOnly> BookedDates { get; set; } = [];
+        public List<DateOnly> BlockedDates { get; set; } = [];
     }
 }

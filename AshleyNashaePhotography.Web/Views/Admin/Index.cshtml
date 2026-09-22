@@ -3,6 +3,20 @@
 
 @model AdminViewModel
 
+<!--Calendar Json Data-->
+@{
+    var bookedDatesJson =
+        System.Text.Json.JsonSerializer.Serialize(Model.BookedDates);
+
+    var blockedDatesJson =
+        System.Text.Json.JsonSerializer.Serialize(Model.BlockedDates);
+}
+
+<!-- Flatpickr CSS -->
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!--Container-->
 <section class="basic-container">
     <div class="admin-content">
 
@@ -46,6 +60,23 @@
 
             </table>
 
+        </div>
+
+        <hr class="my-5" />  <!--Line Seperation-->
+
+        <h1 class="print-header">AVAILABILITY</h1>
+
+        <!--Availability/Calendar-->
+        <div class="d-flex flex-column align-items-center gap-4">
+            <div class="admin-calendar">
+                <input id="availability-calendar" class="d-none" />
+            </div>
+
+            <a asp-controller="Admin"
+               asp-action="EditAvailability"
+               class="site-button">
+                Edit Availability
+            </a>
         </div>
 
         <hr class="my-5" />  <!--Line Seperation-->
@@ -99,3 +130,15 @@
 
 
 </section>
+
+
+<!--JS for Calendar-->
+@section Scripts {
+    <script>
+        const bookedDates = @Html.Raw(bookedDatesJson);
+        const blockedDates = @Html.Raw(blockedDatesJson);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="~/js/admin-calendar.js"></script>
+}

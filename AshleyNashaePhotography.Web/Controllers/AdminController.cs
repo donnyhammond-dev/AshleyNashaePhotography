@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using AshleyNashaePhotography.Web.Data;
+using AshleyNashaePhotography.Web.DTOs;
 using AshleyNashaePhotography.Web.Enums;
 using AshleyNashaePhotography.Web.Models;
 using AshleyNashaePhotography.Web.Services;
@@ -34,6 +35,8 @@ namespace AshleyNashaePhotography.Web.Controllers
              .FirstOrDefaultAsync();
             if (homePage == null) return NotFound();
 
+            var availabilityDto = await _availabilityService.GetAvailabilityDetailsAsync();
+
             var vm = new AdminViewModel
             {
                 HomePage = homePage,
@@ -47,7 +50,9 @@ namespace AshleyNashaePhotography.Web.Controllers
                 .Include(x => x.HeroImage)
                 .ToListAsync(),
 
-                UnavailableDates = await _availabilityService.GetUnavailableDatesAsync()
+                BookedDates = availabilityDto.BookedDates,
+
+                BlockedDates = availabilityDto.BlockedDates
             };
 
             return View(vm);
@@ -128,20 +133,47 @@ namespace AshleyNashaePhotography.Web.Controllers
             return RedirectToAction(nameof(EditHomePage));
         }
 
-        public async Task<IActionResult> BlockDates()
+        public async Task<IActionResult> EditAvailability()
         {
-            var unavailableDates = await _availabilityService.GetUnavailableDatesAsync();
+            var availabilityDto = await _availabilityService.GetAvailabilityDetailsAsync();
 
-            return View(unavailableDates);
+            var vm = new EditAvailabilityViewModel
+            {
+                BookedDates = availabilityDto.BookedDates,
+                BlockedDates = availabilityDto.BlockedDates
+            };
+
+            return View(vm);
         }
 
-        /*
         [HttpPost]
-        public async Task<IActionResult> BlockDates()
+        public async Task<IActionResult> EditAvailability(EditAvailabilityViewModel vm)
         {
+            // Get current blocked dates
+            var currentBlockedDates = await _context.BlockedDates.ToListAsync();
 
+            // Remove dates that Admin unblocked
+            var datesToRemove = currentBlockedDates
+                .Where(x => !vm.SelectedDates.Contains(x.Date))
+                .ToList();
+
+            _context.BlockedDates.RemoveRange(datesToRemove);
+
+            // Get dates that Admin newly blocked
+            var datesToAdd = vm.SelectedDates
+                .Where(date => !currentBlockedDates.Any(x => x.Date == date))
+                .Select(date => new BlockedDate
+                {
+                    Date = date
+                })
+                .ToList();
+
+            _context.BlockedDates.AddRange(datesToAdd);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
-        */
 
         [HttpPost]
         public async Task<IActionResult> ChangeHomePageImages(IFormFile? aboutMeFile,
