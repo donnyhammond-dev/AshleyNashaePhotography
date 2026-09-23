@@ -16,8 +16,11 @@ namespace AshleyNashaePhotography.Web.Models
         [Required]
         public DateOnly Date { get; set; }
 
-        [Required]
-        public SessionLength Length { get; set; }  
+        //Temporarily nullable
+        public int? SessionTypeId { get; set; }
+ 
+        //Temporarily nullable
+        public SessionType? SessionType { get; set; } = null!;
 
         public string? PhoneNumber { get; set; }
 

@@ -42,7 +42,12 @@ namespace AshleyNashaePhotography.Web.Controllers
                 HomePage = homePage,
 
                 Sessions = await _context.PhotoSessions
+                .Include(x => x.SessionType)
                 .OrderBy(x => x.Date)
+                .ToListAsync(),
+
+                SessionTypes = await _context.SessionTypes
+                .OrderBy(x => x.Id)
                 .ToListAsync(),
 
                 Portfolios = await _context.Portfolios
@@ -57,6 +62,49 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             return View(vm);
         }
+
+        public async Task<IActionResult> EditSessionTypes()
+        {
+            var sessionTypes = await _context.SessionTypes.OrderBy(x => x.Id).ToListAsync();
+
+            if (sessionTypes.Count != 3) return NotFound(); //Return NotFound() if the 3 required Session Types aren't found
+
+            return View(sessionTypes);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditSessionTypes(List<SessionType> sessionTypes)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(sessionTypes);
+            }
+
+            var existingTypes = await _context.SessionTypes.OrderBy(x => x.Id).ToListAsync();
+
+            if (sessionTypes.Count != 3) return NotFound();
+
+            foreach (var sessionType in sessionTypes)
+            {
+                var existingType = existingTypes
+                    .FirstOrDefault(x => x.Id == sessionType.Id);
+
+                if (existingType == null)
+                {
+                    return NotFound();
+                }
+
+                existingType.Name = sessionType.Name;
+                existingType.Description = sessionType.Description;
+                existingType.DurationMinutes = sessionType.DurationMinutes;
+                existingType.Price = sessionType.Price;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
         public async Task<IActionResult> EditPortfolio(int id)
         {

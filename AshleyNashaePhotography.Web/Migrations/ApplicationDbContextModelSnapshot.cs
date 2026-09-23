@@ -109,13 +109,15 @@ namespace AshleyNashaePhotography.Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Length")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SessionTypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SessionTypeId");
 
                     b.ToTable("PhotoSessions");
                 });
@@ -150,6 +152,34 @@ namespace AshleyNashaePhotography.Web.Migrations
                     b.HasIndex("HomePageHeroImageId");
 
                     b.ToTable("Portfolios");
+                });
+
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.SessionType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SessionTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -368,6 +398,15 @@ namespace AshleyNashaePhotography.Web.Migrations
                     b.HasOne("AshleyNashaePhotography.Web.Models.Portfolio", null)
                         .WithMany("Photos")
                         .HasForeignKey("PortfolioId");
+                });
+
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.PhotoSession", b =>
+                {
+                    b.HasOne("AshleyNashaePhotography.Web.Models.SessionType", "SessionType")
+                        .WithMany()
+                        .HasForeignKey("SessionTypeId");
+
+                    b.Navigation("SessionType");
                 });
 
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Portfolio", b =>

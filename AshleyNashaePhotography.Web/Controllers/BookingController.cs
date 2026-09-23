@@ -28,9 +28,10 @@ namespace AshleyNashaePhotography.Web.Controllers
                 UnavailableDates = await _availabilityService.GetUnavailableDatesAsync(),
                 Month = today.Month,
                 Year = today.Year,
+                SessionTypes = await _context.SessionTypes.OrderBy(x => x.Id).ToListAsync(),
                 Session = new PhotoSession
                 {
-                    Length = SessionLength.Standard
+                    SessionTypeId = 2  //Standard Session (Out of 3)
                 }
             };
 
@@ -71,7 +72,7 @@ namespace AshleyNashaePhotography.Web.Controllers
                 Email = vm.Session.Email,
                 PhoneNumber = vm.Session.PhoneNumber,
                 Date = vm.Session.Date,
-                Length = vm.Session.Length,
+                SessionTypeId = vm.Session.SessionTypeId,
                 ClientNotes = vm.Session.ClientNotes
 
             };

@@ -22,14 +22,14 @@
 
         <h1 class="print-header">BOOKINGS</h1>
 
-        <!--Table -->
+        <!--Bookings Table -->
         <div class="table-responsive mb-5">
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>DATE</th>
                         <th>CLIENT</th>
-                        <th>DURATION</th>
+                        <th>SESSION TYPE</th>
                         <th>EMAIL</th>
                         <th>PHONE</th>
                         <th>NOTES</th>
@@ -42,14 +42,7 @@
                         <tr>
                             <td>@session.Date</td>
                             <td>@(session.LastName + ", " + session.FirstName)</td>
-                            <td>@(session.Length switch
-                                    {
-                                        SessionLength.Mini => "30 minutes",
-                                        SessionLength.Standard => "1 hour",
-                                        SessionLength.Extended => "2 hours",
-                                        _ => "N/A"
-                                    })
-                            </td>
+                            <td>@session.SessionType!.Name</td>
                             <td>@session.Email</td>
                             <td>@session.PhoneNumber</td>
                             <td>@session.ClientNotes</td>
@@ -76,8 +69,56 @@
                asp-action="EditAvailability"
                class="site-button">
                 Edit Availability
+                <i class="bi bi-pencil fs-6 ms-2"></i>
             </a>
         </div>
+
+        <hr class="my-5" />  <!--Line Seperation-->
+
+        <!--Session Type Details-->
+        <h1 class="print-header">SESSION TYPES</h1>
+
+        <div class="d-flex flex-column align-items-center gap-4">
+
+            <!--Table-->
+            <div class="table-responsive w-100 ">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>SESSION</th>
+                            <th>DURATION</th>
+                            <th>DESCRIPTION</th>
+                            <th>PRICE</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var sessionType in Model.SessionTypes)
+                        {
+                            <tr>
+                                <td>@sessionType.Name</td>
+                                <td>@(sessionType.DurationMinutes + " Minutes")</td>
+                                <td>@sessionType.Description</td>
+                                <td>@sessionType.Price</td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!--Button-->
+            <a asp-controller="Admin"
+               asp-action="EditSessionTypes"
+               class="site-button">
+                Edit Details
+                <i class="bi bi-pencil fs-6 ms-2"></i>
+            </a>
+
+        </div>
+
 
         <hr class="my-5" />  <!--Line Seperation-->
 

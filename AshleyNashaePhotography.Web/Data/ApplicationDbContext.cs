@@ -18,6 +18,8 @@ namespace AshleyNashaePhotography.Web.Data
 
         public DbSet<PhotoSession> PhotoSessions { get; set; }
 
+        public DbSet<SessionType> SessionTypes { get; set; }
+
         public DbSet<BlockedDate> BlockedDates { get; set; }
 
     }

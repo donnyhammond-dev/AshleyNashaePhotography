@@ -1,0 +1,93 @@
+﻿@using AshleyNashaePhotography.Web.Models
+
+@model List<SessionType>
+
+<div class="basic-container text-center">
+
+    <section class="basic-content">
+
+        <h1 class="print-header mb-4">Edit Session Types</h1>
+
+        <!--Session Types Form-->
+        <form asp-controller="Admin"
+              asp-action="EditSessionTypes"
+              class="d-flex flex-column align-items-center gap-4"
+              method="post">
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <!--Session Type-->
+                <div class="w-100" style="max-width: 700px;">
+
+                    <h2 class="print-header">@("Session " + (i + 1))</h2>
+
+                    <!--Id-->
+                    <input asp-for="@Model[i].Id" type="hidden" />
+
+                    <!--Name-->
+                    <div class="mb-3">
+                        <label asp-for="@Model[i].Name"
+                               class="form-label h4 print-header"></label>
+
+                        <input asp-for="@Model[i].Name"
+                               class="form-control" />
+
+                        <span asp-validation-for="@Model[i].Name"
+                              class="text-danger"></span>
+                    </div>
+
+                    <!--Description-->
+                    <div class="mb-3">
+                        <label asp-for="@Model[i].Description"
+                               class="form-label h4 print-header"></label>
+
+                        <textarea asp-for="@Model[i].Description"
+                                  class="form-control"
+                                  rows="4"></textarea>
+
+                        <span asp-validation-for="@Model[i].Description"
+                              class="text-danger"></span>
+                    </div>
+
+                    <!--Duration-->
+                    <div class="mb-3">
+                        <label asp-for="@Model[i].DurationMinutes"
+                               class="form-label h4 print-header"></label>
+
+                        <input asp-for="@Model[i].DurationMinutes"
+                               class="form-control" />
+
+                        <span asp-validation-for="@Model[i].DurationMinutes"
+                              class="text-danger"></span>
+                    </div>
+
+                    <!--Price-->
+                    <div>
+                        <label asp-for="@Model[i].Price"
+                               class="form-label h4 print-header"></label>
+
+                        <input asp-for="@Model[i].Price"
+                               class="form-control" />
+
+                        <span asp-validation-for="@Model[i].Price"
+                              class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                @if (i < Model.Count - 1)
+                {
+                    <hr class="w-100 my-4" />
+                }
+            }
+
+            <!--Submit-->
+            <button type="submit" class="site-button">
+                Save Changes
+            </button>
+
+        </form>
+
+    </section>
+
+</div>

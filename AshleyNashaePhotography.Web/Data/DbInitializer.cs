@@ -2,6 +2,7 @@
 using AshleyNashaePhotography.Web.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using SQLitePCL;
 
 
 namespace AshleyNashaePhotography.Web.Data
@@ -215,6 +216,53 @@ namespace AshleyNashaePhotography.Web.Data
                     throw new InvalidOperationException("Failed to assign admin user to Admin role.");
                 }
             }
+        }
+
+        public static async Task SeedSessionTypesAsync(ApplicationDbContext context)
+        {
+            if (!await context.SessionTypes.AnyAsync(x => x.Id == 1))
+            {
+                var sessionType1 = new SessionType
+                {
+                    Name = "Mini",
+                    Description = "Perfect for quick portraits and capturing a few special moments.",
+                    DurationMinutes = 30,
+                    Price = 300.00m
+                };
+
+                context.SessionTypes.Add(sessionType1);
+                await context.SaveChangesAsync();
+            }
+
+            if (!await context.SessionTypes.AnyAsync(x => x.Id == 2))
+            {
+                var sessionType2 = new SessionType
+                {
+                    Name = "Standard",
+                    Description = "Plenty of time for a variety of photos, poses, and locations.",
+                    DurationMinutes = 60,
+                    Price = 400.00m
+                };
+
+                context.SessionTypes.Add(sessionType2);
+                await context.SaveChangesAsync();
+            }
+
+            if (!await context.SessionTypes.AnyAsync(x => x.Id == 3))
+            {
+                var sessionType3 = new SessionType
+                {
+                    Name = "Extended",
+                    Description = "More relaxed experience with extra time for multiple locations, outfits, and photos.",
+                    DurationMinutes = 120,
+                    Price = 500.00m
+                };
+
+                context.SessionTypes.Add(sessionType3);
+                await context.SaveChangesAsync();
+            }
+
+
         }
     }
 }

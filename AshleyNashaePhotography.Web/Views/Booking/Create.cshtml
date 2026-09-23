@@ -58,13 +58,16 @@
 
 			<!--Session Type-->
 			<div class="w-100">
-				<label asp-for="Session.Length" class="form-label">SESSION:</label>
-				<select asp-for="Session.Length" class="form-select">
-					<option value="Mini">Mini — 30 minutes, perfect for...</option>
-					<option value="Standard">Standard — 1 hour, ideal for...</option>
-					<option value="Extended">Extended — 2 hours, best for...</option>
+				<label asp-for="Session.SessionTypeId" class="form-label">SESSION:</label>
+				<select asp-for="Session.SessionTypeId" class="form-select">
+					@foreach (var type in Model.SessionTypes)
+					{
+						<option value="@type.Id">
+							@type.Name — @type.Description — @(type.DurationMinutes + " Mins") - $@type.Price
+						</option>
+					}
 				</select>
-				<span asp-validation-for="Session.Length" class="text-danger"></span>
+				<span asp-validation-for="Session.SessionType" class="text-danger"></span>
 			</div>
 
 			<!-- Calendar / Notes -->
