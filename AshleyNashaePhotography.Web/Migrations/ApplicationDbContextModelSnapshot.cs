@@ -38,6 +38,27 @@ namespace AshleyNashaePhotography.Web.Migrations
                     b.ToTable("BlockedDates");
                 });
 
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.FAQ", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FAQs");
+                });
+
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.HomePage", b =>
                 {
                     b.Property<int>("Id")

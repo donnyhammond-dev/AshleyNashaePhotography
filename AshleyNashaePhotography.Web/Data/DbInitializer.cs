@@ -261,8 +261,43 @@ namespace AshleyNashaePhotography.Web.Data
                 context.SessionTypes.Add(sessionType3);
                 await context.SaveChangesAsync();
             }
+        }
 
+        public static async Task SeedFAQAsync(ApplicationDbContext context)
+        {
+            if (!await context.FAQs.AnyAsync())
+            {
+                var faqs = new List<FAQ>
+                {
+                      new()
+                      {
+                          Question = "How far in advance should I book my session?",
+                          Answer = "I recommend booking as early as possible to ensure your " +
+                          "preferred date is available. Weekend and seasonal dates tend to fill " +
+                          "up the fastest."
+                      },
+                      
+                      new()
+                      {
+                          Question = "When will I receive my photos?",
+                          Answer = "Your professionally edited gallery will typically be delivered " +
+                          "within 2–3 weeks after your session. You will receive a private online " +
+                          "gallery where you can view and download your photos."
+                      },
+                      
+                      new()
+                      {
+                          Question = "What should I wear to my session?",
+                          Answer = "Wear something that feels comfortable and reflects your " +
+                          "personality. Neutral and earthy tones photograph beautifully, and I " +
+                          "recommend avoiding busy patterns or large logos when possible."
+                      }
+                };
 
+                context.FAQs.AddRange(faqs);
+
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

@@ -22,5 +22,7 @@ namespace AshleyNashaePhotography.Web.Data
 
         public DbSet<BlockedDate> BlockedDates { get; set; }
 
+        public DbSet<FAQ> FAQs { get; set; }
+
     }
 }

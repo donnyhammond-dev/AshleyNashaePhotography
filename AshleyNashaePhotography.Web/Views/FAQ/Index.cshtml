@@ -1,0 +1,22 @@
+﻿@model List<FAQ>
+
+<div class="basic-container">
+
+	<section class="basic-content">
+
+		<h1 class="print-header mb-4">FREQUENTLY ASKED QUESTIONS</h1>
+
+		<div class="d-flex flex-column gap-4">
+
+			@foreach (var faq in Model)
+			{
+				<div>
+					<p class="mb-2">Q - @faq.Question</p>
+					<p>A - @faq.Answer</p>
+				</div>
+			}
+
+		</div>
+
+	</section>
+</div>
