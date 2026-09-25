@@ -5,6 +5,7 @@ using AshleyNashaePhotography.Web.Enums;
 using AshleyNashaePhotography.Web.Models;
 using AshleyNashaePhotography.Web.Services;
 using AshleyNashaePhotography.Web.ViewModels;
+using AspNetCoreGeneratedDocument;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Elfie.Model.Strings;
@@ -28,6 +29,7 @@ namespace AshleyNashaePhotography.Web.Controllers
             _enviorment = enviorment;
         }
 
+        //============================== INDEX ==============================
         public async Task<IActionResult> Index()
         {
             var homePage = await _context.HomePages
@@ -55,6 +57,10 @@ namespace AshleyNashaePhotography.Web.Controllers
                 .Include(x => x.HeroImage)
                 .ToListAsync(),
 
+                FAQs = await _context.FAQs
+                .OrderBy(x => x.Id)
+                .ToListAsync(),
+
                 BookedDates = availabilityDto.BookedDates,
 
                 BlockedDates = availabilityDto.BlockedDates
@@ -63,6 +69,7 @@ namespace AshleyNashaePhotography.Web.Controllers
             return View(vm);
         }
 
+        //============================== EDIT SESSION TYPES ==============================
         public async Task<IActionResult> EditSessionTypes()
         {
             var sessionTypes = await _context.SessionTypes.OrderBy(x => x.Id).ToListAsync();
@@ -105,13 +112,15 @@ namespace AshleyNashaePhotography.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        //============================== EDIT PORTFOLIO ==============================
         public async Task<IActionResult> EditPortfolio(int id)
         {
             var portfolio = await _context.Portfolios
              .Include(x => x.Photos)
              .Include(x => x.HeroImage)
              .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (portfolio == null) return NotFound();
 
             return View(portfolio);
         }
@@ -137,6 +146,7 @@ namespace AshleyNashaePhotography.Web.Controllers
             return RedirectToAction(nameof(EditPortfolio), new { id = portfolio.Id });
         }
 
+        //============================== EDIT HOME PAGE ==============================
         public async Task<IActionResult> EditHomePage()
         {
             var homePage = await _context.HomePages.Include(x => x.AboutMePhoto).FirstOrDefaultAsync();
@@ -181,6 +191,68 @@ namespace AshleyNashaePhotography.Web.Controllers
             return RedirectToAction(nameof(EditHomePage));
         }
 
+        //============================== ADD FAQ ==============================
+        public IActionResult AddFAQ() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> AddFAQ(FAQ faq)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(faq);
+            }
+
+            _context.FAQs.Add(faq);
+
+            await _context.SaveChangesAsync();
+
+            return Redirect($"{Url.Action(nameof(Index))}#faqs");
+        }
+
+        //============================== EDIT FAQ ==============================
+        public async Task<IActionResult> EditFAQ(int id)
+        {
+            var faq = await _context.FAQs.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (faq == null) return NotFound();
+
+            return View(faq);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditFAQ(FAQ faq)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(faq);
+            }
+
+            var existingFaq = await _context.FAQs.FirstOrDefaultAsync(x => x.Id == faq.Id);
+
+            existingFaq!.Question = faq.Question;
+            existingFaq!.Answer = faq.Answer;
+
+            await _context.SaveChangesAsync();
+
+            return Redirect($"{Url.Action(nameof(Index))}#faqs");
+        }
+
+        //============================== DELETE FAQ ==============================
+        [HttpPost]
+        public async Task<IActionResult> DeleteFAQ(int id)
+        {
+            var faq = await _context.FAQs.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (faq == null) return NotFound();
+
+            _context.FAQs.Remove(faq);
+
+            await _context.SaveChangesAsync();
+
+            return Redirect($"{Url.Action(nameof(Index))}#faqs");
+        }
+
+        //============================== EDIT AVAILABILITY ==============================
         public async Task<IActionResult> EditAvailability()
         {
             var availabilityDto = await _availabilityService.GetAvailabilityDetailsAsync();
@@ -191,13 +263,12 @@ namespace AshleyNashaePhotography.Web.Controllers
                 BlockedDates = availabilityDto.BlockedDates
             };
 
-            return View(vm);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         public async Task<IActionResult> EditAvailability(EditAvailabilityViewModel vm)
         {
-            // Get current blocked dates
             var currentBlockedDates = await _context.BlockedDates.ToListAsync();
 
             // Remove dates that Admin unblocked
@@ -223,11 +294,11 @@ namespace AshleyNashaePhotography.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //============================== CHANGE HOME PAGE HERO IMAGE ==============================
         [HttpPost]
         public async Task<IActionResult> ChangeHomePageImages(IFormFile? aboutMeFile,
             IFormFile? portfolio1File, IFormFile? portfolio2File, IFormFile? portfolio3File)
         {
-            //Get Current Images
             var homePage = await _context.HomePages
                 .Include(x => x.AboutMePhoto)
                 .FirstOrDefaultAsync();
@@ -346,6 +417,7 @@ namespace AshleyNashaePhotography.Web.Controllers
             return RedirectToAction(nameof(EditHomePage));
         }
 
+        //============================== EDIT PORTFOLIO HERO ==============================
         [HttpPost]
         public async Task<IActionResult> ChangeHero(int id, IFormFile? heroFile)
         {
@@ -355,7 +427,6 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             if (current == null) return NotFound();
 
-            //Null Model Validation
             if (heroFile == null || heroFile.Length == 0)
             {
                 ModelState.AddModelError("heroFile", "Please select a photo.");
@@ -363,7 +434,6 @@ namespace AshleyNashaePhotography.Web.Controllers
                 return View("EditPortfolio", current);
             }
 
-            //Extension Model Validation
             var extension = GetExtension(heroFile);
             if (extension == null)
             {
@@ -372,10 +442,8 @@ namespace AshleyNashaePhotography.Web.Controllers
                 return View("EditPortfolio", current);
             }
 
-            //Save File & Get Image Path
             var imagePath = await SaveImageFileAsync(id, heroFile, extension, PhotoRole.PortfolioHero);
 
-            //Update Hero
             current.HeroImage!.ImagePath = imagePath;
             
             await _context.SaveChangesAsync();
@@ -383,6 +451,7 @@ namespace AshleyNashaePhotography.Web.Controllers
             return RedirectToAction(nameof(EditPortfolio), new { id = current.Id });
         }
 
+        //============================== ADD PHOTO ==============================
         [HttpPost]
         public async Task<IActionResult> AddPhoto(int id, IFormFile? photoFile)
         {
@@ -392,7 +461,6 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             if (portfolio == null) return NotFound();
 
-            //Null Model Validation
             if (photoFile == null || photoFile.Length == 0)
             {
                 ModelState.AddModelError("photoFile", "Please select a photo.");
@@ -400,7 +468,6 @@ namespace AshleyNashaePhotography.Web.Controllers
                 return View("EditPortfolio", portfolio);
             }
 
-            //Extension Model Validation
             var extension = GetExtension(photoFile);
 
             if (extension == null)
@@ -410,10 +477,8 @@ namespace AshleyNashaePhotography.Web.Controllers
                 return View("EditPortfolio", portfolio);
             }
 
-            //Save File
             var imagePath = await SaveImageFileAsync(id, photoFile, extension, PhotoRole.PortfolioPhoto);
 
-            //Add Photo
             portfolio.Photos.Add(new Photo(imagePath));
 
             await _context.SaveChangesAsync();
@@ -422,6 +487,7 @@ namespace AshleyNashaePhotography.Web.Controllers
 
         }
 
+        //============================== REMOVE PHOTO ==============================
         [HttpPost]
         public async Task<IActionResult> RemovePhoto(int? photoId, int portfolioId)
         {
@@ -438,6 +504,7 @@ namespace AshleyNashaePhotography.Web.Controllers
             return Redirect($"{Url.Action(nameof(EditPortfolio), new { id = portfolioId })}#photos");
         }
 
+        //============================== PRIVATE METH0DS ==============================
         private async Task<string> SaveImageFileAsync(int id, IFormFile file, string extension, PhotoRole role)
         {
             var uploadFolder = Path.Combine(_enviorment.WebRootPath, "images", $"Portfolio{id}");

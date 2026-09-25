@@ -57,9 +57,9 @@
 
         <hr class="my-5" />  <!--Line Seperation-->
 
+        <!--Availability/Calendar-->
         <h1 class="print-header">AVAILABILITY</h1>
 
-        <!--Availability/Calendar-->
         <div class="d-flex flex-column align-items-center gap-4">
             <div class="admin-calendar">
                 <input id="availability-calendar" class="d-none" />
@@ -165,6 +165,45 @@
                 </a>
             </div>
 
+        </div>
+
+        <hr class="my-5" />  <!--Line Seperation-->
+
+        <!--FAQ Management-->
+        <h1 class="print-header">FAQ</h1>
+
+        <div class="d-flex flex-column gap-5" id="faqs">
+
+            @foreach (var faq in Model.FAQs)
+            {
+                <div>
+                    <p>Q - @faq.Question</p>
+
+                    <p>A - @faq.Answer</p>
+
+                    <div class="d-flex flex-row gap-1">
+                        <a asp-action="EditFAQ" asp-route-id="@faq.Id" class="site-button site-button-sm">
+                            <i class="bi bi-pencil fs-6"></i>
+                        </a>
+
+                        <form asp-action="DeleteFAQ"
+                              asp-route-id="@faq.Id"
+                              method="post">
+
+                            <button type="submit"
+                                    class="site-button site-button-sm">
+                                <i class="bi bi-x-lg fs-6"></i>
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+            }
+
+            <a asp-action="AddFAQ" class="site-button align-self-center" style="max-width: 200px">
+                Add FAQ
+                <i class="bi bi-plus-lg fs-6 ms-2"></i>
+            </a>
         </div>
 
     </div>
