@@ -16,17 +16,21 @@ namespace AshleyNashaePhotography.Web.Models
         [Required]
         public DateOnly Date { get; set; }
 
-        //Temporarily nullable
-        public int? SessionTypeId { get; set; }
- 
-        //Temporarily nullable
-        public SessionType? SessionType { get; set; } = null!;
+        [Required]
+        public int SessionTypeId { get; set; }
+
+        [Required]
+        public SessionType? SessionType { get; set; }
+
+        [Required]
+        public string Email { get; set; } = null!;
 
         public string? PhoneNumber { get; set; }
 
-        public string? Email { get; set; }
-
         public string? ClientNotes { get; set; }
 
+        public bool PostSessionEmailSent { get; set; }
+
+        public string? ReviewToken { get; set; }
     }
 }

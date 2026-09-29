@@ -120,6 +120,7 @@ namespace AshleyNashaePhotography.Web.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -133,7 +134,13 @@ namespace AshleyNashaePhotography.Web.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SessionTypeId")
+                    b.Property<bool>("PostSessionEmailSent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReviewToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SessionTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -173,6 +180,35 @@ namespace AshleyNashaePhotography.Web.Migrations
                     b.HasIndex("HomePageHeroImageId");
 
                     b.ToTable("Portfolios");
+                });
+
+            modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrivateFeedback")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ReviewText")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.SessionType", b =>
@@ -425,7 +461,9 @@ namespace AshleyNashaePhotography.Web.Migrations
                 {
                     b.HasOne("AshleyNashaePhotography.Web.Models.SessionType", "SessionType")
                         .WithMany()
-                        .HasForeignKey("SessionTypeId");
+                        .HasForeignKey("SessionTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("SessionType");
                 });

@@ -1,0 +1,35 @@
+﻿@model Review
+
+<div class="booking-container">
+	<section class="booking-content">
+
+		<h1 class="print-header">SUBMIT REVIEW</h1>
+
+		<form asp-action="AddReview"
+			  method="post"
+			  class="submit-spinner d-flex flex-column align-items-center gap-4">
+
+			<div asp-validation-summary="All" class="text-danger"></div>
+
+			<div class="w-100">
+				<label asp-for="ReviewText" class="form-label text-nowrap">
+					REVIEW <span class="text-muted small ms-1">(May be displayed publicly)</span>
+				</label>
+				<textarea asp-for="ReviewText" class="form-control" rows="3"></textarea>
+			</div>
+
+			<div class="w-100">
+				<label asp-for="PrivateFeedback" class="form-label text-nowrap">
+					FEEDBACK <span class="text-muted small ms-1">(Private — only Ashley will see this)</span>
+				</label>
+				<textarea asp-for="PrivateFeedback" class="form-control" rows="3"></textarea>
+			</div>
+
+			<button type="submit" class="site-button" title="Submit Review">SUBMIT REVIEW</button>
+
+		</form>
+
+
+	</section>
+
+</div>
