@@ -2,6 +2,7 @@ using AshleyNashaePhotography.Web.Data;
 using AshleyNashaePhotography.Web.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Resend;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +21,23 @@ builder.Services
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
 builder.Services.AddScoped<AvailabilityService>();
+builder.Services.AddScoped<EmailService>();
 
+//Resend
+builder.Services.AddOptions();
+
+builder.Services.AddHttpClient<ResendClient>();
+
+builder.Services.Configure<ResendClientOptions>(options =>
+{
+    options.ApiToken = builder.Configuration["Resend:ApiKey"]!;
+});
+
+builder.Services.AddTransient<IResend, ResendClient>();
+
+
+//BUILD
 var app = builder.Build();
 
 // Seed Initial Data

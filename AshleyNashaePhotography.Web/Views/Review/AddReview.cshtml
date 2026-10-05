@@ -9,6 +9,8 @@
 			  method="post"
 			  class="submit-spinner d-flex flex-column align-items-center gap-4">
 
+			<input type="hidden" name="token" value="@ViewBag.Token" />
+
 			<div asp-validation-summary="All" class="text-danger"></div>
 
 			<div class="w-100">

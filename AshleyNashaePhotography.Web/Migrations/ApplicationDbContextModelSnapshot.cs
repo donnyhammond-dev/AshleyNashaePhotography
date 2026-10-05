@@ -137,6 +137,9 @@ namespace AshleyNashaePhotography.Web.Migrations
                     b.Property<bool>("PostSessionEmailSent")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("ReviewSubmitted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ReviewToken")
                         .HasColumnType("nvarchar(max)");
 

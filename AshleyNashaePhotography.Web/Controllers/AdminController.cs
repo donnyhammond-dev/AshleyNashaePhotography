@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Elfie.Model.Strings;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Common;
 
 namespace AshleyNashaePhotography.Web.Controllers
 {
@@ -20,13 +21,15 @@ namespace AshleyNashaePhotography.Web.Controllers
         private readonly ApplicationDbContext _context;
         private readonly AvailabilityService _availabilityService;
         private readonly IWebHostEnvironment _enviorment;
+        private readonly EmailService _emailService;
 
-        public AdminController(ApplicationDbContext context, 
-            AvailabilityService availabilityService,IWebHostEnvironment enviorment)
+        public AdminController(ApplicationDbContext context, AvailabilityService availabilityService,
+            IWebHostEnvironment enviorment, EmailService emailService)
         {
             _context = context;
             _availabilityService = availabilityService;
             _enviorment = enviorment;
+            _emailService = emailService;
         }
 
         //============================== INDEX ==============================
@@ -415,6 +418,41 @@ namespace AshleyNashaePhotography.Web.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(EditHomePage));
+        }
+
+        //============================== Review Request ==============================
+
+        [HttpPost]
+        public async Task<IActionResult> SendReviewRequest(int id)
+        {
+            var session = await _context.PhotoSessions.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (session == null) return NotFound(); 
+
+            if (session.Date >= DateOnly.FromDateTime(DateTime.Now))
+            {
+                TempData["Error"] = "Cannot send a customer review request until after the Session's date!";
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            if (session.PostSessionEmailSent) return RedirectToAction(nameof(Index));
+
+            session.ReviewToken = Guid.NewGuid().ToString();
+
+            var reviewUrl = Url.Action(
+                "AddReview",
+                "Review",
+                new { token = session.ReviewToken },
+                Request.Scheme);
+
+            await _emailService.SendReviewRequestAsync(session.FirstName, session.Email, reviewUrl!);
+
+            session.PostSessionEmailSent = true;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         //============================== EDIT PORTFOLIO HERO ==============================

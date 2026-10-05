@@ -19,7 +19,6 @@ namespace AshleyNashaePhotography.Web.Models
         [Required]
         public int SessionTypeId { get; set; }
 
-        [Required]
         public SessionType? SessionType { get; set; }
 
         [Required]
@@ -32,5 +31,7 @@ namespace AshleyNashaePhotography.Web.Models
         public bool PostSessionEmailSent { get; set; }
 
         public string? ReviewToken { get; set; }
+
+        public bool ReviewSubmitted { get; set; }
     }
 }
