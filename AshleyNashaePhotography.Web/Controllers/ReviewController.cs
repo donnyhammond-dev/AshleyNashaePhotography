@@ -42,6 +42,13 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             if (session.ReviewSubmitted) return RedirectToAction("Confirmation");
 
+            review.FirstName = session.FirstName;
+            review.LastInitial = session.LastName.Substring(0, 1) + ".";
+
+            ModelState.Remove(nameof(Review.FirstName));
+            ModelState.Remove(nameof(Review.LastInitial));
+
+
             if (!ModelState.IsValid)
             {
                 ViewBag.Token = token;

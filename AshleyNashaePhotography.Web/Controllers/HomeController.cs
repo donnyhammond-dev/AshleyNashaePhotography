@@ -36,6 +36,10 @@ namespace AshleyNashaePhotography.Web.Controllers
                 .Include(p => p.HomePageHeroImage)
                 .FirstOrDefaultAsync(p => p.Id == 3);
 
+            var reviews = await _context.Reviews
+                .Where(x => x.IsPublished)
+                .ToListAsync();
+
             if (homePage == null) return NotFound();
 
             if (portfolio1 == null) return NotFound();
@@ -50,7 +54,8 @@ namespace AshleyNashaePhotography.Web.Controllers
                 HomePage = homePage,
                 Portfolio1 = portfolio1,
                 Portfolio2 = portfolio2,
-                Portfolio3 = portfolio3
+                Portfolio3 = portfolio3,
+                Reviews = reviews
             };
 
             return View(vm);

@@ -61,6 +61,7 @@ using (var scope = app.Services.CreateScope())
     await DbInitializer.SeedPortfoliosAsync(context);
     await DbInitializer.SeedSessionTypesAsync(context);
     await DbInitializer.SeedFAQAsync(context);
+    await DbInitializer.SeedReviewsAsync(context);
     await DbInitializer.SeedIdentityUserAsync(userManager, roleManager, builder.Configuration, logger);
 }
 

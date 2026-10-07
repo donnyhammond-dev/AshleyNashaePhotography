@@ -299,5 +299,44 @@ namespace AshleyNashaePhotography.Web.Data
                 await context.SaveChangesAsync();
             }
         }
+
+        public static async Task SeedReviewsAsync(ApplicationDbContext context)
+        {
+            if (!await context.Reviews.AnyAsync())
+            {
+                var reviews = new List<Review>
+                {
+                     new()
+                     {
+                         FirstName = "Emily",
+                         LastInitial = "R.",
+                         ReviewText = "Ashley made us feel so comfortable from the moment we started. The photos turned out absolutely beautiful and feel so natural and true to us. We will treasure them forever.",
+                         IsPublished = true
+                     },
+                     
+                     new()
+                     {
+                         FirstName = "Sarah",
+                         LastInitial = "M.",
+                         ReviewText = "We had such a wonderful experience with Ashley! She captured so many genuine moments and made the entire session feel effortless and fun. Our photos are everything we hoped for and more.",
+                         IsPublished = true
+                     },
+                     
+                     new()
+                     {
+                         FirstName = "Lauren",
+                         LastInitial = "T.",
+                         ReviewText = "Ashley has an incredible eye for capturing the little moments that mean the most. Our photos feel warm, natural, and completely us. I could not be happier with how they turned out.",
+                         IsPublished = true
+                     }
+                     
+                };
+
+
+                context.Reviews.AddRange(reviews);
+
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

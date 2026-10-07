@@ -8,5 +8,6 @@ namespace AshleyNashaePhotography.Web.ViewModels
         public required Portfolio Portfolio1 { get; set; }
         public required Portfolio Portfolio2 { get; set; }
         public required Portfolio Portfolio3 { get; set; }
+        public List<Review> Reviews { get; set; } = [];
     }
 }

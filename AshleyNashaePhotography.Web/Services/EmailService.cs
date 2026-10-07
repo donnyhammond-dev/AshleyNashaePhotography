@@ -19,7 +19,7 @@ namespace AshleyNashaePhotography.Web.Services
             {
                 From = "Ashley Nashae Photography <onboarding@resend.dev>",
                 Subject = "We'd Love to Hear About Your Experience",
-                HtmlBody = "<p>This is a test review request.</p>"
+                HtmlBody = $"""<a href="{reviewLink}">Leave a Review</a>"""
 
             };
             message.To.Add(clientEmail);

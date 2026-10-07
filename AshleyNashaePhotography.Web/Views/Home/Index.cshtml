@@ -50,15 +50,26 @@
 	<img class="about-photo mb-5"
 		 src="@Model.HomePage.AboutMePhoto?.ImagePath"
 		 alt="Ashley" />
-
-	<!--Book Now-->
-	<div class="text-center mt-5">
-		<a asp-controller="Booking" asp-action="Create"
-		   class="site-button"
-		   title="Book Now">BOOK NOW</a>
-	</div>
-
 </div>
+
+<!--Reviews-->
+<div class="about-container">
+	<div class="about-content">
+
+		<div class="d-flex flex-column align-items-center gap-4">
+			
+			@foreach (var review in Model.Reviews)
+			{
+				<div>
+					<p class="font-cursive">@review.ReviewText</p>
+					<p class="font-cursive">@(review.FirstName + " " + review.LastInitial)</p>
+				</div>
+			}
+		</div>
+
+	</div>
+</div>
+
 
 
 

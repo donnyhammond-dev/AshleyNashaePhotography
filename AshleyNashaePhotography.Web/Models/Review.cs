@@ -6,7 +6,9 @@ namespace AshleyNashaePhotography.Web.Models
     {
         public int Id { get; set; }
 
-        public required string Name { get; set; }
+        public required string FirstName { get; set; }
+
+        public required string LastInitial { get; set; }
 
         [StringLength(1000, MinimumLength = 20, 
             ErrorMessage = "Your review must be between 20 and 1000 characters.")]

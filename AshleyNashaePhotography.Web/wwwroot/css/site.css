@@ -118,6 +118,13 @@ body {
         font-size: 1.2rem;
     }
 
+
+.font-cursive {
+    font-family: "Italianno", cursive;
+    font-size: clamp(1.5rem, 2.5vw, 4rem);
+    font-weight: 300;
+}
+
 .print-header {
     font-family: "Cormorant Garamond", serif;
     font-weight: 300;
