@@ -30,7 +30,7 @@
 
         <h1 class="print-header">BOOKINGS</h1>
 
-        <!--Bookings Table -->
+        <!-------------------Bookings Table ------------------->
         <div class="table-responsive mb-5">
             <table class="table table-striped">
                 <thead>
@@ -85,7 +85,67 @@
 
         <hr class="my-5" />  <!--Line Seperation-->
 
-        <!--Availability/Calendar-->
+        <!------------------- Reviews ------------------->
+        <h1 class="print-header" id="reviews">REVIEWS</h1>
+
+        <div class="d-flex flex-column gap-5">
+
+            @foreach (var review in Model.Reviews)
+            {
+                <div class="d-flex justify-content-between align-items-center gap-4">
+
+                    <div>
+                        <p>@review.ReviewText</p>
+
+                        <div class="d-flex align-items-center gap-3">
+                            <span>@(review.FirstName + " " + review.LastInitial)</span>
+
+                            @if (review.IsPublished)
+                            {
+                                <span class="text-success small">
+                                    <i class="bi bi-check-circle-fill"></i> Published
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">
+                                    <i class="bi bi-circle"></i> Hidden
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <form asp-controller="Admin"
+                          asp-action="ChangeReviewPublishing"
+                          asp-route-id="@review.Id"
+                          method="post">
+
+                        <button type="submit"
+                                class="site-button site-button-sm"
+                                title="@(review.IsPublished ? "Unpublish Review" : "Publish Review")"
+                                aria-label="@(review.IsPublished ? "Unpublish Review" : "Publish Review")">
+
+                            @if (review.IsPublished)
+                            {
+                                <span>Hide</span>
+                            }
+                            else
+                            {
+                                <span>Publish</span>
+                            }
+
+                        </button>
+
+                    </form>
+
+                </div>
+            }
+
+        </div>
+
+        <hr class="my-5" />  <!--Line Seperation-->
+
+        <!-------------------Availability/Calendar------------------->
         <h1 class="print-header">AVAILABILITY</h1>
 
         <div class="d-flex flex-column align-items-center gap-4">
@@ -103,7 +163,7 @@
 
         <hr class="my-5" />  <!--Line Seperation-->
 
-        <!--Session Type Details-->
+        <!-----------------Session Type Details------------------->
         <h1 class="print-header">SESSION TYPES</h1>
 
         <div class="d-flex flex-column align-items-center gap-4">
@@ -150,7 +210,7 @@
 
         <hr class="my-5" />  <!--Line Seperation-->
 
-        <!--Edit Portfolios-->
+        <!-------------------Edit Portfolios------------------->
         <h1 class="print-header">PORTFOLIOS</h1>
 
         <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-4">
@@ -177,7 +237,7 @@
 
         <hr class="my-5" />  <!--Line Seperation-->
 
-        <!--Edit Home Page-->
+        <!-------------------Edit Home Page------------------->
         <h1 class="print-header">HOME PAGE</h1>
 
         <div class="basic-card portfolio-card mx-auto"
@@ -197,7 +257,7 @@
 
         <hr class="my-5" />  <!--Line Seperation-->
 
-        <!--FAQ Management-->
+        <!-------------------FAQ Management------------------->
         <h1 class="print-header">FAQ</h1>
 
         <div class="d-flex flex-column gap-5" id="faqs">

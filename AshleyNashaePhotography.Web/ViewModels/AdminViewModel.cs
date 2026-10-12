@@ -8,6 +8,7 @@ namespace AshleyNashaePhotography.Web.ViewModels
         public List<PhotoSession> Sessions { get; set; } = [];
         public List<SessionType> SessionTypes { get; set; } = [];
         public List<FAQ> FAQs { get; set; } = [];
+        public List<Review> Reviews { get; set; } = [];
         public HomePage HomePage { get; set; } = null!;
         public List<DateOnly> BookedDates { get; set; } = [];
         public List<DateOnly> BlockedDates { get; set; } = [];

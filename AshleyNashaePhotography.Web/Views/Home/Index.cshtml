@@ -53,16 +53,16 @@
 </div>
 
 <!--Reviews-->
-<div class="about-container">
-	<div class="about-content">
+<div class="reviews-container">
+	<div class="reviews-content">
 
 		<div class="d-flex flex-column align-items-center gap-4">
 			
 			@foreach (var review in Model.Reviews)
 			{
 				<div>
-					<p class="font-cursive">@review.ReviewText</p>
-					<p class="font-cursive">@(review.FirstName + " " + review.LastInitial)</p>
+					<p>@review.ReviewText</p>
+					<p>@(review.FirstName + " " + review.LastInitial)</p>
 				</div>
 			}
 		</div>

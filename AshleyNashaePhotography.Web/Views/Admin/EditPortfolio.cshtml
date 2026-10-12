@@ -99,11 +99,12 @@
             <h2 id="photos" class="print-header">PHOTOS</h2>
 
           <!--Current Photos-->
-            <div class="d-flex flex-wrap justify-content-center gap-3">
+            <div id="sortable-photos"
+                 class="d-flex flex-wrap justify-content-center gap-3">
 
                 @foreach (var photo in Model.Photos)
                 {
-                    <div class="admin-photo-wrapper">
+                    <div class="admin-photo-wrapper" data-id="@photo.Id">
                         <img src="@photo.ImagePath"
                              alt="@Model.Title portfolio photo"
                              class="admin-photo-thumbnail" />
@@ -163,3 +164,20 @@
         </div>
     </section>
 </div>
+
+@section Scripts {
+    <script>
+        const photoContainer = document.getElementById("sortable-photos");
+
+        new Sortable(photoContainer, {
+            animation: 150,
+
+            onEnd: function () {
+                const photoIds = Array.from(photoContainer.children)
+                    .map(photo => photo.dataset.id);
+
+                console.log(photoIds);
+            }
+        });
+    </script>
+}

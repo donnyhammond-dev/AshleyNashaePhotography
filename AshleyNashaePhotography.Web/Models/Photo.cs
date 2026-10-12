@@ -7,7 +7,7 @@ namespace AshleyNashaePhotography.Web.Models
     {
         public int Id { get; set; }
         public required string ImagePath { get; set; }
-
+        public int DisplayOrder { get; set; }
         public Photo() { }
 
         [SetsRequiredMembers]

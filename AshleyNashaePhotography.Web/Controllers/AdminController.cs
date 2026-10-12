@@ -60,6 +60,8 @@ namespace AshleyNashaePhotography.Web.Controllers
                 .Include(x => x.HeroImage)
                 .ToListAsync(),
 
+                Reviews = await _context.Reviews.ToListAsync(),
+
                 FAQs = await _context.FAQs
                 .OrderBy(x => x.Id)
                 .ToListAsync(),
@@ -266,7 +268,7 @@ namespace AshleyNashaePhotography.Web.Controllers
                 BlockedDates = availabilityDto.BlockedDates
             };
 
-            return RedirectToAction(nameof(Index));
+            return View(vm);
         }
 
         [HttpPost]
@@ -429,7 +431,7 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             if (session == null) return NotFound(); 
 
-            if (session.Date >= DateOnly.FromDateTime(DateTime.Now))
+            if (session.Date > DateOnly.FromDateTime(DateTime.Now))
             {
                 TempData["Error"] = "Cannot send a customer review request until after the Session's date!";
 
@@ -454,6 +456,22 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        //============================== Publish/Depublish Reviews ==============================
+        [HttpPost]
+        public async Task<IActionResult> ChangeReviewPublishing(int id)
+        {
+            var review = await _context.Reviews.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (review == null) return NotFound();
+
+            review.IsPublished = !review.IsPublished;
+
+            await _context.SaveChangesAsync();
+
+            return Redirect($"{Url.Action(nameof(Index))}#reviews");
+        }
+
 
         //============================== EDIT PORTFOLIO HERO ==============================
         [HttpPost]
