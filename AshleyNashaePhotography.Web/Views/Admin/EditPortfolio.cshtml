@@ -158,7 +158,7 @@
                 </div>
 
                 <button type="submit" class="site-button">
-                    Save Changes
+                    Add Photo
                 </button>
             </form>
         </div>
@@ -172,12 +172,24 @@
         new Sortable(photoContainer, {
             animation: 150,
 
-            onEnd: function () {
-                const photoIds = Array.from(photoContainer.children)
-                    .map(photo => photo.dataset.id);
+            onEnd: async function () {
 
-                console.log(photoIds);
+                const photoIds = Array.from(photoContainer.children)
+                    .map(photo => Number(photo.dataset.id));
+
+                const response = await fetch('@Url.Action("ReorderPhotos", "Admin")', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(photoIds)
+                });
+
+                if (!response.ok) {
+                    alert("Could not save photo order.");
+                }
             }
         });
     </script>
+}
 }

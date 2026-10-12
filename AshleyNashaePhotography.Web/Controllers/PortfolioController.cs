@@ -17,7 +17,7 @@ namespace AshleyNashaePhotography.Web.Controllers
         {
             var portfolio = await _context.Portfolios
                 .Include(p => p.HeroImage)
-                .Include(p => p.Photos)
+                .Include(p => p.Photos.OrderBy(photo => photo.DisplayOrder))
                 .FirstOrDefaultAsync(p => p.Id == 1);
 
             if (portfolio == null) return NotFound();
@@ -29,7 +29,7 @@ namespace AshleyNashaePhotography.Web.Controllers
         {
             var portfolio = await _context.Portfolios
                 .Include(p => p.HeroImage)
-                .Include(p => p.Photos)
+                .Include(p => p.Photos.OrderBy(photo => photo.DisplayOrder))
                 .FirstOrDefaultAsync(p => p.Id == 2);
 
             if (portfolio == null) return NotFound();
@@ -41,7 +41,7 @@ namespace AshleyNashaePhotography.Web.Controllers
         {
             var portfolio = await _context.Portfolios
                 .Include(p => p.HeroImage)
-                .Include(p => p.Photos)
+                .Include(p => p.Photos.OrderBy(photo => photo.DisplayOrder))
                 .FirstOrDefaultAsync(p => p.Id == 3);
 
             if (portfolio == null) return NotFound();

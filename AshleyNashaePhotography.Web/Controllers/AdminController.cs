@@ -121,7 +121,7 @@ namespace AshleyNashaePhotography.Web.Controllers
         public async Task<IActionResult> EditPortfolio(int id)
         {
             var portfolio = await _context.Portfolios
-             .Include(x => x.Photos)
+             .Include(x => x.Photos.OrderBy(photo => photo.DisplayOrder))
              .Include(x => x.HeroImage)
              .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -150,6 +150,30 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             return RedirectToAction(nameof(EditPortfolio), new { id = portfolio.Id });
         }
+
+        //============================== REORDER PORTFOLIO PHOTOS ==============================
+        [HttpPost]
+        public async Task<IActionResult> ReorderPhotos([FromBody] List<int> photoIds)
+        {
+            var photos = await _context.Photos
+                .Where(p => photoIds.Contains(p.Id))
+                .ToListAsync();
+
+            for (int i = 0; i < photoIds.Count; i++)
+            {
+                var photo = photos.FirstOrDefault(p => p.Id == photoIds[i]);
+
+                if (photo != null)
+                {
+                    photo.DisplayOrder = i;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
 
         //============================== EDIT HOME PAGE ==============================
         public async Task<IActionResult> EditHomePage()
