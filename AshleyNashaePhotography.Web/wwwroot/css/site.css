@@ -79,7 +79,7 @@ body {
     background-color: #f5f0e8;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 992px) {
     .dropdown-menu {
         display: block;
         opacity: 0;
@@ -259,14 +259,10 @@ body {
 
 .portfolio-quote p {
     font-family: "Italianno", cursive;
-    font-size: clamp(1rem, 5vw, 3rem);
+    font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 300;
     text-decoration: none;
 }
-
-/* ==========================================
-   Portfolio Photo Gallery
-   ========================================== */
 
 /* ==========================================
    Portfolio Photo Gallery
