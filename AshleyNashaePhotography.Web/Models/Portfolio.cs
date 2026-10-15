@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AshleyNashaePhotography.Web.Enums;
 
 namespace AshleyNashaePhotography.Web.Models
 {
@@ -12,7 +13,7 @@ namespace AshleyNashaePhotography.Web.Models
 
         [MaxLength(100, ErrorMessage = "Title cannot exceed 100 characters.")]
         public string? Quote { get; set; }
-
+        public FontColor QuoteTextColor { get; set; }
         public int? HomePageHeroImageId { get; set; }
         public Photo? HomePageHeroImage { get; set; }
 

@@ -8,9 +8,21 @@
 	<section class="portfolio-section d-flex justify-content-center align-items-center"
 			 style="background-image: url('@Model.HeroImage?.ImagePath');">
 
+			 <!--Quote Font Colors-->
+		@{
+			string textColor = Model.QuoteTextColor switch
+			{
+				FontColor.White => "text-white",
+				FontColor.Black => "text-black",
+				FontColor.Cream => "text-cream",
+				_ => "text-white"
+			};
+		}
+
 		<div class="portfolio-quote text-center">
-			<p>@Model.Quote</p>
+			<p class="@textColor">@Model.Quote</p>
 		</div>
+
 	</section>
 </div>
 

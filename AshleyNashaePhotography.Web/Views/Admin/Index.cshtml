@@ -23,7 +23,7 @@
         <!--Alert Messages-->
         @if (TempData["Error"] != null)
         {
-            <div class="alert alert-success">
+            <div class="alert alert-danger">
                 @TempData["Error"]
             </div>
         }
@@ -48,7 +48,7 @@
                 <tbody>
                     @foreach (var session in Model.Sessions)
                     {
-                        <tr>
+                        <tr class="@(session.Date < DateOnly.FromDateTime(DateTime.Today) ? "past-session" : "")">
                             <td>@session.Date</td>
                             <td>@(session.LastName + ", " + session.FirstName)</td>
                             <td>@session.SessionType!.Name</td>
@@ -60,7 +60,7 @@
                                 {
                                     <i class="bi bi-check-lg fs-5"></i>
                                 }
-                                else
+                                else if (!session.PostSessionEmailSent && session.Date <= DateOnly.FromDateTime(DateTime.Now))
                                 {
                                     <form asp-action="SendReviewRequest"
                                           asp-route-id="@session.Id"

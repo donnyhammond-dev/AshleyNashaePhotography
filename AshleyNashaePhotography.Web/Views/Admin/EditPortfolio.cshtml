@@ -1,4 +1,6 @@
-﻿@model Portfolio
+﻿@using AshleyNashaePhotography.Web.Enums
+
+@model Portfolio
 
 <div class="basic-container text-center">
 
@@ -39,6 +41,11 @@
 
                 <span asp-validation-for="Quote" class="text-danger"></span>
 
+            </div>
+
+            <div>
+                <label asp-for="QuoteTextColor" class="form-label">Quote Text Color</label>
+                <select asp-for="QuoteTextColor" asp-items="Html.GetEnumSelectList<FontColor>()" class="form-select"></select>
             </div>
 
             <!-- Submit -->

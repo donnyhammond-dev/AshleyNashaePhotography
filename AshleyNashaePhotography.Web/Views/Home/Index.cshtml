@@ -3,7 +3,7 @@
 @model HomePageViewModel
 
 <!--Hero/Portfolio Navigation-->
-<div class="basic-container">
+<div class="hero-container">
 	<section class="hero-section d-flex flex-column"
 			 id="hero"
 			 data-image="@Model.Portfolio3.HomePageHeroImage?.ImagePath"
@@ -47,7 +47,7 @@
 		<p>@Model.HomePage.AboutMeDescription</p>
 	</div>
 
-	<img class="about-photo mb-5"
+	<img class="about-photo"
 		 src="@Model.HomePage.AboutMePhoto?.ImagePath"
 		 alt="Ashley" />
 </div>

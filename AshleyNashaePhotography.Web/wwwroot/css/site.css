@@ -26,6 +26,7 @@ body {
     margin-bottom: 60px;
     font-family: "Cormorant Garamond", serif;
     background-color: #f5f0e8;
+    min-width: 379px;
 }
 
 /* ==========================================
@@ -75,12 +76,24 @@ body {
 }
 
 .dropdown-menu {
-    display: block;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
     background-color: #f5f0e8;
+}
+
+@media (min-width: 576px) {
+    .dropdown-menu {
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
+    }
+
+        .nav-item.dropdown:hover .dropdown-menu,
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
 }
 
 .nav-item.dropdown:hover .dropdown-menu {
@@ -134,6 +147,14 @@ body {
     font-family: "Italianno", cursive;
 }
 
+.text-cream {
+    color: tan;
+}
+
+.past-session td {
+    color: #999;
+}
+
 /* ==========================================
    Home Page Hero Section
    ========================================== */
@@ -165,7 +186,7 @@ body {
 
 .hero-quote p {
     font-family: "Italianno", cursive;
-    font-size: clamp(1rem, 4vw, 3rem);
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 300;
     text-decoration: none;
     color: white;
@@ -178,9 +199,10 @@ body {
     margin: 3rem 2rem 5rem;
 }
 
+
 .about-photo {
     display: block;
-    width: 70%;
+    width: 90%;
     max-height: 85vh;
     object-fit: cover;
     object-position: center 35%;
@@ -193,20 +215,22 @@ body {
 }
 
 .about-content {
-    max-width: 100rem;
+    width: 100%;
+    max-width: 35rem;
     margin: 1rem auto;
-    text-align: center;
+    text-align: justify;
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(0.75rem, 1.5vw, 2rem);
+    font-size: clamp(1rem, 1.5vw, 2rem);
     font-weight: 300;
-    white-space: pre-line;
+    white-space: normal;
 }
+
 
 /* ==========================================
    Reviews
    ========================================== */
 .reviews-container {
-    margin: 10rem 2rem;
+    margin: 5rem 2rem;
 }
 
 .reviews-content {
@@ -238,36 +262,54 @@ body {
     font-size: clamp(1rem, 5vw, 3rem);
     font-weight: 300;
     text-decoration: none;
-    color: white;
 }
 
 /* ==========================================
    Portfolio Photo Gallery
    ========================================== */
+
+/* ==========================================
+   Portfolio Photo Gallery
+   ========================================== */
+
+/* Mobile (Default) */
 .photo-gallery {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    margin: 4rem 2rem;
+    margin: 2rem 1rem;
 }
 
     .photo-gallery img {
-        height: 280px;
-        width: auto;
-        max-width: 50%;
+        width: calc((100% - 1rem) / 2);
+        height: auto;
         object-fit: cover;
-        flex-grow: 1;
     }
 
-        .photo-gallery img:hover {
-            transform: scale(1.02);
+/* Tablet and Desktop */
+@media (min-width: 576px) {
+
+    .photo-gallery {
+        margin: 4rem 2rem;
+    }
+
+        .photo-gallery img {
+            height: 280px;
+            width: auto;
+            max-width: 50%;
+            flex-grow: 1;
         }
+}
+
+.photo-gallery img:hover {
+    transform: scale(1.02);
+}
 
 .portfolio-card {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    max-width: 300px
+    max-width: 300px;
 }
 
 /* ==========================================

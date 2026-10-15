@@ -13,6 +13,7 @@ using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Common;
 
+
 namespace AshleyNashaePhotography.Web.Controllers
 {
     [Authorize(Roles = "Admin")]
@@ -145,6 +146,7 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             existingPortfolio.Title = portfolio.Title;
             existingPortfolio.Quote = portfolio.Quote;
+            existingPortfolio.QuoteTextColor = portfolio.QuoteTextColor;
 
             await _context.SaveChangesAsync();
 
@@ -193,24 +195,61 @@ namespace AshleyNashaePhotography.Web.Controllers
             var vm = new HomePageViewModel
             {
                 HomePage = homePage,
-                Portfolio1 = portfolio1!,
-                Portfolio2 = portfolio2!,
-                Portfolio3 = portfolio3!
+                Portfolio1 = portfolio1,
+                Portfolio2 = portfolio2,
+                Portfolio3 = portfolio3
             };
 
             return View(vm);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditHomePage(HomePageViewModel vm)
         {
+            var homePage = await _context.HomePages
+                .Include(x => x.AboutMePhoto)
+                .FirstOrDefaultAsync();
+
+            if (homePage == null) return NotFound();
+
             if (!ModelState.IsValid)
             {
+                var portfolio1 = await _context.Portfolios
+                    .Include(x => x.HomePageHeroImage)
+                    .FirstOrDefaultAsync(x => x.Id == 1);
+
+                var portfolio2 = await _context.Portfolios
+                    .Include(x => x.HomePageHeroImage)
+                    .FirstOrDefaultAsync(x => x.Id == 2);
+
+                var portfolio3 = await _context.Portfolios
+                    .Include(x => x.HomePageHeroImage)
+                    .FirstOrDefaultAsync(x => x.Id == 3);
+
+                if (portfolio1 == null ||
+                    portfolio2 == null ||
+                    portfolio3 == null)
+                {
+                    return NotFound();
+                }
+
+                vm.Portfolio1 = portfolio1;
+                vm.Portfolio2 = portfolio2;
+                vm.Portfolio3 = portfolio3;
+
+                // Restore display data while preserving the submitted text.
+                if (vm.HomePage == null)
+                {
+                    vm.HomePage = homePage;
+                }
+                else
+                {
+                    vm.HomePage.AboutMePhoto = homePage.AboutMePhoto;
+                }
+
                 return View(vm);
             }
-
-            var homePage = await _context.HomePages.FirstOrDefaultAsync();
-            if (homePage == null) return NotFound();
 
             homePage.HeroQuote = vm.HomePage.HeroQuote;
             homePage.AboutMeDescription = vm.HomePage.AboutMeDescription;
