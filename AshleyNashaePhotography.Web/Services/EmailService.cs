@@ -6,6 +6,7 @@ namespace AshleyNashaePhotography.Web.Services
     public class EmailService
     {
         private readonly IResend _resend;
+    
 
         public EmailService(IResend resend)
         {
@@ -17,28 +18,34 @@ namespace AshleyNashaePhotography.Web.Services
         {
             var message = new EmailMessage
             {
-                From = "Ashley Nashae Photography <onboarding@resend.dev>",
+                From = "Ashley Nashae Photography <reviews@ashleynashaephotography.com>",
                 Subject = "We'd Love to Hear About Your Experience",
                 HtmlBody = $"""<a href="{reviewLink}">Leave a Review</a>"""
 
             };
             message.To.Add(clientEmail);
 
-            await _resend.EmailSendAsync(message);
+            var response = await _resend.EmailSendAsync(message);
+
+            if (!response.Success) throw new Exception("Resend failed to send the email.");
+
+
         }
 
         public async Task SendTestEmailAsync()
         {
             var message = new EmailMessage
             {
-                From = "Ashley Nashae Photography <onboarding@resend.dev>",
+                From = "Ashley Nashae Photography <reviews@ashleynashaephotography.com>",
                 Subject = "Ashley Nashae Photography Test",
                 HtmlBody = "<strong>It works!</strong>"
             };
 
-            message.To.Add("dkhammond1989@gmail.com");
+            message.To.Add("ashleygrimmett@yahoo.com");
 
-            await _resend.EmailSendAsync(message);
+            var response = await _resend.EmailSendAsync(message);
+
+            if (!response.Success) throw new Exception("Resend failed to send the email.");
         }
     }
 }

@@ -37,8 +37,22 @@ builder.Services.Configure<ResendClientOptions>(options =>
 builder.Services.AddTransient<IResend, ResendClient>();
 
 
+
 //BUILD
 var app = builder.Build();
+
+/* --TEMPORARY EMAIL TEST--
+if (app.Environment.IsDevelopment())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var emailService = scope.ServiceProvider
+            .GetRequiredService<EmailService>();
+
+        await emailService.SendTestEmailAsync();
+    }
+}
+*/
 
 // Seed Initial Data
 using (var scope = app.Services.CreateScope())

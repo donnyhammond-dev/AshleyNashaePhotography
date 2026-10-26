@@ -23,14 +23,15 @@ namespace AshleyNashaePhotography.Web.Controllers
         private readonly AvailabilityService _availabilityService;
         private readonly IWebHostEnvironment _enviorment;
         private readonly EmailService _emailService;
-
+        private readonly ILogger<AdminController> _logger;
         public AdminController(ApplicationDbContext context, AvailabilityService availabilityService,
-            IWebHostEnvironment enviorment, EmailService emailService)
+            IWebHostEnvironment enviorment, EmailService emailService, ILogger<AdminController> logger)
         {
             _context = context;
             _availabilityService = availabilityService;
             _enviorment = enviorment;
             _emailService = emailService;
+            _logger = logger;
         }
 
         //============================== INDEX ==============================
@@ -362,10 +363,14 @@ namespace AshleyNashaePhotography.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //============================== CHANGE HOME PAGE HERO IMAGE ==============================
+
+        //============================== CHANGE HOME PAGE IMAGES ==============================
         [HttpPost]
-        public async Task<IActionResult> ChangeHomePageImages(IFormFile? aboutMeFile,
-            IFormFile? portfolio1File, IFormFile? portfolio2File, IFormFile? portfolio3File)
+        public async Task<IActionResult> ChangeHomePageImages(
+            IFormFile? aboutMeFile,
+            IFormFile? portfolio1File,
+            IFormFile? portfolio2File,
+            IFormFile? portfolio3File)
         {
             var homePage = await _context.HomePages
                 .Include(x => x.AboutMePhoto)
@@ -387,7 +392,6 @@ namespace AshleyNashaePhotography.Web.Controllers
                 .FirstOrDefaultAsync(x => x.Id == 3);
             if (portfolio3 == null) return NotFound();
 
-            // Build ViewModel for validation fails
             var vm = new HomePageViewModel
             {
                 HomePage = homePage,
@@ -396,94 +400,95 @@ namespace AshleyNashaePhotography.Web.Controllers
                 Portfolio3 = portfolio3
             };
 
-
-            //About Me
-            if (aboutMeFile != null && aboutMeFile.Length > 0)
+            // Validate every supplied image before saving any files.
+            var files = new (string Key, IFormFile? File)[]
             {
-                var aboutMeExtension = GetExtension(aboutMeFile);
+                ("aboutMeFile", aboutMeFile),
+                ("portfolio1File", portfolio1File),
+                ("portfolio2File", portfolio2File),
+                ("portfolio3File", portfolio3File)
+            };
 
-                if (aboutMeExtension == null)
+            try
+            {
+                foreach (var (key, file) in files)
                 {
-                    ModelState.AddModelError(
-                        "aboutMeFile",
-                        "Please select a JPG, PNG, or WEBP photo.");
+                    if (file == null) continue;
 
+                    var validationMessage =
+                        ImageFileValidationService.ValidateFile(file);
+
+                    if (validationMessage != null)
+                    {
+                        ModelState.AddModelError(key, validationMessage);
+                    }
+                }
+
+                if (!ModelState.IsValid)
+                {
                     return View("EditHomePage", vm);
                 }
 
-                var imagePath = await SaveAboutMeFileAsync(aboutMeFile, aboutMeExtension);
-
-                homePage.AboutMePhoto!.ImagePath = imagePath;
-            }
-
-
-            //Portfolio 1
-            if (portfolio1File != null && portfolio1File.Length > 0)
-            {
-                var portfolio1Extension = GetExtension(portfolio1File);
-
-                if (portfolio1Extension == null)
+                // About Me
+                if (aboutMeFile != null)
                 {
-                    ModelState.AddModelError(
-                        "portfolio1File",
-                        "Please select a JPG, PNG, or WEBP photo.");
+                    var extension = Path.GetExtension(
+                        aboutMeFile.FileName).ToLowerInvariant();
 
-                    return View("EditHomePage", vm);
+                    var imagePath = await SaveAboutMeFileAsync(
+                        aboutMeFile, extension);
+
+                    homePage.AboutMePhoto!.ImagePath = imagePath;
                 }
 
-                var imagePath = await SaveImageFileAsync(
-                    1, portfolio1File, portfolio1Extension, PhotoRole.HomePageHero);
-
-                portfolio1.HomePageHeroImage!.ImagePath = imagePath;
-            }
-
-
-            //Portfolio 2
-            if (portfolio2File != null && portfolio2File.Length > 0)
-            {
-                var portfolio2Extension = GetExtension(portfolio2File);
-
-                if (portfolio2Extension == null)
+                // Portfolio 1
+                if (portfolio1File != null)
                 {
-                    ModelState.AddModelError(
-                        "portfolio2File",
-                        "Please select a JPG, PNG, or WEBP photo.");
+                    var extension = Path.GetExtension(
+                        portfolio1File.FileName).ToLowerInvariant();
 
-                    return View("EditHomePage", vm);
+                    var imagePath = await SaveImageFileAsync(
+                        1, portfolio1File, extension, PhotoRole.HomePageHero);
+
+                    portfolio1.HomePageHeroImage!.ImagePath = imagePath;
                 }
 
-                var imagePath = await SaveImageFileAsync(
-                    2, portfolio2File, portfolio2Extension, PhotoRole.HomePageHero);
-
-                portfolio2.HomePageHeroImage!.ImagePath = imagePath;
-            }
-
-
-            //Portfolio 3
-            if (portfolio3File != null && portfolio3File.Length > 0)
-            {
-                var portfolio3Extension = GetExtension(portfolio3File);
-
-                if (portfolio3Extension == null)
+                // Portfolio 2
+                if (portfolio2File != null)
                 {
-                    ModelState.AddModelError(
-                        "portfolio3File",
-                        "Please select a JPG, PNG, or WEBP photo.");
+                    var extension = Path.GetExtension(
+                        portfolio2File.FileName).ToLowerInvariant();
 
-                    return View("EditHomePage", vm);
+                    var imagePath = await SaveImageFileAsync(
+                        2, portfolio2File, extension, PhotoRole.HomePageHero);
+
+                    portfolio2.HomePageHeroImage!.ImagePath = imagePath;
                 }
 
-                var imagePath = await SaveImageFileAsync(
-                    3, portfolio3File, portfolio3Extension, PhotoRole.HomePageHero);
+                // Portfolio 3
+                if (portfolio3File != null)
+                {
+                    var extension = Path.GetExtension(
+                        portfolio3File.FileName).ToLowerInvariant();
 
-                portfolio3.HomePageHeroImage!.ImagePath = imagePath;
+                    var imagePath = await SaveImageFileAsync(
+                        3, portfolio3File, extension, PhotoRole.HomePageHero);
+
+                    portfolio3.HomePageHeroImage!.ImagePath = imagePath;
+                }
+
+                await _context.SaveChangesAsync();
             }
-
-            //Save
-            await _context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to upload home page images");
+                TempData["Error"] = "Failed to upload image. Please try again.";
+                return RedirectToAction(nameof(EditHomePage));
+            }
 
             return RedirectToAction(nameof(EditHomePage));
         }
+
 
         //============================== Review Request ==============================
 
@@ -492,7 +497,7 @@ namespace AshleyNashaePhotography.Web.Controllers
         {
             var session = await _context.PhotoSessions.FirstOrDefaultAsync(x => x.Id == id);
 
-            if (session == null) return NotFound(); 
+            if (session == null) return NotFound();
 
             if (session.Date > DateOnly.FromDateTime(DateTime.Now))
             {
@@ -511,7 +516,23 @@ namespace AshleyNashaePhotography.Web.Controllers
                 new { token = session.ReviewToken },
                 Request.Scheme);
 
-            await _emailService.SendReviewRequestAsync(session.FirstName, session.Email, reviewUrl!);
+            try
+            {
+                _logger.LogInformation("Sending review request email using Resend");
+
+                await _emailService.SendReviewRequestAsync(session.FirstName, session.Email, reviewUrl!);
+
+                TempData["Success"] = "Review Request Email was successfully sent!";
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Resend failed to send the Review Request Email");
+
+                TempData["Error"] = "Review Request Email failed to send, please try again later";
+
+                return RedirectToAction(nameof(Index));
+            }
+
 
             session.PostSessionEmailSent = true;
 
@@ -536,39 +557,48 @@ namespace AshleyNashaePhotography.Web.Controllers
         }
 
 
+
         //============================== EDIT PORTFOLIO HERO ==============================
         [HttpPost]
         public async Task<IActionResult> ChangeHero(int id, IFormFile? heroFile)
         {
             var current = await _context.Portfolios
                 .Include(x => x.HeroImage)
+                .Include(x => x.HeroImage)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (current == null) return NotFound();
 
-            if (heroFile == null || heroFile.Length == 0)
+            var validationMessage = ImageFileValidationService.ValidateFile(heroFile);
+
+            if (validationMessage != null)
             {
-                ModelState.AddModelError("heroFile", "Please select a photo.");
+                ModelState.AddModelError("heroFile", validationMessage);
 
                 return View("EditPortfolio", current);
             }
 
-            var extension = GetExtension(heroFile);
-            if (extension == null)
+            var extension = Path.GetExtension(heroFile!.FileName).ToLowerInvariant();
+
+            try
             {
-                ModelState.AddModelError("heroFile", "Please select a JPG, PNG, or WEBP photo.");
+                var imagePath = await SaveImageFileAsync(
+                    id, heroFile!, extension, PhotoRole.PortfolioHero);
 
-                return View("EditPortfolio", current);
+                current.HeroImage!.ImagePath = imagePath;
+
+                await _context.SaveChangesAsync();
             }
-
-            var imagePath = await SaveImageFileAsync(id, heroFile, extension, PhotoRole.PortfolioHero);
-
-            current.HeroImage!.ImagePath = imagePath;
-            
-            await _context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to upload portfolio hero image");
+                TempData["Error"] = "Failed to upload photo. Please try again.";
+                return RedirectToAction(nameof(EditPortfolio), new { id });
+            }
 
             return RedirectToAction(nameof(EditPortfolio), new { id = current.Id });
         }
+
 
         //============================== ADD PHOTO ==============================
         [HttpPost]
@@ -576,31 +606,38 @@ namespace AshleyNashaePhotography.Web.Controllers
         {
             var portfolio = await _context.Portfolios
                 .Include(x => x.Photos)
+                .Include(x => x.HeroImage)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (portfolio == null) return NotFound();
 
-            if (photoFile == null || photoFile.Length == 0)
+            var validationMessage = ImageFileValidationService.ValidateFile(photoFile);
+
+            if (validationMessage != null)
             {
-                ModelState.AddModelError("photoFile", "Please select a photo.");
+                ModelState.AddModelError("photoFile", validationMessage);
 
                 return View("EditPortfolio", portfolio);
             }
 
-            var extension = GetExtension(photoFile);
+            var extension = Path.GetExtension(photoFile!.FileName).ToLowerInvariant();
 
-            if (extension == null)
+            try
             {
-                ModelState.AddModelError("photoFile", "Please select a JPG, PNG, or WEBP photo.");
+                var imagePath = await SaveImageFileAsync(id, photoFile, extension, 
+                    PhotoRole.PortfolioPhoto);
 
-                return View("EditPortfolio", portfolio);
+                portfolio.Photos.Add(new Photo(imagePath));
+
+                await _context.SaveChangesAsync();
+
             }
-
-            var imagePath = await SaveImageFileAsync(id, photoFile, extension, PhotoRole.PortfolioPhoto);
-
-            portfolio.Photos.Add(new Photo(imagePath));
-
-            await _context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to upload portfolio photo");
+                TempData["Error"] = "Failed to upload photo. Please try again.";
+                return RedirectToAction(nameof(EditPortfolio), new { id });
+            }
 
             return Redirect($"{Url.Action(nameof(EditPortfolio), new { id = id })}#photos");
 
@@ -616,9 +653,13 @@ namespace AshleyNashaePhotography.Web.Controllers
 
             if (photo == null) return NotFound();
 
+            var imagePath = photo.ImagePath;
+
             _context.Photos.Remove(photo);
 
             await _context.SaveChangesAsync();
+
+            DeleteImageFile(imagePath);
 
             return Redirect($"{Url.Action(nameof(EditPortfolio), new { id = portfolioId })}#photos");
         }
@@ -660,16 +701,56 @@ namespace AshleyNashaePhotography.Web.Controllers
             return $"/images/{fileName}";
         }
 
-        private string? GetExtension(IFormFile file)
+        private void DeleteImageFile(string imagePath)
         {
-            var extension = Path.GetExtension(file.FileName).ToLower();
+            if (string.IsNullOrWhiteSpace(imagePath))
+                return;
 
-            var allowedExtensions = new string[] { ".jpg", ".jpeg", ".png", ".webp" };
+            // Convert URL path to physical file path
+            var relativePath = imagePath.TrimStart('/')
+                .Replace('/', Path.DirectorySeparatorChar);
 
-            return allowedExtensions.Contains(extension) ? extension : null;
+            var physicalPath = Path.GetFullPath(
+                Path.Combine(_enviorment.WebRootPath, relativePath));
+
+            // Ensure the file is inside wwwroot/images
+            var imagesFolder = Path.GetFullPath(
+                Path.Combine(_enviorment.WebRootPath, "images"));
+
+            if (!Path.IsPathFullyQualified(imagePath) &&
+                Path.IsPathRooted(imagePath) &&
+                !imagePath.StartsWith('/'))
+                return;
+
+            var allowedPrefix = Path.TrimEndingDirectorySeparator(imagesFolder)
+                + Path.DirectorySeparatorChar;
+
+            if (!physicalPath.StartsWith(
+                allowedPrefix,
+                OperatingSystem.IsWindows()
+                    ? StringComparison.OrdinalIgnoreCase
+                    : StringComparison.Ordinal))
+            {
+                _logger.LogWarning("Invalid image deletion path: {ImagePath}", imagePath);
+                return;
+            }
+
+            try
+            {
+                if (System.IO.File.Exists(physicalPath))
+                {
+                    System.IO.File.Delete(physicalPath);
+                }
+            }
+            catch (IOException ex)
+            {
+                _logger.LogError(ex, "Failed to delete image: {ImagePath}", imagePath);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                _logger.LogError(ex, "Access denied deleting image: {ImagePath}", imagePath);
+            }
         }
-
-
     }
 
 }

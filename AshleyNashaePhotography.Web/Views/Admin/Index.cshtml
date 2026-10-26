@@ -23,8 +23,15 @@
         <!--Alert Messages-->
         @if (TempData["Error"] != null)
         {
-            <div class="alert alert-danger">
+            <div class="alert alert-danger" role="alert">
                 @TempData["Error"]
+            </div>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["Success"]
             </div>
         }
 
@@ -51,7 +58,7 @@
                         <tr class="@(session.Date < DateOnly.FromDateTime(DateTime.Today) ? "past-session" : "")">
                             <td>@session.Date</td>
                             <td>@(session.LastName + ", " + session.FirstName)</td>
-                            <td>@session.SessionType!.Name</td>
+                            <td>@($"{session.SessionType!.Name} ({session.SessionType.DurationMinutes} mins)")</td>
                             <td>@session.Email</td>
                             <td>@session.PhoneNumber</td>
                             <td>@session.ClientNotes</td>
