@@ -199,4 +199,12 @@
         });
     </script>
 }
+
+<!--Add photo fail anchor-->
+@if (ViewData.ModelState.ContainsKey("photoFile") &&
+     ViewData.ModelState["photoFile"]!.Errors.Count > 0)
+{
+    <script>
+        document.getElementById("photos")?.scrollIntoView();
+    </script>
 }

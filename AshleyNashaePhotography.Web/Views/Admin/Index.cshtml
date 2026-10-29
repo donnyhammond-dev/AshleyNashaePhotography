@@ -47,7 +47,7 @@
                         <th>SESSION TYPE</th>
                         <th>EMAIL</th>
                         <th>PHONE</th>
-                        <th style="width:20%">NOTES</th>
+                        <th>NOTES</th>
                         <th>REVIEW REQUEST</th>
                     </tr>
                 </thead>
@@ -61,7 +61,14 @@
                             <td>@($"{session.SessionType!.Name} ({session.SessionType.DurationMinutes} mins)")</td>
                             <td>@session.Email</td>
                             <td>@session.PhoneNumber</td>
-                            <td>@session.ClientNotes</td>
+                            <td>
+                                <button type="button"
+                                        class="site-button site-button-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#clientNotesModal-@session.Id">
+                                    View
+                                </button>
+                            </td>
                             <td>
                                 @if (session.PostSessionEmailSent)
                                 {
@@ -82,6 +89,9 @@
                                 }
                             </td>
                         </tr>
+
+                        <!--View Client Notes Modal-->
+                        <partial name="_ViewClientNotesModal" model="session" />
                     }
 
                 </tbody>
@@ -105,6 +115,7 @@
                         <p>@review.ReviewText</p>
 
                         <div class="d-flex align-items-center gap-3">
+
                             <span>@(review.FirstName + " " + review.LastInitial)</span>
 
                             @if (review.IsPublished)
@@ -119,36 +130,53 @@
                                     <i class="bi bi-circle"></i> Hidden
                                 </span>
                             }
+
                         </div>
                     </div>
 
-                    <form asp-controller="Admin"
-                          asp-action="ChangeReviewPublishing"
-                          asp-route-id="@review.Id"
-                          method="post">
+                    <div class="d-flex flex-column gap-1">
 
-                        <button type="submit"
+                        <form asp-controller="Admin"
+                              asp-action="ChangeReviewPublishing"
+                              asp-route-id="@review.Id"
+                              method="post">
+
+                            <button type="submit"
+                                    class="site-button site-button-sm"
+                                    title="@(review.IsPublished ? "Unpublish Review" : "Publish Review")"
+                                    aria-label="@(review.IsPublished ? "Unpublish Review" : "Publish Review")">
+
+                                @if (review.IsPublished)
+                                {
+                                    <span>Hide</span>
+                                }
+                                else
+                                {
+                                    <span>Publish</span>
+                                }
+
+                            </button>
+
+                        </form>
+
+                        <button type="button"
                                 class="site-button site-button-sm"
-                                title="@(review.IsPublished ? "Unpublish Review" : "Publish Review")"
-                                aria-label="@(review.IsPublished ? "Unpublish Review" : "Publish Review")">
-
-                            @if (review.IsPublished)
-                            {
-                                <span>Hide</span>
-                            }
-                            else
-                            {
-                                <span>Publish</span>
-                            }
-
+                                data-bs-toggle="modal"
+                                data-bs-target="#feedbackModal-@review.Id">
+                            Feedback
                         </button>
 
-                    </form>
+                    </div>
 
                 </div>
+
+                <!--ViewFeedback Modal-->
+                <partial name="_ViewFeedbackModal" model="review" />
             }
 
         </div>
+
+        <hr class="my-5" />
 
         <hr class="my-5" />  <!--Line Seperation-->
 
