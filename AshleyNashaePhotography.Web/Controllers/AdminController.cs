@@ -8,12 +8,7 @@ using AshleyNashaePhotography.Web.ViewModels;
 using AspNetCoreGeneratedDocument;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Elfie.Model.Strings;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
-using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Common;
-
 
 namespace AshleyNashaePhotography.Web.Controllers
 {
