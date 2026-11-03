@@ -17,7 +17,7 @@ namespace AshleyNashaePhotography.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.12")
+                .HasAnnotation("ProductVersion", "10.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -35,7 +35,7 @@ namespace AshleyNashaePhotography.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlockedDates");
+                    b.ToTable("BlockedDates", (string)null);
                 });
 
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.FAQ", b =>
@@ -56,7 +56,7 @@ namespace AshleyNashaePhotography.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FAQs");
+                    b.ToTable("FAQs", (string)null);
                 });
 
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.HomePage", b =>
@@ -80,7 +80,7 @@ namespace AshleyNashaePhotography.Web.Migrations
 
                     b.HasIndex("AboutMePhotoId");
 
-                    b.ToTable("HomePages");
+                    b.ToTable("HomePages", (string)null);
                 });
 
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Photo", b =>
@@ -105,7 +105,7 @@ namespace AshleyNashaePhotography.Web.Migrations
 
                     b.HasIndex("PortfolioId");
 
-                    b.ToTable("Photos");
+                    b.ToTable("Photos", (string)null);
                 });
 
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.PhotoSession", b =>
@@ -153,7 +153,7 @@ namespace AshleyNashaePhotography.Web.Migrations
 
                     b.HasIndex("SessionTypeId");
 
-                    b.ToTable("PhotoSessions");
+                    b.ToTable("PhotoSessions", (string)null);
                 });
 
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Portfolio", b =>
@@ -188,7 +188,7 @@ namespace AshleyNashaePhotography.Web.Migrations
 
                     b.HasIndex("HomePageHeroImageId");
 
-                    b.ToTable("Portfolios");
+                    b.ToTable("Portfolios", (string)null);
                 });
 
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.Review", b =>
@@ -221,7 +221,7 @@ namespace AshleyNashaePhotography.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("AshleyNashaePhotography.Web.Models.SessionType", b =>
@@ -249,7 +249,7 @@ namespace AshleyNashaePhotography.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SessionTypes");
+                    b.ToTable("SessionTypes", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -9,7 +9,13 @@
 			 data-image="@Model.Portfolio3.HomePageHeroImage?.ImagePath"
 			 style="background-image: url('@Model.Portfolio3.HomePageHeroImage?.ImagePath')">
 
-		<nav class="hero-navigation d-flex w-100 justify-content-around mt-6">
+		<nav class="hero-navigation
+			d-flex flex-column flex-md-row
+			align-items-center
+			justify-content-around
+			flex-grow-1
+			w-100">
+
 			<a asp-controller="Portfolio"
 			   asp-action="Portfolio1"
 			   data-image="@Model.Portfolio1.HomePageHeroImage?.ImagePath"

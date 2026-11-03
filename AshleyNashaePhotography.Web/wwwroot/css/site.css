@@ -26,7 +26,6 @@ body {
     margin-bottom: 60px;
     font-family: "Cormorant Garamond", serif;
     background-color: #f5f0e8;
-    min-width: 379px;
 }
 
 /* ==========================================
@@ -39,7 +38,13 @@ body {
 
 .navbar-brand {
     font-family: "Italianno", cursive;
-    font-size: 2.5rem;
+    font-size: 2.3rem;
+}
+
+@media (max-width: 376px) {
+    .navbar-brand {
+        font-size: 2rem;
+    }
 }
 
 .navbar-nav .nav-link {
@@ -151,6 +156,7 @@ body {
     color: #999;
 }
 
+
 /* ==========================================
    Home Page Hero Section
    ========================================== */
@@ -168,7 +174,7 @@ body {
 
 .hero-navigation a {
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(2.5rem, 8vw, 7rem);
+    font-size: clamp(5rem, 8vw, 7rem);
     font-weight: 300;
     text-decoration: none;
     color: white;
