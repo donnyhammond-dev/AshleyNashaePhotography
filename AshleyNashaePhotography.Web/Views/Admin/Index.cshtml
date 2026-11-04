@@ -17,7 +17,7 @@
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 <!--Container-->
-<section class="basic-container">
+<section class="admin-container">
     <div class="admin-content">
 
         <!--Alert Messages-->
@@ -142,8 +142,7 @@
                               method="post">
 
                             <button type="submit"
-                                    class="site-button site-button-sm"
-                                    style="width:120px"
+                                    class="site-button site-button-sm admin-review-button"
                                     title="@(review.IsPublished ? "Unpublish Review" : "Publish Review")"
                                     aria-label="@(review.IsPublished ? "Unpublish Review" : "Publish Review")">
 
@@ -161,8 +160,7 @@
                         </form>
 
                         <button type="button"
-                                class="site-button site-button-sm"
-                                style="width:120px"
+                                class="site-button site-button-sm admin-review-button"
                                 data-bs-toggle="modal"
                                 data-bs-target="#feedbackModal-@review.Id">
                             Feedback

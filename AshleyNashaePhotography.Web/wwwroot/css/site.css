@@ -36,16 +36,26 @@ body {
     padding-right: 10px;
 }
 
-.navbar-brand {
-    font-family: "Italianno", cursive;
-    font-size: 2.3rem;
-}
-
-@media (max-width: 376px) {
-    .navbar-brand {
-        font-size: 2rem;
+@media (max-width: 322px) {
+    .navbar {
+        padding-left: 0;
+        padding-right: 0;
     }
 }
+
+@media (max-width: 297px) {
+    .navbar {
+        padding-left: 1px;
+        padding-right: 1px;
+    }
+}
+
+.navbar-brand {
+    font-family: "Italianno", cursive;
+    font-size: clamp(2rem, 5vw, 2.5rem);
+}
+
+
 
 .navbar-nav .nav-link {
     font-family: "Cormorant Garamond", serif;
@@ -101,396 +111,443 @@ body {
         }
 }
 
-.nav-item.dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+.navbar-toggler {
+    padding: 2px 6px;
 }
 
-/* ==========================================
+    .nav-item.dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    /* ==========================================
    Default Templates & Fonts
    ========================================== */
-.basic-container {
-    margin: 1rem 2rem;
-}
-
-.basic-content {
-    padding: 2rem;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    outline: 1px solid #222;
-    outline-offset: 8px;
-}
-
-.basic-card {
-    border: 1px solid #222;
-    padding: 2rem;
-    min-width: 15rem;
-}
-    .basic-card h1 {
-        font-size: 1.6rem;
-        font-weight: 500;
+    .basic-container {
+        margin: 1rem 2rem;
     }
 
-    .basic-card p {
-        font-size: 1.2rem;
+    .basic-content {
+        padding: 2rem;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        outline: 1px solid #222;
+        outline-offset: 8px;
     }
 
-.print-header {
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 300;
-    letter-spacing: .1rem;
-    text-align: center;
-}
+    .basic-card {
+        border: 1px solid #222;
+        padding: 2rem;
+        min-width: 15rem;
+    }
 
-.cursive-header {
-    font-family: "Italianno", cursive;
-    font-weight: 300;
-}
+        .basic-card h1 {
+            font-size: 1.6rem;
+            font-weight: 500;
+        }
 
-.text-cream {
-    color: tan;
-}
+        .basic-card p {
+            font-size: 1.2rem;
+        }
 
-.past-session td {
-    color: #999;
-}
+    .print-header {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 300;
+        letter-spacing: .1rem;
+        text-align: center;
+    }
 
+    .cursive-header {
+        font-family: "Italianno", cursive;
+        font-weight: 300;
+        text-align: center;
+    }
 
-/* ==========================================
+    .text-cream {
+        color: tan;
+    }
+
+    .past-session td {
+        color: #999;
+    }
+    /* ==========================================
    Home Page Hero Section
    ========================================== */
-.hero-section {
-    min-height: 85vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: opacity .75s ease;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    outline: 1px solid #222;
-    outline-offset: 8px;
-}
-
-.hero-navigation a {
-    font-family: "Cormorant Garamond", serif;
-    font-size: clamp(5rem, 8vw, 7rem);
-    font-weight: 300;
-    text-decoration: none;
-    color: white;
-    transition: transform .2s ease, letter-spacing .2s ease;
-}
-    .hero-navigation a:hover {
-        transform: scale(1.03);
-        color: lemonchiffon;
-        letter-spacing: .05em;
+    .hero-section {
+        min-height: 85vh;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: opacity .75s ease;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        outline: 1px solid #222;
+        outline-offset: 8px;
     }
 
-.hero-quote p {
-    font-family: "Italianno", cursive;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 300;
-    text-decoration: none;
-    color: white;
-}
+    .hero-navigation a {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(4rem, 8vw, 7rem);
+        font-weight: 300;
+        text-decoration: none;
+        color: white;
+        transition: transform .2s ease, letter-spacing .2s ease;
+    }
 
-/* ==========================================
+        .hero-navigation a:hover {
+            transform: scale(1.03);
+            color: lemonchiffon;
+            letter-spacing: .05em;
+        }
+
+    .hero-quote p {
+        font-family: "Italianno", cursive;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 300;
+        text-decoration: none;
+        color: white;
+    }
+    /* ==========================================
    About Me Section
    ========================================== */
-.about-container {
-    margin: 3rem 2rem 5rem;
-}
-
-
-.about-photo {
-    display: block;
-    width: 90%;
-    max-height: 85vh;
-    object-fit: cover;
-    object-position: center 35%;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 50%;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    outline: 1px solid #222;
-    outline-offset: 8px;
-    margin: 0 auto;
-}
-
-.about-content {
-    width: 100%;
-    max-width: 35rem;
-    margin: 1rem auto;
-    text-align: justify;
-    font-family: "Cormorant Garamond", serif;
-    font-size: clamp(1rem, 1.5vw, 2rem);
-    font-weight: 300;
-    white-space: normal;
-}
-
-
-/* ==========================================
-   Reviews
-   ========================================== */
-.reviews-container {
-    margin: 5rem 2rem;
-}
-
-.reviews-content {
-    font-family: "Italianno", cursive;
-    font-size: clamp(1.5rem, 2.5vw, 4rem);
-    font-weight: 300;
-    max-width: 75rem;
-    margin: 1rem auto;
-    text-align: center;
-}
-
-
-/* ==========================================
-   Portfolio Hero Section
-   ========================================== */
-.portfolio-section {
-    min-height: 60vh;
-    background-size: cover;
-    background-position: center 35%;
-    background-repeat: no-repeat;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    outline: 1px solid #222;
-    outline-offset: 8px;
-}
-
-.portfolio-quote p {
-    font-family: "Italianno", cursive;
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 300;
-    text-decoration: none;
-}
-
-/* ==========================================
-   Portfolio Photo Gallery
-   ========================================== */
-
-/* Mobile (Default) */
-.photo-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin: 2rem 1rem;
-}
-
-    .photo-gallery img {
-        width: calc((100% - 1rem) / 2);
-        height: auto;
-        object-fit: cover;
+    .about-container {
+        margin: 3rem 2rem 5rem;
     }
 
-/* Tablet and Desktop */
-@media (min-width: 576px) {
 
+    .about-photo {
+        display: block;
+        width: 90%;
+        max-height: 85vh;
+        object-fit: cover;
+        object-position: center 35%;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 50%;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        outline: 1px solid #222;
+        outline-offset: 8px;
+        margin: 0 auto;
+    }
+
+    .about-content {
+        width: 100%;
+        max-width: 35rem;
+        margin: 1rem auto;
+        text-align: justify;
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.5rem, 2vw, 3rem);
+        font-weight: 300;
+        white-space: normal;
+    }
+    /* ==========================================
+   Reviews
+   ========================================== */
+    .reviews-container {
+        margin: 5rem 2rem;
+    }
+
+    .reviews-content {
+        font-family: "Italianno", cursive;
+        font-size: clamp(1.5rem, 2.5vw, 4rem);
+        font-weight: 300;
+        max-width: 75rem;
+        margin: 1rem auto;
+        text-align: center;
+    }
+    /* ==========================================
+   Portfolio Hero Section
+   ========================================== */
+    .portfolio-section {
+        min-height: 60vh;
+        background-size: cover;
+        background-position: center 35%;
+        background-repeat: no-repeat;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        outline: 1px solid #222;
+        outline-offset: 8px;
+    }
+
+    .portfolio-quote p {
+        font-family: "Italianno", cursive;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 300;
+        text-decoration: none;
+    }
+    /* ==========================================
+   Portfolio Photo Gallery
+   ========================================== */
+    /* Mobile (Default) */
     .photo-gallery {
-        margin: 4rem 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin: 2rem 1rem;
     }
 
         .photo-gallery img {
-            height: 280px;
-            width: auto;
-            max-width: 50%;
-            flex-grow: 1;
+            width: calc((100% - 1rem) / 2);
+            height: auto;
+            object-fit: cover;
         }
-}
+    /* Tablet and Desktop */
+    @media (min-width: 576px) {
 
-.photo-gallery img:hover {
-    transform: scale(1.02);
-}
+        .photo-gallery {
+            margin: 4rem 2rem;
+        }
 
-.portfolio-card {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    max-width: 300px;
-}
+            .photo-gallery img {
+                height: 280px;
+                width: auto;
+                max-width: 50%;
+                flex-grow: 1;
+            }
+    }
 
-/* ==========================================
+    .photo-gallery img:hover {
+        transform: scale(1.02);
+    }
+
+    .portfolio-card {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        max-width: 300px;
+    }
+    /* ==========================================
    Lightbox (Click to Enlarge)
    ========================================== */
-.lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    backdrop-filter: blur(8px);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-    .lightbox.show {
-        display: flex;
+    .lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        backdrop-filter: blur(8px);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
     }
 
-#lightbox-image {
-    max-width: 90vw;
-    max-height: 90vh;
-    width: auto;
-    height: auto;
-}
+        .lightbox.show {
+            display: flex;
+        }
 
-/* ==========================================
+    #lightbox-image {
+        max-width: 90vw;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+    }
+    /* ==========================================
    Admin Dashboard
    ========================================== */
-.admin-content {
-    padding: 2rem;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    outline: 1px solid #222;
-    outline-offset: 8px;
-}
-
-.admin-hero-preview {
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
-}
-
-.admin-photo-thumbnail {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-}
-
-.admin-photo-wrapper {
-    position: relative;
-}
-
-.photo-delete {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-    .photo-delete:hover {
-        transform: scale(1.05);
+    .admin-container {
+        margin: 5rem 2rem;
     }
 
-/* ==========================================
+    .admin-content {
+        padding: 2rem;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        outline: 1px solid #222;
+        outline-offset: 8px;
+    }
+
+    @media (max-width: 400px) {
+        .admin-container {
+            margin: 2rem 1rem;
+        }
+
+        .admin-content {
+            padding: 1rem;
+        }
+    }
+
+    .admin-hero-preview {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .admin-photo-thumbnail {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .admin-photo-wrapper {
+        position: relative;
+    }
+
+    .photo-delete {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+        .photo-delete:hover {
+            transform: scale(1.05);
+        }
+    /* ==========================================
    Book Appointment
    ========================================== */
-.booking-container {
-    margin: 5rem 2rem;
-}
-
-.booking-content {
-    max-width: 50rem;
-    margin: 0 auto;
-    padding: 3rem;
-
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    outline: 1px solid #222;
-    outline-offset: 8px;
-}
-
-/* ==========================================
-   Flatpicker Calendar Responsiveness
-   ========================================== */
-.flatpickr-calendar.inline {
-    width: 100%;
-    max-width: 100%;
-}
-
-.flatpickr-days,
-.dayContainer {
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-}
-
-.flatpickr-day {
-    width: 14.2857%;
-    max-width: none;
-    flex-basis: 14.2857%;
-}
-
-#session-date {
-    display: none;
-}
-
-.admin-calendar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 261.6px;
-    margin: 0 auto;
-}
-
-    .admin-calendar .booked-date {
-        background-color: lightblue;
+    .booking-container {
+        margin: 5rem 2rem;
     }
 
-    .admin-calendar .blocked-date {
+    .booking-content {
+        max-width: 50rem;
+        margin: 0 auto;
+        padding: 3rem;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        outline: 1px solid #222;
+        outline-offset: 8px;
+    }
+
+    @media (max-width: 500px) {
+        .booking-content {
+            padding: 2rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .booking-container {
+            margin: 2rem 1rem;
+        }
+
+        .booking-content {
+            padding: 1rem;
+        }
+    }
+    /* ==========================================
+   Flatpicker Calendar Responsiveness
+   ========================================== */
+    .flatpickr-calendar.inline {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .flatpickr-days,
+    .dayContainer {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .flatpickr-day {
+        width: 14.2857%;
+        max-width: none;
+        flex-basis: 14.2857%;
+    }
+
+    .admin-calendar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 308px;
+        margin: 0 auto;
+    }
+
+        .admin-calendar .flatpickr-days,
+        .admin-calendar .dayContainer {
+            width: 100%;
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .admin-calendar .booked-date {
+            background-color: lightblue;
+        }
+
+        .admin-calendar .blocked-date {
+            background-color: indianred;
+        }
+
+        .admin-calendar .flatpickr-day.selected {
+            background: transparent;
+            border-color: transparent;
+            color: inherit;
+        }
+
+        .admin-calendar .flatpickr-day.blocked-date,
+        .admin-calendar .flatpickr-day.blocked-date.selected {
+            background: indianred;
+            border-color: indianred;
+            color: white;
+        }
+
+    @media (max-width: 461px) {
+        #session-date + .flatpickr-calendar {
+            width: 308px;
+            max-width: none;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    .calendar-legend-circle {
+        display: inline-block;
+        width: 39px;
+        height: 39px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .blocked-legend {
         background-color: indianred;
     }
 
-    .admin-calendar .flatpickr-day.selected {
-        background: transparent;
-        border-color: transparent;
-        color: inherit;
+    .booked-legend {
+        background-color: lightblue;
     }
 
-    .admin-calendar .flatpickr-day.blocked-date,
-    .admin-calendar .flatpickr-day.blocked-date.selected {
-        background: indianred;
-        border-color: indianred;
-        color: white;
+    .available-legend {
+        background-color: white
     }
-
-.calendar-legend-circle {
-    display: inline-block;
-    width: 39px;
-    height: 39px;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.blocked-legend {
-    background-color: indianred;
-}
-
-.booked-legend {
-    background-color: lightblue;
-}
-
-.available-legend {
-    background-color: white
-}
-
-/* ==========================================
+    /* ==========================================
    Buttons
    ========================================== */
-.site-button {
-    padding: 0.75rem 2.5rem;
-    border: 1px solid #222;
-    background-color: transparent;
-    font-size: 1.1rem;
-    letter-spacing: 0.15rem;
-    text-decoration: none;
-    color: #222;
-    text-align: center;
-
-    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-}
-    .site-button:hover {
-        transform: scale(1.05);
-        background-color: #222;
-        color: #f5f0e8;
+    .site-button {
+        padding: 0.75rem 2.5rem;
+        border: 1px solid #222;
+        background-color: transparent;
+        font-size: 1.1rem;
+        letter-spacing: 0.15rem;
+        text-decoration: none;
+        color: #222;
+        text-align: center;
+        transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
     }
 
-    .site-button:active {
-        transform: scale(0.98);
+        .site-button:hover {
+            transform: scale(1.05);
+            background-color: #222;
+            color: #f5f0e8;
+        }
+
+        .site-button:active {
+            transform: scale(0.98);
+        }
+
+    .site-button-sm {
+        padding: 0.4rem 1.5rem;
+        font-size: 0.9rem;
     }
 
-.site-button-sm {
-    padding: 0.4rem 1.5rem;
-    font-size: 0.9rem;
-}
+    .admin-review-button {
+        width: 120px;
+    }
+
+    @media (max-width: 400px) {
+        .admin-review-button {
+            width: 80px;
+            padding: 0.8rem .8rem;
+            font-size: 0.8rem;
+        }
+    }
 
 
