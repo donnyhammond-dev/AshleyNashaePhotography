@@ -173,17 +173,33 @@ body {
     /* ==========================================
    Home Page Hero Section
    ========================================== */
-    .hero-section {
-        min-height: 85vh;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        transition: opacity .75s ease;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        outline: 1px solid #222;
-        outline-offset: 8px;
-    }
+.hero-section {
+    min-height: 85vh;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    outline: 1px solid #222;
+    outline-offset: 8px;
+    position: relative;
+}
+
+.hero-image-1 {
+    opacity: 1;
+}
+
+.hero-image-2 {
+    opacity: 0;
+}
+
+.hero-image {
+    transition: opacity 2.5s ease;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
     .hero-navigation a {
         font-family: "Cormorant Garamond", serif;
@@ -200,6 +216,14 @@ body {
             letter-spacing: .05em;
         }
 
+@media (max-width: 767.98px) {
+    .hero-navigation a.active {
+        transform: scale(1.03);
+        color: lemonchiffon;
+        letter-spacing: .05em;
+    }
+}
+
     .hero-quote p {
         font-family: "Italianno", cursive;
         font-size: clamp(2rem, 4vw, 3rem);
@@ -207,6 +231,14 @@ body {
         text-decoration: none;
         color: white;
     }
+
+.hero-navigation,
+.hero-quote {
+    position: relative;
+    z-index: 1;
+}
+
+
     /* ==========================================
    About Me Section
    ========================================== */
@@ -217,10 +249,10 @@ body {
 
     .about-photo {
         display: block;
-        width: 90%;
+        width: 100%;
         max-height: 85vh;
         object-fit: cover;
-        object-position: center 35%;
+        object-position: center 25%;
         border: 1px solid rgba(0, 0, 0, 0.15);
         border-radius: 50%;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
@@ -231,11 +263,11 @@ body {
 
     .about-content {
         width: 100%;
-        max-width: 35rem;
+        max-width: 50rem;
         margin: 1rem auto;
         text-align: justify;
         font-family: "Cormorant Garamond", serif;
-        font-size: clamp(1.5rem, 2vw, 3rem);
+        font-size: clamp(1.5rem, 1.5vw, 2rem);
         font-weight: 300;
         white-space: normal;
     }
@@ -248,12 +280,25 @@ body {
 
     .reviews-content {
         font-family: "Italianno", cursive;
-        font-size: clamp(1.5rem, 2.5vw, 4rem);
+        font-size: clamp(2rem, 2.5vw, 4rem);
         font-weight: 300;
         max-width: 75rem;
         margin: 1rem auto;
         text-align: center;
     }
+
+.admin-review-button {
+    width: 120px;
+}
+
+@media (max-width: 400px) {
+    .admin-review-button {
+        width: 80px;
+        padding: 0.8rem .8rem;
+        font-size: 0.8rem;
+    }
+}
+
     /* ==========================================
    Portfolio Hero Section
    ========================================== */
@@ -536,18 +581,6 @@ body {
     .site-button-sm {
         padding: 0.4rem 1.5rem;
         font-size: 0.9rem;
-    }
-
-    .admin-review-button {
-        width: 120px;
-    }
-
-    @media (max-width: 400px) {
-        .admin-review-button {
-            width: 80px;
-            padding: 0.8rem .8rem;
-            font-size: 0.8rem;
-        }
     }
 
 
