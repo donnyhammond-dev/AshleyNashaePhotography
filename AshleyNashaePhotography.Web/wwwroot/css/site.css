@@ -12,7 +12,7 @@ html {
 
 .mt-6 {
     margin-top: 6rem;
-} 
+}
 
 .btn:focus,
 .btn:active:focus,
@@ -23,13 +23,13 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
+    margin-bottom: 120px;
     font-family: "Cormorant Garamond", serif;
     background-color: #f5f0e8;
 }
 
 /* ==========================================
-   Navigation Bar & Menus
+   Nav Bar & Menus
    ========================================== */
 .navbar {
     padding-left: 10px;
@@ -115,62 +115,62 @@ body {
     padding: 2px 6px;
 }
 
-    .nav-item.dropdown:hover .dropdown-menu {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-    /* ==========================================
+.nav-item.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+/* ==========================================
    Default Templates & Fonts
    ========================================== */
-    .basic-container {
-        margin: 1rem 2rem;
+.basic-container {
+    margin: 1rem 2rem;
+}
+
+.basic-content {
+    padding: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    outline: 1px solid #222;
+    outline-offset: 8px;
+}
+
+.basic-card {
+    border: 1px solid #222;
+    padding: 2rem;
+    min-width: 15rem;
+}
+
+    .basic-card h1 {
+        font-size: 1.6rem;
+        font-weight: 500;
     }
 
-    .basic-content {
-        padding: 2rem;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        outline: 1px solid #222;
-        outline-offset: 8px;
+    .basic-card p {
+        font-size: 1.2rem;
     }
 
-    .basic-card {
-        border: 1px solid #222;
-        padding: 2rem;
-        min-width: 15rem;
-    }
+.print-header {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    letter-spacing: .1rem;
+    text-align: center;
+}
 
-        .basic-card h1 {
-            font-size: 1.6rem;
-            font-weight: 500;
-        }
+.cursive-header {
+    font-family: "Italianno", cursive;
+    font-weight: 300;
+    text-align: center;
+}
 
-        .basic-card p {
-            font-size: 1.2rem;
-        }
+.text-cream {
+    color: tan;
+}
 
-    .print-header {
-        font-family: "Cormorant Garamond", serif;
-        font-weight: 300;
-        letter-spacing: .1rem;
-        text-align: center;
-    }
-
-    .cursive-header {
-        font-family: "Italianno", cursive;
-        font-weight: 300;
-        text-align: center;
-    }
-
-    .text-cream {
-        color: tan;
-    }
-
-    .past-session td {
-        color: #999;
-    }
-    /* ==========================================
+.past-session td {
+    color: #999;
+}
+/* ==========================================
    Home Page Hero Section
    ========================================== */
 .hero-section {
@@ -201,36 +201,38 @@ body {
     background-repeat: no-repeat;
 }
 
-    .hero-navigation a {
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(4rem, 8vw, 7rem);
-        font-weight: 300;
-        text-decoration: none;
-        color: white;
-        transition: transform .2s ease, letter-spacing .2s ease;
-    }
+.hero-navigation a {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(4rem, 8vw, 7rem);
+    font-weight: 300;
+    text-decoration: none;
+    color: white;
+    transition: transform 1s ease, letter-spacing 1s ease;
+}
 
-        .hero-navigation a:hover {
-            transform: scale(1.03);
-            color: lemonchiffon;
-            letter-spacing: .05em;
-        }
-
-@media (max-width: 767.98px) {
-    .hero-navigation a.active {
+    .hero-navigation a:hover {
         transform: scale(1.03);
         color: lemonchiffon;
         letter-spacing: .05em;
     }
+
+@media (max-width: 767.98px) {
+
+    .hero-navigation a.active {
+        transform: scale(1.03);
+        color: lemonchiffon;
+        letter-spacing: .05em;
+
+    }
 }
 
-    .hero-quote p {
-        font-family: "Italianno", cursive;
-        font-size: clamp(2rem, 4vw, 3rem);
-        font-weight: 300;
-        text-decoration: none;
-        color: white;
-    }
+.hero-quote p {
+    font-family: "Italianno", cursive;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    text-decoration: none;
+    color: white;
+}
 
 .hero-navigation,
 .hero-quote {
@@ -239,53 +241,57 @@ body {
 }
 
 
-    /* ==========================================
+/* ==========================================
    About Me Section
    ========================================== */
-    .about-container {
-        margin: 3rem 2rem 5rem;
-    }
+.about-container {
+    margin: 3rem 2rem 5rem;
+}
 
 
-    .about-photo {
-        display: block;
-        width: 100%;
-        max-height: 85vh;
-        object-fit: cover;
-        object-position: center 25%;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        border-radius: 50%;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        outline: 1px solid #222;
-        outline-offset: 8px;
-        margin: 0 auto;
-    }
+.about-photo {
+    display: block;
+    width: 100%;
+    max-height: 85vh;
+    object-fit: cover;
+    object-position: center 25%;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    outline: 1px solid #222;
+    outline-offset: 8px;
+    margin: 0 auto;
+}
 
-    .about-content {
-        width: 100%;
-        max-width: 50rem;
-        margin: 1rem auto;
-        text-align: justify;
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(1.5rem, 1.5vw, 2rem);
-        font-weight: 300;
-        white-space: normal;
-    }
-    /* ==========================================
+.about-content {
+    width: 100%;
+    max-width: 50rem;
+    margin: 1rem auto;
+    text-align: center;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.5rem, 1.5vw, 2rem);
+    font-weight: 300;
+    white-space: normal;
+}
+
+.about-description {
+    white-space: pre-line;
+}
+/* ==========================================
    Reviews
    ========================================== */
-    .reviews-container {
-        margin: 5rem 2rem;
-    }
+.reviews-container {
+    margin: 5rem 2rem;
+}
 
-    .reviews-content {
-        font-family: "Italianno", cursive;
-        font-size: clamp(2rem, 2.5vw, 4rem);
-        font-weight: 300;
-        max-width: 75rem;
-        margin: 1rem auto;
-        text-align: center;
-    }
+.reviews-content {
+    font-family: "Italianno", cursive;
+    font-size: clamp(2rem, 2.5vw, 4rem);
+    font-weight: 300;
+    max-width: 75rem;
+    margin: 1rem auto;
+    text-align: center;
+}
 
 .admin-review-button {
     width: 120px;
@@ -299,288 +305,286 @@ body {
     }
 }
 
-    /* ==========================================
+/* ==========================================
    Portfolio Hero Section
    ========================================== */
-    .portfolio-section {
-        min-height: 60vh;
-        background-size: cover;
-        background-position: center 35%;
-        background-repeat: no-repeat;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        outline: 1px solid #222;
-        outline-offset: 8px;
-    }
+.portfolio-section {
+    min-height: 60vh;
+    background-size: cover;
+    background-position: center 35%;
+    background-repeat: no-repeat;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    outline: 1px solid #222;
+    outline-offset: 8px;
+}
 
-    .portfolio-quote p {
-        font-family: "Italianno", cursive;
-        font-size: clamp(2rem, 5vw, 3rem);
-        font-weight: 300;
-        text-decoration: none;
-    }
-    /* ==========================================
+.portfolio-quote p {
+    font-family: "Italianno", cursive;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
+    text-decoration: none;
+}
+/* ==========================================
    Portfolio Photo Gallery
    ========================================== */
-    /* Mobile (Default) */
+/* Mobile (Default) */
+.photo-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem 1rem;
+}
+
+    .photo-gallery img {
+        width: calc((100% - 1rem) / 2);
+        height: auto;
+        object-fit: cover;
+    }
+/* Tablet and Desktop */
+@media (min-width: 576px) {
+
     .photo-gallery {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin: 2rem 1rem;
+        margin: 4rem 2rem;
     }
 
         .photo-gallery img {
-            width: calc((100% - 1rem) / 2);
-            height: auto;
-            object-fit: cover;
+            height: 280px;
+            width: auto;
+            max-width: 50%;
+            flex-grow: 1;
         }
-    /* Tablet and Desktop */
-    @media (min-width: 576px) {
+}
 
-        .photo-gallery {
-            margin: 4rem 2rem;
-        }
+.photo-gallery img:hover {
+    transform: scale(1.02);
+}
 
-            .photo-gallery img {
-                height: 280px;
-                width: auto;
-                max-width: 50%;
-                flex-grow: 1;
-            }
-    }
-
-    .photo-gallery img:hover {
-        transform: scale(1.02);
-    }
-
-    .portfolio-card {
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        max-width: 300px;
-    }
-    /* ==========================================
+.portfolio-card {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    max-width: 300px;
+}
+/* ==========================================
    Lightbox (Click to Enlarge)
    ========================================== */
-    .lightbox {
-        display: none;
-        position: fixed;
-        inset: 0;
-        backdrop-filter: blur(8px);
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+    .lightbox.show {
+        display: flex;
     }
 
-        .lightbox.show {
-            display: flex;
-        }
-
-    #lightbox-image {
-        max-width: 90vw;
-        max-height: 90vh;
-        width: auto;
-        height: auto;
-    }
-    /* ==========================================
+#lightbox-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+}
+/* ==========================================
    Admin Dashboard
    ========================================== */
+.admin-container {
+    margin: 5rem 2rem;
+}
+
+.admin-content {
+    padding: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    outline: 1px solid #222;
+    outline-offset: 8px;
+}
+
+@media (max-width: 400px) {
     .admin-container {
-        margin: 5rem 2rem;
+        margin: 2rem 1rem;
     }
 
     .admin-content {
-        padding: 2rem;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        outline: 1px solid #222;
-        outline-offset: 8px;
+        padding: 1rem;
     }
+}
 
-    @media (max-width: 400px) {
-        .admin-container {
-            margin: 2rem 1rem;
-        }
+.admin-hero-preview {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+}
 
-        .admin-content {
-            padding: 1rem;
-        }
+.admin-photo-thumbnail {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.admin-photo-wrapper {
+    position: relative;
+}
+
+.photo-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+    .photo-delete:hover {
+        transform: scale(1.05);
     }
-
-    .admin-hero-preview {
-        width: 300px;
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .admin-photo-thumbnail {
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-    }
-
-    .admin-photo-wrapper {
-        position: relative;
-    }
-
-    .photo-delete {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background-color: rgba(255, 255, 255, 0.5);
-    }
-
-        .photo-delete:hover {
-            transform: scale(1.05);
-        }
-    /* ==========================================
+/* ==========================================
    Book Appointment
    ========================================== */
+.booking-container {
+    margin: 5rem 2rem;
+}
+
+.booking-content {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 3rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    outline: 1px solid #222;
+    outline-offset: 8px;
+}
+
+@media (max-width: 500px) {
+    .booking-content {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 400px) {
     .booking-container {
-        margin: 5rem 2rem;
+        margin: 2rem 1rem;
     }
 
     .booking-content {
-        max-width: 50rem;
-        margin: 0 auto;
-        padding: 3rem;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        outline: 1px solid #222;
-        outline-offset: 8px;
+        padding: 1rem;
     }
-
-    @media (max-width: 500px) {
-        .booking-content {
-            padding: 2rem;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .booking-container {
-            margin: 2rem 1rem;
-        }
-
-        .booking-content {
-            padding: 1rem;
-        }
-    }
-    /* ==========================================
+}
+/* ==========================================
    Flatpicker Calendar Responsiveness
    ========================================== */
-    .flatpickr-calendar.inline {
+.flatpickr-calendar.inline {
+    width: 100%;
+    max-width: 100%;
+}
+
+.flatpickr-days,
+.dayContainer {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.flatpickr-day {
+    width: 14.2857%;
+    max-width: none;
+    flex-basis: 14.2857%;
+}
+
+.admin-calendar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 308px;
+    margin: 0 auto;
+}
+
+    .admin-calendar .flatpickr-days,
+    .admin-calendar .dayContainer {
         width: 100%;
+        min-width: 0;
         max-width: 100%;
     }
 
-    .flatpickr-days,
-    .dayContainer {
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
-    }
-
-    .flatpickr-day {
-        width: 14.2857%;
-        max-width: none;
-        flex-basis: 14.2857%;
-    }
-
-    .admin-calendar {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        max-width: 308px;
-        margin: 0 auto;
-    }
-
-        .admin-calendar .flatpickr-days,
-        .admin-calendar .dayContainer {
-            width: 100%;
-            min-width: 0;
-            max-width: 100%;
-        }
-
-        .admin-calendar .booked-date {
-            background-color: lightblue;
-        }
-
-        .admin-calendar .blocked-date {
-            background-color: indianred;
-        }
-
-        .admin-calendar .flatpickr-day.selected {
-            background: transparent;
-            border-color: transparent;
-            color: inherit;
-        }
-
-        .admin-calendar .flatpickr-day.blocked-date,
-        .admin-calendar .flatpickr-day.blocked-date.selected {
-            background: indianred;
-            border-color: indianred;
-            color: white;
-        }
-
-    @media (max-width: 461px) {
-        #session-date + .flatpickr-calendar {
-            width: 308px;
-            max-width: none;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-    }
-
-    .calendar-legend-circle {
-        display: inline-block;
-        width: 39px;
-        height: 39px;
-        border-radius: 50%;
-        flex-shrink: 0;
-    }
-
-    .blocked-legend {
-        background-color: indianred;
-    }
-
-    .booked-legend {
+    .admin-calendar .booked-date {
         background-color: lightblue;
     }
 
-    .available-legend {
-        background-color: white
+    .admin-calendar .blocked-date {
+        background-color: indianred;
     }
-    /* ==========================================
+
+    .admin-calendar .flatpickr-day.selected {
+        background: transparent;
+        border-color: transparent;
+        color: inherit;
+    }
+
+    .admin-calendar .flatpickr-day.blocked-date,
+    .admin-calendar .flatpickr-day.blocked-date.selected {
+        background: indianred;
+        border-color: indianred;
+        color: white;
+    }
+
+@media (max-width: 461px) {
+    #session-date + .flatpickr-calendar {
+        width: 308px;
+        max-width: none;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.calendar-legend-circle {
+    display: inline-block;
+    width: 39px;
+    height: 39px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.blocked-legend {
+    background-color: indianred;
+}
+
+.booked-legend {
+    background-color: lightblue;
+}
+
+.available-legend {
+    background-color: white
+}
+/* ==========================================
    Buttons
    ========================================== */
-    .site-button {
-        padding: 0.75rem 2.5rem;
-        border: 1px solid #222;
-        background-color: transparent;
-        font-size: 1.1rem;
-        letter-spacing: 0.15rem;
-        text-decoration: none;
-        color: #222;
-        text-align: center;
-        transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+.site-button {
+    padding: 0.75rem 2.5rem;
+    border: 1px solid #222;
+    background-color: transparent;
+    font-size: 1.1rem;
+    letter-spacing: 0.15rem;
+    text-decoration: none;
+    color: #222;
+    text-align: center;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+    .site-button:hover {
+        transform: scale(1.05);
+        background-color: #222;
+        color: #f5f0e8;
     }
 
-        .site-button:hover {
-            transform: scale(1.05);
-            background-color: #222;
-            color: #f5f0e8;
-        }
-
-        .site-button:active {
-            transform: scale(0.98);
-        }
-
-    .site-button-sm {
-        padding: 0.4rem 1.5rem;
-        font-size: 0.9rem;
+    .site-button:active {
+        transform: scale(0.98);
     }
 
-
+.site-button-sm {
+    padding: 0.4rem 1.5rem;
+    font-size: 0.9rem;
+}

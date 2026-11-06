@@ -14,11 +14,11 @@ namespace AshleyNashaePhotography.Web.ViewComponents
             _context = context;
         }
         
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(bool isFooter = false)
         {
             var portfolios = await _context.Portfolios.ToListAsync();
 
-            return View(portfolios);
+            return isFooter ? View("Footer", portfolios) : View(portfolios);
         }
         
 

@@ -86,7 +86,7 @@ namespace AshleyNashaePhotography.Web.Data
             {
                 var radiantPortfolio = new Portfolio
                 {
-                    Title = "Radiant",
+                    Title = "Radiance",
                     HomePageHeroImage = new Photo("/images/Portfolio2/Hero.jpg"),
                     HeroImage = new Photo("/images/Portfolio2/Radiant1.jpg"),
                     Quote = "No beauty shines brighter than that of a good heart. — Shanina Shaik",

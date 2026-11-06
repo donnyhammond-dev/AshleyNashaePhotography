@@ -1,0 +1,10 @@
+﻿@model List<Portfolio>
+
+@foreach (var portfolio in Model)
+{
+    <a asp-controller="Portfolio"
+       asp-action="@($"Portfolio{portfolio.Id}")"
+       class="text-muted">
+        @portfolio.Title
+    </a>
+}
