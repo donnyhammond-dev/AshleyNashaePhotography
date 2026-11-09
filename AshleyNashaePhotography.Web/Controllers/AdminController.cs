@@ -2,6 +2,7 @@
 using AshleyNashaePhotography.Web.Data;
 using AshleyNashaePhotography.Web.DTOs;
 using AshleyNashaePhotography.Web.Enums;
+using AshleyNashaePhotography.Web.Migrations;
 using AshleyNashaePhotography.Web.Models;
 using AshleyNashaePhotography.Web.Services;
 using AshleyNashaePhotography.Web.ViewModels;
@@ -36,37 +37,43 @@ namespace AshleyNashaePhotography.Web.Controllers
             var homePage = await _context.HomePages
              .Include(x => x.AboutMePhoto)
              .FirstOrDefaultAsync();
+
             if (homePage == null) return NotFound();
 
             var availabilityDto = await _availabilityService.GetAvailabilityDetailsAsync();
 
+            var Sessions = await _context.PhotoSessions
+             .Include(x => x.SessionType)
+             .OrderBy(x => x.Date)
+             .ToListAsync();
+
+            var SessionTypes = await _context.SessionTypes
+             .OrderBy(x => x.Id)
+             .ToListAsync();
+
+            var Portfolios = await _context.Portfolios
+             .Include(x => x.Photos)
+             .Include(x => x.HeroImage)
+             .ToListAsync();
+
+            var Reviews = await _context.Reviews.ToListAsync();
+
+            var FAQs = await _context.FAQs
+             .OrderBy(x => x.Id)
+             .ToListAsync();
+
             var vm = new AdminViewModel
             {
                 HomePage = homePage,
-
-                Sessions = await _context.PhotoSessions
-                .Include(x => x.SessionType)
-                .OrderBy(x => x.Date)
-                .ToListAsync(),
-
-                SessionTypes = await _context.SessionTypes
-                .OrderBy(x => x.Id)
-                .ToListAsync(),
-
-                Portfolios = await _context.Portfolios
-                .Include(x => x.Photos)
-                .Include(x => x.HeroImage)
-                .ToListAsync(),
-
-                Reviews = await _context.Reviews.ToListAsync(),
-
-                FAQs = await _context.FAQs
-                .OrderBy(x => x.Id)
-                .ToListAsync(),
-
+                Sessions = Sessions,
+                SessionTypes = SessionTypes,
+                Portfolios = Portfolios,
+                Reviews = Reviews,
+                FAQs = FAQs,
                 BookedDates = availabilityDto.BookedDates,
-
-                BlockedDates = availabilityDto.BlockedDates
+                BlockedDates = availabilityDto.BlockedDates,
+                HasBookings = Sessions.Count > 0,
+                HasReviews = Reviews.Count > 0
             };
 
             return View(vm);

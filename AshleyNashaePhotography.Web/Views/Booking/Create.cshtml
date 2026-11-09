@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 <!--Book a Session Form-->
-<section class="admin-container">
-	<div class="admin-content">
+<section class="booking-container">
+	<div class="booking-content">
 
 		<h1 class="print-header">BOOK A SESSION</h1>
 
@@ -59,15 +59,19 @@
 			<!--Session Type-->
 			<div class="w-100">
 				<label asp-for="Session.SessionTypeId" class="form-label">SESSION:</label>
-				<select asp-for="Session.SessionTypeId" class="form-select">
+				<select asp-for="Session.SessionTypeId" class="form-select" id="session-type">
 					@foreach (var type in Model.SessionTypes)
 					{
-						<option value="@type.Id">
-							@type.Name — @type.Description — @(type.DurationMinutes + " Mins") - $@type.Price
+						<option value="@type.Id" data-description="@type.Description">
+							@type.Name — @(type.DurationMinutes + " Mins") - $@type.Price
 						</option>
 					}
 				</select>
+
+				<p id="session-description" class="text-muted mt-2"></p>
+
 				<span asp-validation-for="Session.SessionType" class="text-danger"></span>
+			
 			</div>
 
 			<!-- Calendar / Notes -->
@@ -106,13 +110,16 @@
 </section>
 
 
-<!--Calendar JS scripts-->
+<!--JS scripts-->
 @section Scripts {
 	<script>
 		const bookedDates = @Html.Raw(bookedDatesJson);
 	</script>
 
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 	<script src="~/js/booking-calendar.js"></script>
+
+	<script src="~/js/booking-session.js"></script>
 }
 

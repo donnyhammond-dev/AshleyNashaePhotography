@@ -35,146 +35,167 @@
             </div>
         }
 
+        <!-------------------Bookings------------------->
         <h1 class="print-header">BOOKINGS</h1>
 
-        <!-------------------Bookings Table ------------------->
-        <div class="table-responsive mb-5">
-            <table class="table table-striped text-center">
-                <thead>
-                    <tr>
-                        <th>DATE</th>
-                        <th>CLIENT</th>
-                        <th>SESSION TYPE</th>
-                        <th>EMAIL</th>
-                        <th>PHONE</th>
-                        <th>NOTES</th>
-                        <th>REVIEW REQUEST</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var session in Model.Sessions)
-                    {
-                        <tr class="@(session.Date < DateOnly.FromDateTime(DateTime.Today) ? "past-session" : "")">
-                            <td>@session.Date</td>
-                            <td>@(session.LastName + ", " + session.FirstName)</td>
-                            <td>@($"{session.SessionType!.Name} ({session.SessionType.DurationMinutes} mins)")</td>
-                            <td>@session.Email</td>
-                            <td>@session.PhoneNumber</td>
-                            <td>
-                                <button type="button"
-                                        class="site-button site-button-sm"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#clientNotesModal-@session.Id">
-                                    View
-                                </button>
-                            </td>
-                            <td>
-                                @if (session.PostSessionEmailSent)
-                                {
-                                    <i class="bi bi-check-lg fs-5"></i>
-                                }
-                                else if (!session.PostSessionEmailSent && session.Date <= DateOnly.FromDateTime(DateTime.Now))
-                                {
-                                    <form asp-action="SendReviewRequest"
-                                          asp-route-id="@session.Id"
-                                          method="post">
-
-                                        <button type="submit"
-                                                class="site-button site-button-sm">
-                                            Send
-                                        </button>
-
-                                    </form>
-                                }
-                            </td>
+        <!--Empty State-->
+        @if(!Model.HasBookings)
+        {
+            <p class="text-muted text-center mb-5">No sessions are currently booked.</p>
+        }
+        else
+        {
+            <div class="table-responsive mb-5">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th>DATE</th>
+                            <th>CLIENT</th>
+                            <th>SESSION TYPE</th>
+                            <th>EMAIL</th>
+                            <th>PHONE</th>
+                            <th>NOTES</th>
+                            <th>REVIEW REQUEST</th>
                         </tr>
+                    </thead>
 
-                        <!--View Client Notes Modal-->
-                        <partial name="_ViewClientNotesModal" model="session" />
-                    }
+                    <tbody>
+                        @foreach (var session in Model.Sessions)
+                        {
+                            <tr class="@(session.Date < DateOnly.FromDateTime(DateTime.Today) ? "past-session" : "")">
+                                <td>@session.Date</td>
+                                <td>@(session.LastName + ", " + session.FirstName)</td>
+                                <td>@($"{session.SessionType!.Name} ({session.SessionType.DurationMinutes} mins)")</td>
+                                <td>@session.Email</td>
+                                <td>@session.PhoneNumber</td>
+                                <td>
+                                    <button type="button"
+                                            class="site-button site-button-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#clientNotesModal-@session.Id">
+                                        View
+                                    </button>
+                                </td>
+                                <td>
+                                    @if (session.PostSessionEmailSent)
+                                    {
+                                        <i class="bi bi-check-lg fs-5"></i>
+                                    }
+                                    else if (!session.PostSessionEmailSent && session.Date <= DateOnly.FromDateTime(DateTime.Now))
+                                    {
+                                        <form asp-action="SendReviewRequest"
+                                              asp-route-id="@session.Id"
+                                              method="post">
 
-                </tbody>
+                                            <button type="submit"
+                                                    class="site-button site-button-sm">
+                                                Send
+                                            </button>
 
-            </table>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
 
-        </div>
+                            <!--View Client Notes Modal-->
+                            <partial name="_ViewClientNotesModal" model="session" />
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+
+
 
         <hr class="my-5" />  <!--Line Seperation-->
 
         <!------------------- Reviews ------------------->
         <h1 class="print-header" id="reviews">REVIEWS</h1>
 
-        <div class="d-flex flex-column gap-5">
+        @if (!Model.HasReviews)
+        {
+            <p class="text-muted text-center mb-5">
+                No reviews have been submitted yet.
+            </p>
+        }
+        else
+        {
+            <div class="d-flex flex-column gap-5">
 
-            @foreach (var review in Model.Reviews)
-            {
-                <div class="d-flex justify-content-between align-items-center gap-4">
+                @foreach (var review in Model.Reviews)
+                {
+                    <div class="d-flex justify-content-between align-items-center gap-4">
 
-                    <div>
-                        <p>@review.ReviewText</p>
+                        <div>
+                            <p>@review.ReviewText</p>
 
-                        <div class="d-flex align-items-center gap-3">
+                            <div class="d-flex align-items-center gap-3">
 
-                            <span>@(review.FirstName + " " + review.LastInitial)</span>
-
-                            @if (review.IsPublished)
-                            {
-                                <span class="text-success small">
-                                    <i class="bi bi-check-circle-fill"></i> Published
-                                </span>
-                            }
-                            else
-                            {
-                                <span class="text-muted small">
-                                    <i class="bi bi-circle"></i> Hidden
-                                </span>
-                            }
-
-                        </div>
-                    </div>
-
-                    <div class="d-flex flex-column gap-1">
-
-                        <form asp-controller="Admin"
-                              asp-action="ChangeReviewPublishing"
-                              asp-route-id="@review.Id"
-                              method="post">
-
-                            <button type="submit"
-                                    class="site-button site-button-sm admin-review-button"
-                                    title="@(review.IsPublished ? "Unpublish Review" : "Publish Review")"
-                                    aria-label="@(review.IsPublished ? "Unpublish Review" : "Publish Review")">
+                                <span>@(review.FirstName + " " + review.LastInitial)</span>
 
                                 @if (review.IsPublished)
                                 {
-                                    <span>Hide</span>
+                                    <span class="text-success small">
+                                        <i class="bi bi-check-circle-fill"></i> Published
+                                    </span>
                                 }
                                 else
                                 {
-                                    <span>Publish</span>
+                                    <span class="text-muted small">
+                                        <i class="bi bi-circle"></i> Hidden
+                                    </span>
                                 }
 
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column gap-1">
+
+                            <form asp-controller="Admin"
+                                  asp-action="ChangeReviewPublishing"
+                                  asp-route-id="@review.Id"
+                                  method="post">
+
+                                <button type="submit"
+                                        class="site-button site-button-sm admin-review-button"
+                                        title="@(review.IsPublished ? "Unpublish Review" : "Publish Review")"
+                                        aria-label="@(review.IsPublished ? "Unpublish Review" : "Publish Review")">
+
+                                    @if (review.IsPublished)
+                                    {
+                                        <span>Hide</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Publish</span>
+                                    }
+
+                                </button>
+
+                            </form>
+
+                            <button type="button"
+                                    class="site-button site-button-sm admin-review-button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#feedbackModal-@review.Id">
+                                Feedback
                             </button>
 
-                        </form>
-
-                        <button type="button"
-                                class="site-button site-button-sm admin-review-button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#feedbackModal-@review.Id">
-                            Feedback
-                        </button>
+                        </div>
 
                     </div>
 
-                </div>
+                    <!--ViewFeedback Modal-->
+                    <partial name="_ViewFeedbackModal" model="review" />
+                }
 
-                <!--ViewFeedback Modal-->
-                <partial name="_ViewFeedbackModal" model="review" />
-            }
+            </div>
+        }
 
-        </div>
+
 
         <hr class="my-5" />  <!--Line Seperation-->
 

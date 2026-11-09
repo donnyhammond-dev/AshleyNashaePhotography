@@ -12,5 +12,7 @@ namespace AshleyNashaePhotography.Web.ViewModels
         public HomePage HomePage { get; set; } = null!;
         public List<DateOnly> BookedDates { get; set; } = [];
         public List<DateOnly> BlockedDates { get; set; } = [];
+        public bool HasReviews { get; set; }
+        public bool HasBookings { get; set; }
     }
 }
