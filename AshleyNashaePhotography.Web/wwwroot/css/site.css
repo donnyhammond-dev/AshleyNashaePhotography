@@ -121,7 +121,7 @@ body {
     transform: translateY(0);
 }
 /* ==========================================
-   Default Templates & Fonts
+   Templates & Fonts
    ========================================== */
 .basic-container {
     margin: 1rem 2rem;
@@ -171,7 +171,7 @@ body {
     color: #999;
 }
 /* ==========================================
-   Home Page Hero Section
+   Home Page Hero
    ========================================== */
 .hero-section {
     min-height: 85vh;
@@ -191,7 +191,7 @@ body {
 }
 
 .hero-image {
-    transition: opacity 2.5s ease;
+    transition: opacity 4s ease;
     position: absolute;
     inset: 0;
     width: 100%;

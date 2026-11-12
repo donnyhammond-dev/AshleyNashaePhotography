@@ -49,8 +49,8 @@ function changeHeroImage(imagePath) {
 }
 
 function startMobileSlideshow() {
-	slideshowTimer = setInterval(() => {
 
+	function nextImage() {
 		heroLinks[currentPortfolioIndex].classList.remove("active");
 
 		currentPortfolioIndex = (currentPortfolioIndex + 1) % heroLinks.length;
@@ -58,6 +58,12 @@ function startMobileSlideshow() {
 		changeHeroImage(heroLinks[currentPortfolioIndex].dataset.image);
 
 		heroLinks[currentPortfolioIndex].classList.add("active");
+	}
 
-	}, 3000);
+	setTimeout(() => {
+		nextImage();
+
+		slideshowTimer = setInterval(nextImage, 6000);
+
+	}, 1000);
 }

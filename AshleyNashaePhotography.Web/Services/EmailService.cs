@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AshleyNashaePhotography.Web.Models;
+using Microsoft.AspNetCore.Mvc;
 using Resend;
 
 namespace AshleyNashaePhotography.Web.Services
@@ -6,11 +7,13 @@ namespace AshleyNashaePhotography.Web.Services
     public class EmailService
     {
         private readonly IResend _resend;
+        private readonly IConfiguration _config;
     
 
-        public EmailService(IResend resend)
+        public EmailService(IResend resend, IConfiguration config)
         {
             _resend = resend;
+            _config = config;
         }
 
         public async Task SendReviewRequestAsync(string clientName, string clientEmail,
@@ -27,9 +30,31 @@ namespace AshleyNashaePhotography.Web.Services
 
             var response = await _resend.EmailSendAsync(message);
 
-            if (!response.Success) throw new Exception("Resend failed to send the email.");
+            if (!response.Success) throw new Exception("Resend failed to send the review request email.");
+        }
 
+        public async Task SendBookingAlertAsync(PhotoSession session)
+        {
+            var message = new EmailMessage
+            {
+                From = "Ashley Nashae Photography <bookings@ashleynashaephotography.com>",
+                Subject = $"{session.FirstName} Booked a Photo Session!",
+                HtmlBody = $"""
+        <h2>New Session Booking!</h2>
 
+        <p>Client: {System.Net.WebUtility.HtmlEncode(session.FirstName)} {System.Net.WebUtility.HtmlEncode(session.LastName)}</p>
+        <p>Date: {session.Date:MMMM d, yyyy}</p>
+        <p>Email: {System.Net.WebUtility.HtmlEncode(session.Email)}</p>
+        <p>Phone: {System.Net.WebUtility.HtmlEncode(session.PhoneNumber)}</p>
+        <p>Notes: {System.Net.WebUtility.HtmlEncode(session.ClientNotes)}</p>
+        """
+            };
+
+            message.To.Add(_config["Admin:Email"]!);
+
+            var response = await _resend.EmailSendAsync(message);
+
+            if (!response.Success) throw new Exception("Resend failed to send the booking alert email.");
         }
 
         public async Task SendTestEmailAsync()

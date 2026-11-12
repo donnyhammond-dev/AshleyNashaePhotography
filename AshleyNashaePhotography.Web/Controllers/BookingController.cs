@@ -12,11 +12,16 @@ namespace AshleyNashaePhotography.Web.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly AvailabilityService _availabilityService;
+        private readonly EmailService _emailService;
+        private readonly ILogger<BookingController> _logger;
 
-        public BookingController(ApplicationDbContext context, AvailabilityService availabilityService)
+        public BookingController(ApplicationDbContext context, AvailabilityService availabilityService,
+            EmailService emailService, ILogger<BookingController> logger)
         {
             _context = context;
             _availabilityService = availabilityService;
+            _emailService = emailService;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Create()
@@ -78,7 +83,18 @@ namespace AshleyNashaePhotography.Web.Controllers
             };
 
             _context.PhotoSessions.Add(session);
+
             await _context.SaveChangesAsync();
+
+            try
+            {
+                await _emailService.SendBookingAlertAsync(session);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to send booking notification email.");
+            }
+
 
             return RedirectToAction("Confirmation");
         }
