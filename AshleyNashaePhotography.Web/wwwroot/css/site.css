@@ -170,6 +170,36 @@ body {
 .past-session td {
     color: #999;
 }
+
+.form-container {
+    margin: 5rem 2rem;
+}
+
+.form-content {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 3rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    outline: 1px solid #222;
+    outline-offset: 8px;
+}
+
+@media (max-width: 500px) {
+    .form-content {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .form-container {
+        margin: 2rem 1rem;
+    }
+
+    .form-content {
+        padding: 1rem;
+    }
+}
 /* ==========================================
    Home Page Hero
    ========================================== */
@@ -440,38 +470,7 @@ body {
     .photo-delete:hover {
         transform: scale(1.05);
     }
-/* ==========================================
-   Book Appointment
-   ========================================== */
-.booking-container {
-    margin: 5rem 2rem;
-}
 
-.booking-content {
-    max-width: 50rem;
-    margin: 0 auto;
-    padding: 3rem;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    outline: 1px solid #222;
-    outline-offset: 8px;
-}
-
-@media (max-width: 500px) {
-    .booking-content {
-        padding: 2rem;
-    }
-}
-
-@media (max-width: 400px) {
-    .booking-container {
-        margin: 2rem 1rem;
-    }
-
-    .booking-content {
-        padding: 1rem;
-    }
-}
 /* ==========================================
    Flatpicker Calendar Responsiveness
    ========================================== */

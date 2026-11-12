@@ -62,6 +62,14 @@
                         <li class="nav-item">
                             <a class="nav-link nav-link-font"
                                asp-area=""
+                               asp-controller="Contact"
+                               asp-action="Contact">
+                                CONTACT
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-font"
+                               asp-area=""
                                asp-controller="FAQ"
                                asp-action="Index">
                                 FAQ
@@ -94,6 +102,7 @@
             <a asp-controller="Home" asp-action="Index" class="text-muted">Home</a>
             @await Component.InvokeAsync("PortfolioNavigation", new { isFooter = true })
             <a asp-controller="Book" asp-action="Create" class="text-muted">Book</a>
+            <a asp-controller="Contact" asp-action="Contact" class="text-muted">FAQ</a>
             <a asp-controller="FAQ" asp-action="Index" class="text-muted">FAQ</a>
                 @if (User.IsInRole("Admin"))
                 {

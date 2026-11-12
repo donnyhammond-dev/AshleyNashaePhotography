@@ -22,8 +22,10 @@ namespace AshleyNashaePhotography.Web.Models
         public SessionType? SessionType { get; set; }
 
         [Required]
+        [EmailAddress]
         public string Email { get; set; } = null!;
 
+        [Phone]
         public string? PhoneNumber { get; set; }
 
         public string? ClientNotes { get; set; }

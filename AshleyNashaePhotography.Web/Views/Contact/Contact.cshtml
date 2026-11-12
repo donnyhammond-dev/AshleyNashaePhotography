@@ -1,0 +1,62 @@
+﻿@using AshleyNashaePhotography.Web.ViewModels
+
+@model ContactViewModel
+
+<section class="form-container">
+	<div class="form-content">
+
+		<h1 class="print-header">CONTACT ASHLEY</h1>
+
+		<p class="text-center">Have a question or something special in mind? I'd love to hear from you.</p>
+
+		<!--Contact Form-->
+		<form asp-action="Contact" method="post" class="submit-spinner d-flex flex-column align-items-center gap-4">
+
+			<div asp-validation-summary="All" class="text-danger"></div>
+
+			<div class="row g-3 w-100">
+
+				<!-- Name -->
+				<div class="col-md-6">
+					<label asp-for="Name" class="form-label">
+						NAME <span class="text-muted small ms-1">(Required)</span>
+					</label>
+					<input asp-for="Name" class="form-control" />
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+
+				<!-- Email -->
+				<div class="col-md-6">
+					<label asp-for="Email" class="form-label">
+						EMAIL ADDRESS <span class="text-muted small ms-1">(Required)</span>
+					</label>
+					<input asp-for="Email" class="form-control" />
+					<span asp-validation-for="Email" class="text-danger"></span>
+				</div>
+
+			</div>
+
+			<!--Message-->
+			<div class="d-flex flex-column align-items-center gap-1 w-75">
+				<label asp-for="Message" class="form-label">
+					MESSAGE  <span class="text-muted small ms-1">(Required)</span>
+				</label>
+					<textarea asp-for="Message"
+							  class="form-control"
+							  rows="12"></textarea>
+				<span asp-validation-for="Message" class="text-danger"></span>
+			</div>
+
+			<!--Submit-->
+			<button type="submit"
+					class="site-button"
+					title="Send Message"
+					id="submitButton">
+				SEND
+			</button>
+
+		</form>
+
+	</div>
+</section>
+	

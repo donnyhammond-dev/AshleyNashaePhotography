@@ -16,6 +16,30 @@ namespace AshleyNashaePhotography.Web.Services
             _config = config;
         }
 
+        public async Task SendContactMessageAsync(string clientName, string clientEmail,
+            string clientMessage)
+        {
+            var message = new EmailMessage
+            {
+                From = "Ashley Nashae Photography <bookings@ashleynashaephotography.com>",
+                Subject = $"New Contact Message from {clientName}",
+                HtmlBody = $"""
+        <h2>New Contact Message!</h2>
+
+        <p><strong>Name:</strong> {System.Net.WebUtility.HtmlEncode(clientName)}</p>
+        <p><strong>Email:</strong> {System.Net.WebUtility.HtmlEncode(clientEmail)}</p>
+        <p><strong>Message:</strong></p>
+        <p style="white-space: pre-wrap;">{System.Net.WebUtility.HtmlEncode(clientMessage)}</p>
+        """
+            };
+
+            message.To.Add(_config["Admin:Email"]!);
+
+            var response = await _resend.EmailSendAsync(message);
+
+            if (!response.Success) throw new Exception("Resend failed to send the client's contact message");
+        }
+
         public async Task SendReviewRequestAsync(string clientName, string clientEmail,
             string reviewLink)
         {
