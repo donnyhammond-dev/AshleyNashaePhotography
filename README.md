@@ -1,19 +1,18 @@
 
 # Ashley Nashae Photography
 
-A full-stack photography business website built with C# and ASP.NET Core MVC for a real client.
+A photography business website built with C#/ASP.NET Core MVC for Ashley Nashae Photography.
 
 **Live Website:** https://ashleynashaephotography.com/
 
 ## Features
 
 - Responsive design for desktop and mobile devices
-- Photography portfolios with dynamic image galleries
-- Online photography session booking
-- Admin dashboard for managing website content, portfolios, and bookings
+- Customizable photography portfolios with image galleries
+- Scheduling and booking
+- Admin dashboard for managing schedules, bookings, and customizing website content and appearance
 - Image uploads with server-side file validation
-- Client review management
-- Email integration using Resend
+- Automated emails using Resend for booking alerts and post-session review requests
 - Authentication and role-based authorization using ASP.NET Core Identity
 
 ## Tech Stack
@@ -25,7 +24,9 @@ A full-stack photography business website built with C# and ASP.NET Core MVC for
 
 ## About the Project
 
-I developed Ashley Nashae Photography for a real photography business to showcase its work and manage photography sessions, portfolio content, and client reviews.
+Ashley Nashae Photography is a website developed for a real photography business.
 
-The website is live and in use, with a secure admin dashboard that allows the business owner to update content and manage bookings without modifying the code.
-aePhotography
+The business owner wanted a soft, elegant design and an easy way to manage bookings, clients, and
+website content through a secure admin dashboard.
+
+The website allows clients to browse portfolios, schedule sessions, and contact the photographer.

@@ -100,9 +100,8 @@
 
         <nav class="d-flex flex-wrap justify-content-center gap-3 mb-1">
             <a asp-controller="Home" asp-action="Index" class="text-muted">Home</a>
-            @await Component.InvokeAsync("PortfolioNavigation", new { isFooter = true })
             <a asp-controller="Book" asp-action="Create" class="text-muted">Book</a>
-            <a asp-controller="Contact" asp-action="Contact" class="text-muted">FAQ</a>
+            <a asp-controller="Contact" asp-action="Contact" class="text-muted">Contact</a>
             <a asp-controller="FAQ" asp-action="Index" class="text-muted">FAQ</a>
                 @if (User.IsInRole("Admin"))
                 {
